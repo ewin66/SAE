@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SAE.CommonLibrary.Storage.MongoDB\SAE.CommonLibrary.Storage.MongoDB.csproj" />
+    <ProjectReference Include="..\..\src\SAE.Commonlibrary.Storage\SAE.CommonLibrary.Storage.csproj" />
+    <ProjectReference Include="..\SAE.Test.Infrastructure\SAE.Test.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

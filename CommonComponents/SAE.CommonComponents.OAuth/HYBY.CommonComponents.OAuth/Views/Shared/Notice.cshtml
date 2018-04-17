@@ -1,0 +1,18 @@
+﻿@model NoticeModel
+<p>
+  Message:@Model.Message
+</p>
+<p>单击跳转至<a id="link" href="@Url.Action("")">@Url.Action("")</a>,倒计时<strong id="countdown"></strong></p>
+
+<script>
+    var i = 5;
+    var interval = setInterval(function () {
+        if (i <= 0) {
+            clearInterval(interval);
+            debugger;
+            $("#link")[0].click();
+        } else {
+            $("#countdown").text(i--);
+        }
+    }, 1000);
+</script>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0.5</Version>
+    <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
+    <Description>MQ抽象接口</Description>
+    <PackageReleaseNotes>+ #0：NameUtils中加入Get(object message)；函数以便处理发布时可以根据Message获取正确的队列名称</PackageReleaseNotes>
+    <PackageTags>MQ</PackageTags>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\SAE.CommonLibrary.MQ.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAE.Commonlibrary.Log\SAE.CommonLibrary.Log.csproj" />
+  </ItemGroup>
+
+</Project>

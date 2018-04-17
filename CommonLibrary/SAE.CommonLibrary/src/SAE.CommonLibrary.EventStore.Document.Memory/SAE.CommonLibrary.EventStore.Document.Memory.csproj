@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageTags>EventStore Document Memory</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
+    <Description>Docuemnt,内存实现</Description>
+    <PackageReleaseNotes>^ #0：修改IDocumentEvent实现方式</PackageReleaseNotes>
+    <Version>1.0.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\SAE.Commonlibrary.EventStore.Document.Memory.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAE.Commonlibrary.EventStore.Document\SAE.CommonLibrary.EventStore.Document.csproj" />
+  </ItemGroup>
+
+</Project>

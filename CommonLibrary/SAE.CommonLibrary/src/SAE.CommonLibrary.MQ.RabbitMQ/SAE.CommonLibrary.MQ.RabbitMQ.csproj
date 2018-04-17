@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
+    <Description>MQ组件Rabbitmq的实现</Description>
+    <PackageReleaseNotes>^ #0：修复当发布对象为接口时出现的发布错误</PackageReleaseNotes>
+    <Version>1.0.0.4</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\SAE.CommonLibrary.MQ.RabbitMQ.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAE.CommonLibrary.Common\SAE.CommonLibrary.Common.csproj" />
+    <ProjectReference Include="..\SAE.Commonlibrary.Json\SAE.CommonLibrary.Json.csproj" />
+    <ProjectReference Include="..\SAE.Commonlibrary.Log\SAE.CommonLibrary.Log.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.MQ\SAE.CommonLibrary.MQ.csproj" />
+  </ItemGroup>
+
+</Project>
