@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SAE.CommonLibrary.EventStore.Document" Version="1.0.0.1" />
+    <PackageReference Include="SAE.CommonLibrary.MQ" Version="1.0.0.5" />
+    <PackageReference Include="SAE.CommonLibrary.Storage" Version="1.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAE.ShoppingMall.Infrastructure\SAE.ShoppingMall.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

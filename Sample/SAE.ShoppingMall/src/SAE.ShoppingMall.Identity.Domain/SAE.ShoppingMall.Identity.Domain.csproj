@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DomainService\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SAE.CommonLibrary.EventStore" Version="1.0.0.1" />
+    <PackageReference Include="SAE.CommonLibrary.EventStore.Document" Version="1.0.0.1" />
+  </ItemGroup>
+
+</Project>

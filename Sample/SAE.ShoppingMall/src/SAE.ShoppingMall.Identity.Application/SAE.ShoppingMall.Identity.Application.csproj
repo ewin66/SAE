@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SAE.CommonLibrary.Common" Version="1.0.0" />
+    <PackageReference Include="SAE.CommonLibrary.EventStore" Version="1.0.0.1" />
+    <PackageReference Include="SAE.CommonLibrary.EventStore.Document" Version="1.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAE.ShoppingMall.Identity.DocumentService\SAE.ShoppingMall.Identity.DocumentService.csproj" />
+    <ProjectReference Include="..\SAE.ShoppingMall.Identity.Domain\SAE.ShoppingMall.Identity.Domain.csproj" />
+    <ProjectReference Include="..\SAE.ShoppingMall.Identity.Dto\SAE.ShoppingMall.Identity.Dto.csproj" />
+    <ProjectReference Include="..\SAE.ShoppingMall.Infrastructure\SAE.ShoppingMall.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
