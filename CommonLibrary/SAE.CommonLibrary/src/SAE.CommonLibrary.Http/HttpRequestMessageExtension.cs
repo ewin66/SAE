@@ -11,10 +11,13 @@ namespace SAE.CommonLibrary.Http
 {
     public static class HttpRequestMessageExtension
     {
-        private static HttpClient client;
+        /// <summary>
+        /// 
+        /// </summary>
+        public static HttpClient Client;
         static HttpRequestMessageExtension()
         {
-            client = new HttpClient(new HttpClientHandler { UseProxy = false });
+            Client = new HttpClient(new HttpClientHandler { UseProxy = false });
         }
         /// <summary>
         /// 默认的字符集
@@ -27,7 +30,7 @@ namespace SAE.CommonLibrary.Http
         /// <param name="httpClient"></param>
         public static void SetHttpClient(HttpClient httpClient)
         {
-            client = httpClient;
+            Client = httpClient;
         }
 
         /// <summary>
@@ -210,7 +213,7 @@ namespace SAE.CommonLibrary.Http
         /// <returns></returns>
         public static Task<HttpResponseMessage> SendAsync(this HttpRequestMessage request)
         {
-            return client.SendAsync(request);
+            return Client.SendAsync(request);
         }
         /// <summary>
         /// 发送请求,并返回响应
