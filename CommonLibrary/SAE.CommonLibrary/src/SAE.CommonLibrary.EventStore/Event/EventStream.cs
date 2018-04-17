@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using SAE.CommonLibrary.EventStore.Event;
+using SAE.CommonLibrary.Common.Check;
 
 namespace SAE.CommonLibrary.EventStore
 {
@@ -132,7 +133,8 @@ namespace SAE.CommonLibrary.EventStore
         /// <param name="version"></param>
         public void Valid(int version)
         {
-            if (this.Version >= version) throw new Exception("当前版本过低");
+            Assert.Build(this.Version >= version)
+                  .False("当前版本过低");
         }
 
         /// <summary>
