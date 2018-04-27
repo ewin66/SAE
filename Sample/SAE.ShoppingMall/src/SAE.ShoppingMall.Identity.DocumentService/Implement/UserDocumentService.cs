@@ -9,9 +9,9 @@ using SAE.ShoppingMall.DocumentService;
 
 namespace SAE.ShoppingMall.Identity.DocumentService.Implement
 {
-    public class UserDocumentServer :DocumentServer<UserDto>,IUserQueryServer
+    public class UserDocumentService :DocumentService<UserDto>,IUserQueryService
     {
-        public UserDocumentServer(IStorage storage) : base(storage)
+        public UserDocumentService(IStorage storage) : base(storage)
         {
         }
 
@@ -21,5 +21,10 @@ namespace SAE.ShoppingMall.Identity.DocumentService.Implement
                                .FirstOrDefault(s => s.Credentials.Name == loginName);
         }
 
+        public UserDto GetById(string id)
+        {
+            return this.Storage.AsQueryable<UserDto>()
+                               .FirstOrDefault(s => s.Id == id);
+        }
     }
 }

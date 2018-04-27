@@ -9,8 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SAE.CommonLibrary.EventStore" Version="1.0.0.1" />
+    <PackageReference Include="SAE.CommonLibrary.EventStore" Version="1.0.0.3" />
     <PackageReference Include="SAE.CommonLibrary.EventStore.Document" Version="1.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAE.ShoppingMall.Infrastructure\SAE.ShoppingMall.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

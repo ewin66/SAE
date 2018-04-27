@@ -34,7 +34,17 @@ namespace SAE.ShoppingMall.Identity.Domain.ValueObject
 
         internal void Encrypt()
         {
-            
+            this.Password = this.Encrypt(this.Password);
+        }
+
+        private string Encrypt(string input)
+        {
+            return input;
+        }
+        
+        internal bool Verify(string password)
+        {
+            return this.Password == this.Encrypt(password);
         }
     }
 }

@@ -11,5 +11,7 @@ namespace SAE.ShoppingMall.Identity.Dto
         public string Name { get; set; }
         public CredentialsDto Credentials { get; set; }
         public int Status { get; set; }
+        public UserInfoDto Information { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace SAE.ShoppingMall.DocumentService
     /// 文档服务基类
     /// </summary>
     /// <typeparam name="TDto"></typeparam>
-    public abstract class DocumentServer<TDto> : IDocumentServer<TDto> where TDto : class
+    public abstract class DocumentService<TDto> : IDocumentService<TDto> where TDto : class
     {
         protected IStorage Storage
         {
             get;
         }
-        public DocumentServer(IStorage storage)
+        public DocumentService(IStorage storage)
         {
             this.Storage = storage;
         }

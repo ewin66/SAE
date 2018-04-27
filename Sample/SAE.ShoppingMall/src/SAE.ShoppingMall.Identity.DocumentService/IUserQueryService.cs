@@ -5,8 +5,14 @@ using SAE.ShoppingMall.Infrastructure.Specification;
 
 namespace SAE.ShoppingMall.Identity.DocumentService
 {
-    public interface IUserQueryServer
+    public interface IUserQueryService
     {
+        /// <summary>
+        /// 根据id获得用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UserDto GetById(string id);
         /// <summary>
         /// 使用用户名查询用户
         /// </summary>

@@ -2,6 +2,7 @@
 using SAE.CommonLibrary.EventStore;
 using SAE.ShoppingMall.Identity.Domain.Event;
 using SAE.ShoppingMall.Identity.Domain.ValueObject;
+using SAE.ShoppingMall.Infrastructure;
 
 namespace SAE.ShoppingMall.Identity.Domain
 {
@@ -12,7 +13,12 @@ namespace SAE.ShoppingMall.Identity.Domain
             
         }
 
-        public override IIdentity Identity => new CommonLibrary.EventStore.Identity(this.Id.ToString());
+        public User(Credentials credentials)
+        {
+            this.Create(credentials);
+        }
+
+        public override IIdentity Identity => IdentityGenerator.Build(this.Id.ToString());
         /// <summary>
         /// id
         /// </summary>
@@ -44,6 +50,11 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// 状态
         /// </summary>
         public Status Status { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+
     }
 
     public partial class User
@@ -59,20 +70,61 @@ namespace SAE.ShoppingMall.Identity.Domain
                 Id = Guid.NewGuid().ToString(),
                 LoginName = credentials.Name,
                 Password = credentials.Password,
-                Salt = credentials.Salt
+                Salt = credentials.Salt,
+                CreateTime=DateTime.Now,
+                Status= (int)Status.Enable
             });
+            this.ChangeInformation(new UserInfo(Sex.Woman, DateTime.Now, "", new Contact()));
+        }
+
+        public void ChangeInformation(UserInfo userInfo)
+        {
+            this.Apply(new ChangeUserInfoEvent
+            {
+                BirthDate = userInfo.BirthDate,
+                Email = userInfo.Contact.Email,
+                Hometown = userInfo.Hometown,
+                Phone = userInfo.Contact.Phone,
+                QQ = userInfo.Contact.QQ,
+                Sex = (int)userInfo.Sex,
+            });
+            
+        }
+
+        /// <summary>
+        /// 验证密码
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool VerifyPassword(string password)
+        {
+            return this.Credentials.Verify(password);
         }
     }
 
     public partial class User
     {
-       
-        internal void When(RegisterUserEvent registerUser)
+
+        internal void When(RegisterUserEvent @event)
         {
-            this.Id = registerUser.Id;
-            this.Credentials = new Credentials(registerUser.LoginName, registerUser.Password, registerUser.Salt);
+            this.Id = @event.Id;
+            this.Credentials = new Credentials(@event.LoginName, @event.Password, @event.Salt);
             this.Name = this.Credentials.Name;
-            this.Information = new UserInfo(Sex.Woman, DateTime.Now, "", new Contact());
+            this.CreateTime = @event.CreateTime;
+            this.Status = Utils.EnumTo<Status>(@event.Status);
+            
+        }
+        internal void When(ChangeUserInfoEvent @event)
+        {
+            this.Information = new UserInfo(Utils.EnumTo<Sex>(@event.Sex),
+                                            @event.BirthDate,
+                                            @event.Hometown,
+                                            new Contact
+                                            {
+                                                Email = @event.Email,
+                                                Phone = @event.Phone,
+                                                QQ = @event.QQ
+                                            });
         }
     }
 }

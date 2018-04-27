@@ -15,28 +15,12 @@ using SAE.CommonLibrary.EventStore.Document;
 
 namespace SAE.ShoppingMall.Identity.Application.Test
 {
-    public class IdentityServiceTest : BaseTest
+    public class IdentityServiceTest : ApplicationTest
     {
-        
-        private readonly IIdentityService _identityService;
-        private readonly IUserQueryServer _userQueryServer;
         public IdentityServiceTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
+         
             
-            this._services.AddSingleton<IIdentityService, IdentityService>()
-                          .AddSingleton<IUserQueryServer, UserDocumentServer>()
-                          .AddSingleton<IDocumentServer<UserDto>,UserDocumentServer>()
-                          .AddMemberDocument()
-                          .AddSingleton<IDocumentEvent, DocumentPublish>()
-                          .AddMemoryMQ()
-                          .AddMemoryStorage()
-                          .AddSingleton<RegisterHandle>();
-            var provider = this._services.BuildServiceProvider();
-            this._identityService = provider.GetService<IIdentityService>();
-            this._userQueryServer = provider.GetService<IUserQueryServer>();
-            var mq = provider.GetService<IMQ>();
-            mq.SetServiceFactory(provider.GetService);
-            mq.SubscibeType<RegisterHandle>();
 
         }
 
@@ -53,6 +37,28 @@ namespace SAE.ShoppingMall.Identity.Application.Test
             var userDto = this._userQueryServer.Find(loginName);
             Assert.Equal(user.Credentials.Name,userDto.Credentials.Name);
             return user;
+        }
+
+        [Theory]
+        [InlineData("mypjb1994","6666666666")]
+        public void Login(string loginName,string password)
+        {
+            var userDto = this.Register_User(loginName, password);
+            
+            var user = this._identityService.Login(new CredentialsDto
+            {
+                Name = loginName,
+                Password = password
+            });
+            this.Show(user);
+            Assert.Equal(userDto.Credentials.Name,user.Credentials.Name);
+            
+        }
+        [Theory]
+        [InlineData("mypjb1994", "6666666666")]
+        public void ChangeInfo(string loginName, string password)
+        {
+            var userDto = this.Register_User(loginName, password);
         }
     }
 }

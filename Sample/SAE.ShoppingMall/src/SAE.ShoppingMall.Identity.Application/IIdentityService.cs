@@ -1,4 +1,5 @@
 ﻿using SAE.ShoppingMall.Identity.Dto;
+using SAE.ShoppingMall.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace SAE.ShoppingMall.Identity.Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        UserDto Find(Guid id);
+        UserDto Find(string id);
         /// <summary>
         /// 登录
         /// </summary>

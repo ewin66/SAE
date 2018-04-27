@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SAE.ShoppingMall.DocumentService
 {
-    public interface IDocumentServer<TDto>where TDto:class
+    public interface IDocumentService<TDto>where TDto:class
     {
         /// <summary>
         /// 保存传输对象

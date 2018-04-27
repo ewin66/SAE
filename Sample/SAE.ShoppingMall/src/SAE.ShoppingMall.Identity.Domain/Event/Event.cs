@@ -7,7 +7,7 @@ namespace SAE.ShoppingMall.Identity.Domain.Event
 {
     public class Event : IEvent
     {
-        public string Id { get; set; }
-        public long Version { get; set; }
+        string IEvent.Id { get; set; }
+        long IEvent.Version { get; set; }
     }
 }
