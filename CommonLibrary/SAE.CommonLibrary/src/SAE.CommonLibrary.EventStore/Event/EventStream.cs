@@ -106,10 +106,13 @@ namespace SAE.CommonLibrary.EventStore
         {
             List<IEvent> eventList = new List<IEvent>();
 
-            this._store.ForEach(@event =>
+            this._store.ForEach(e =>
             {
-                var internalEvent= @event as InternalEvent;
-                eventList.Add((IEvent)SerializerProvider.Current.Deserialize(internalEvent.Event, internalEvent.GetEventType()));
+                var internalEvent= e as InternalEvent;
+                var @event = (IEvent)SerializerProvider.Current.Deserialize(internalEvent.Event, internalEvent.GetEventType());
+                @event.Id = internalEvent.Id;
+                @event.Version = internalEvent.Version;
+                eventList.Add(@event);
             });
 
             return eventList.GetEnumerator();

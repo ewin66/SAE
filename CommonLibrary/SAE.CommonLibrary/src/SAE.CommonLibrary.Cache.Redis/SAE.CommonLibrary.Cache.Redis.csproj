@@ -5,6 +5,8 @@
     <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
     <PackageTags>Cache Redis</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0.1</Version>
+    <PackageReleaseNotes>^ #0：修复AddAsync函数序列化失败造成的异常</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

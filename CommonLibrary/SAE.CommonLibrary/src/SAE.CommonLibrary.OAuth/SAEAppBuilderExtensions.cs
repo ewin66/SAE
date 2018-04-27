@@ -18,7 +18,7 @@ namespace Microsoft.AspNetCore.Builder
       
 
         /// <summary>
-        /// 使用华跃博弈授权认证
+        /// 使用SAE授权认证
         /// </summary>
         /// <param name="service"></param>
         /// <param name="clientId">应用标识</param>
@@ -36,7 +36,7 @@ namespace Microsoft.AspNetCore.Builder
         /// <summary>
         /// 授权认证
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="services"></param>
         /// <param name="action"></param>
         /// <returns></returns>
         public static IServiceCollection AddSAEAuthentication(this IServiceCollection services, Action<SAEOAuthOptions> action)

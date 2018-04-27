@@ -56,7 +56,7 @@ namespace SAE.CommonLibrary.OAuth
         /// </summary>
         public const string SingoutCookie = Issuer + ".singout";
         /// <summary>
-        /// 用户token超时时间(一天)
+        /// 用户token超时时间(一个月)
         /// </summary>
         public const int UserTokenLifetime = 60 * 60 * 24 * 30;
         /// <summary>

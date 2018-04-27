@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SAE.CommonLibrary.Common.Check
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class AssertExtension
     {
 

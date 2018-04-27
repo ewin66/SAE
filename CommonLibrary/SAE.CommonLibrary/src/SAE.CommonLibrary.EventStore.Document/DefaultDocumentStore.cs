@@ -46,7 +46,13 @@ namespace SAE.CommonLibrary.EventStore.Document
             document.Version = eventStream.Version <= 0 ? snapshot.Version : eventStream.Version;
             return document;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TDocument"></typeparam>
+        /// <param name="identity"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
         public virtual async Task<TDocument> FindAsync<TDocument>(IIdentity identity, long version) where TDocument : IDocument,new()
         {
             //获取快照
@@ -90,7 +96,11 @@ namespace SAE.CommonLibrary.EventStore.Document
 
             return snapshot;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
         public virtual async Task SaveAsync(IDocument document)
         {
             var identity = document.Identity;
