@@ -24,7 +24,7 @@ namespace SAE.ShoppingMall.Identity.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public object Get(Guid id)
+        public object Get(string id)
         {
             return this._identityService.Find(id);
         }

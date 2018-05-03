@@ -1,0 +1,20 @@
+﻿
+<ul class="pagination pagination-sm no-margin pull-right">
+    <li class="paginate_button previous" id="example2_previous" data-bind="visible:displayPrevious,
+                                                                           css:{disabled:disabledPrevious},
+                                                                           click:previous">
+        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+    </li>
+    <!-- ko foreach:indexs-->
+    <li class="paginate_button" data-bind="css:{'active':$parent.isIndex($data)}">
+        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" data-bind="text:$data,
+                                                                                     click:$parent.skipIndex">
+        </a>
+    </li>
+    <!-- /ko -->
+    <li class="paginate_button next" id="example2_next" data-bind="visible:displayNext,
+                                                                   css:{disabled:disabledNext},
+                                                                   click:next">
+        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
+    </li>
+</ul>

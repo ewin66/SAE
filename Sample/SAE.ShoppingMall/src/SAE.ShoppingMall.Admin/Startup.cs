@@ -17,12 +17,12 @@ namespace SAE.ShoppingMall.Admin
         {
             services.AddMvc();
 
-            services.AddSAEAuthentication(option =>
-            {
-                option.ClientId = "sae.admin.com";
-                option.ClientSecret = "sae.admin.secret";
-                option.Authority = $"{option.Authority}:12001";
-            });
+            //services.AddSAEAuthentication(option =>
+            //{
+            //    option.ClientId = "sae.admin.com";
+            //    option.ClientSecret = "sae.admin.secret";
+            //    option.Authority = $"{option.Authority}:12001";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +36,7 @@ namespace SAE.ShoppingMall.Admin
 
             app.UseStatusCodePages()
                .UseStaticFiles()
-               .UseAuthentication()
+               //.UseAuthentication()
                .UseMvcWithDefaultRoute();
 
         }

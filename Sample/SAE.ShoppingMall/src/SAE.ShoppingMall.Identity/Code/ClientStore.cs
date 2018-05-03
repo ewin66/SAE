@@ -33,6 +33,7 @@ namespace SAE.ShoppingMall.Identity.Code
                 AllowedScopes = new string[] { IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OpenId, OAuthDefault.ApiScope },
                 RedirectUris = new string[] { app.Signin },
                 RequireConsent = false,
+                AccessTokenLifetime=OAuthDefault.ClientCertificationTokenLifetime,
             });
         }
     }
