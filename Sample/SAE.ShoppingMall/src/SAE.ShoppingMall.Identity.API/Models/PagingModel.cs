@@ -11,7 +11,7 @@ namespace SAE.ShoppingMall.Identity.API.Models
         public PagingModel()
         {
             this.Index = 1;
-            
+            this.Size = 10;
         }
 
         private int index;
@@ -46,7 +46,7 @@ namespace SAE.ShoppingMall.Identity.API.Models
             get;set;
         }
 
-        public int TotalCount
+        public int Total
         {
             get;
         }

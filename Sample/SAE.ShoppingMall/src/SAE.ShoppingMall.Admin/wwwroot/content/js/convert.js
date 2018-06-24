@@ -5,6 +5,7 @@ define(["method", "jquery"], function (method, $) {
         method.convert = {};
     }
     method.convert.status = function (val) {
+        
         val = val == null ? -1 : parseInt(val);
         var font;
         switch (val) {

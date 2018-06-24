@@ -12,5 +12,11 @@ namespace SAE.ShoppingMall.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
     }
 }

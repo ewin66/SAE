@@ -70,39 +70,7 @@ namespace SAE.ShoppingMall.Identity.Code
             {
                 await this._cache.AddAsync(grant.Key, grant, TimeSpan.FromSeconds(300));
             }
-            //var time = grant.Expiration.HasValue ? grant.Expiration.Value.ToLocalTime() - DateTime.Now : TimeSpan.FromSeconds(60);
 
-            //await this._cache.AddAsync(grant.Key, grant, time);
-
-            //var client = this._appService.Find(grant.ClientId);
-            //Dictionary<string, string> dic;
-            //string value;
-            //if (this._httpContextAccessor
-            //        .HttpContext
-            //        .Request
-            //        .Cookies
-            //        .TryGetValue(OAuthDefault.SingoutCookie, out value))
-            //{
-            //    dic = _jsonConvertor.Deserialize<Dictionary<string, string>>(value);
-
-            //}
-            //else
-            //{
-            //    dic = new Dictionary<string, string>();
-            //}
-
-            //dic[grant.ClientId] = client.Signout;
-
-            //value = this._jsonConvertor.Serialize(dic);
-
-            //this._httpContextAccessor
-            //    .HttpContext
-            //    .Response
-            //    .Cookies
-            //    .Append(OAuthDefault.SingoutCookie, value, new CookieOptions
-            //    {
-            //        Expires = DateTime.Now.Add(TimeSpan.FromSeconds(OAuthDefault.UserTokenLifetime))
-            //    });
         }
         #endregion
     }

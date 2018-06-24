@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.6.100" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 
@@ -19,6 +20,9 @@
   <ItemGroup>
     <ProjectReference Include="..\SAE.ShoppingMall.Identity.Application\SAE.ShoppingMall.Identity.Application.csproj" />
     <ProjectReference Include="..\SAE.ShoppingMall.Identity.Dto\SAE.ShoppingMall.Identity.Dto.csproj" />
+    <ProjectReference Include="..\SAE.ShoppingMall.Identity.Handle\SAE.ShoppingMall.Identity.Handle.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

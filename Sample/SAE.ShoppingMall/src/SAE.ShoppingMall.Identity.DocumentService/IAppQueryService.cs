@@ -10,6 +10,13 @@ namespace SAE.ShoppingMall.Identity.DocumentService
     public interface IAppQueryService
     {
         /// <summary>
+        /// 根据id查询对象
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        AppDto GetById(string appId);
+
+        /// <summary>
         /// 分页查询应用
         /// </summary>
         /// <param name="paging"></param>

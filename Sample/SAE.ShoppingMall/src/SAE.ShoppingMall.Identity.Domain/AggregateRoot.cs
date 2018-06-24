@@ -21,7 +21,8 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         void IDocument.Mutate(IEvent @event)
         {
-            ((dynamic)this).When((dynamic)@event);
+            dynamic self = this;
+            self.When((dynamic)@event);
         }
     }
 }

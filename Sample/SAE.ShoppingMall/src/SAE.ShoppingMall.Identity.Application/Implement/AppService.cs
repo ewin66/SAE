@@ -43,5 +43,12 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
             this._documentStore.Save(app);
             return Utils.Map<AppDto>(app);
         }
+
+        public void Remove(string appId)
+        {
+            var app = this._documentStore.Find<App>(IdentityGenerator.Build(appId));
+            app.ChangeStatus(Status.Delete);
+            this._documentStore.Save(app);
+        }
     }
 }

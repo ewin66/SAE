@@ -9,14 +9,17 @@
     "bootstrap": "v3.0.1",
     "daterangepicker": "bootstrap-daterangepicker#v3.0.1",
     "chart.js": "v2.7.2",
-    "font-awesome": "5.0.11",
-    "require-css": "0.1.9"
+    "font-awesome": "5.0.13",
+    "require-css": "0.1.9",
+    "jquery-validation-unobtrusive": "v3.2.10",
+    "jquery-validation": "1.17.0",
+    "jquery-ajax-unobtrusive": "v3.2.5"
   },
   "resolutions": {
     "jquery": "^3.2.1",
     "requirejs": "2.3.5",
     "bootstrap": "^3.0",
     "chart.js": "v2.7.2",
-    "font-awesome": "5.0.11"
+    "font-awesome": "5.0.13"
   }
 }

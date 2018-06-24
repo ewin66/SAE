@@ -22,7 +22,12 @@ namespace SAE.ShoppingMall.Identity.Application
         /// </summary>
         /// <param name="appDto"></param>
         void Change(AppDto appDto);
-        
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="appId"></param>
+        void Remove(string appId);
 
         /// <summary>
         /// 根据appid获得对象

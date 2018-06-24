@@ -26,19 +26,7 @@ namespace SAE.ShoppingMall.Identity
         public void ConfigureServices(IServiceCollection services)
         {
            
-            services.AddCache()
-                    .AddJson()
-                    .AddLogger()
-                    .AddMemoryStorage()
-                    .AddMemoryMQ()
-                    .AddMemberDocument()
-                    .AddSingleton<IIdentityService, IdentityService>()
-                    .AddSingleton<IUserQueryService, UserDocumentService>()
-                    .AddSingleton<IAppService, AppService>()
-                    .AddSingleton<IAppQueryService, AppDocuemntService>()
-                    .AddSingleton<IDocumentService<UserDto>, UserDocumentService>()
-                    .AddSingleton<IDocumentEvent, DocumentPublish>()
-                    .AddSingleton<UserHandle>()
+            services.AddApplicationService()
                     .AddSingleton(new RedisConfig
                     {
                         Connection= "redis.cache.com:6379,allowadmin=true,syncTimeout=5000"
@@ -50,9 +38,7 @@ namespace SAE.ShoppingMall.Identity
                     .AddDeveloperSigningCredential()
                     .AddClientStore<ClientStore>()
                     .AddResourceStore<ResourceStore>()
-                    .AddProfileService<ProfileService>();
-                    
-            
+                    .AddProfileService<ProfileService>();            
                     
         }
 
@@ -62,12 +48,11 @@ namespace SAE.ShoppingMall.Identity
             loggerFactory.AddConsole()
                          .AddDebug();
 
+            app.ApplicationServices.UseApplicationService();
+
             if (env.IsDevelopment())
             {
-                var mq = app.ApplicationServices.GetService<IMQ>();
-                mq.SetServiceFactory(app.ApplicationServices.GetService);
-                mq.SubscibeAssembly(typeof(UserHandle).Assembly);
-
+                
                 var appService = app.ApplicationServices.GetService<IAppService>();
                 var identityService = app.ApplicationServices.GetService<IIdentityService>();
                 appService.Register(new AppDto

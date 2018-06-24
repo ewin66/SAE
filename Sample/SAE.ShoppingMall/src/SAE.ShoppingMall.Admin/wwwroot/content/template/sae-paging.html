@@ -1,7 +1,6 @@
 ﻿
-<ul class="pagination pagination-sm no-margin pull-right">
-    <li class="paginate_button previous" id="example2_previous" data-bind="visible:displayPrevious,
-                                                                           css:{disabled:disabledPrevious},
+<ul class="pagination pagination-sm no-margin pull-right" data-bind="visible:display">
+    <li class="paginate_button previous" id="example2_previous" data-bind="css:{disabled:disabledPrevious},
                                                                            click:previous">
         <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
     </li>
@@ -12,8 +11,7 @@
         </a>
     </li>
     <!-- /ko -->
-    <li class="paginate_button next" id="example2_next" data-bind="visible:displayNext,
-                                                                   css:{disabled:disabledNext},
+    <li class="paginate_button next" id="example2_next" data-bind="css:{disabled:disabledNext},
                                                                    click:next">
         <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
     </li>

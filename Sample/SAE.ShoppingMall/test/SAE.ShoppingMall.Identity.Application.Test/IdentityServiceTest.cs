@@ -1,17 +1,6 @@
 ﻿using SAE.ShoppingMall.Identity.Dto;
-using SAE.ShoppingMall.Test;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-using SAE.ShoppingMall.Identity.Application.Implement;
-using SAE.CommonLibrary.EventStore.Document.Memory;
-using SAE.CommonLibrary.MQ;
-using System.Linq;
-using SAE.ShoppingMall.Identity.Handle;
-using SAE.ShoppingMall.Identity.DocumentService;
-using SAE.ShoppingMall.Identity.DocumentService.Implement;
-using SAE.ShoppingMall.DocumentService;
-using SAE.CommonLibrary.EventStore.Document;
 
 namespace SAE.ShoppingMall.Identity.Application.Test
 {

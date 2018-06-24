@@ -13,6 +13,7 @@ using SAE.ShoppingMall.Identity.Dto;
 using SAE.ShoppingMall.Identity.Handle;
 using SAE.ShoppingMall.Test;
 using Xunit.Abstractions;
+using SAE.CommonLibrary.Ioc.ServiceCollections;
 
 namespace SAE.ShoppingMall.Identity.Application.Test
 {
@@ -24,25 +25,26 @@ namespace SAE.ShoppingMall.Identity.Application.Test
         protected readonly IAppQueryService _appQueryService;
         public ApplicationTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            this._services.AddSingleton<IIdentityService, IdentityService>()
-                          .AddSingleton<IUserQueryService, UserDocumentService>()
-                          .AddSingleton<IAppService,AppService>()
-                          .AddSingleton<IAppQueryService,AppDocuemntService>()
-                          .AddSingleton<IDocumentService<UserDto>, UserDocumentService>()
-                          .AddMemberDocument()
-                          .AddSingleton<IDocumentEvent, DocumentPublish>()
-                          .AddMemoryMQ()
-                          .AddMemoryStorage()
-                          .AddSingleton<UserHandle>();
+            //this._services.AddSingleton<IIdentityService, IdentityService>()
+            //              .AddSingleton<IUserQueryService, UserDocumentService>()
+            //              .AddSingleton<IAppService,AppService>()
+            //              .AddSingleton<IAppQueryService,AppDocuemntService>()
+            //              .AddSingleton<IDocumentService<UserDto>, UserDocumentService>()
+            //              .AddMemberDocument()
+            //              .AddSingleton<IDocumentEvent, DocumentPublish>()
+            //              .AddMemoryMQ()
+            //              .AddMemoryStorage()
+            //              .AddSingleton<UserHandle>();
+
+            this._services.AddApplicationService();
 
             var provider = this._services.BuildServiceProvider();
             this._identityService = provider.GetService<IIdentityService>();
             this._userQueryServer = provider.GetService<IUserQueryService>();
             this._appService = provider.GetService<IAppService>();
             this._appQueryService = provider.GetService<IAppQueryService>();
-            var mq = provider.GetService<IMQ>();
-            mq.SetServiceFactory(provider.GetService);
-            mq.SubscibeAssembly(typeof(UserHandle).Assembly);
+
+            provider.UseApplicationService();
         }
     }
 }

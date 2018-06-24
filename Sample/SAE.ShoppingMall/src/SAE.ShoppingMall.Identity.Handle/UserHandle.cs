@@ -7,7 +7,8 @@ using SAE.ShoppingMall.Identity.Dto;
 
 namespace SAE.ShoppingMall.Identity.Handle
 {
-    public class UserHandle : IHandler<RegisterUserEvent>,IHandler<ChangeUserInfoEvent>
+    public class UserHandle : IHandler<RegisterUserEvent>,
+                              IHandler<ChangeUserInfoEvent>
     {
         private readonly IUserQueryService _userQueryService;
         private readonly IDocumentService<UserDto> _userDocumentServer;
@@ -31,7 +32,7 @@ namespace SAE.ShoppingMall.Identity.Handle
                 CreateTime = @event.CreateTime
             };
 
-            this._userDocumentServer.Save(userDto);
+            this._userDocumentServer.Add(userDto);
         }
 
         public void Handle(ChangeUserInfoEvent @event)
@@ -49,7 +50,7 @@ namespace SAE.ShoppingMall.Identity.Handle
             userInfoDto.Phone = @event.Phone;
             userInfoDto.QQ = @event.QQ;
             userInfoDto.Sex = @event.Sex;
-            //this._userDocumentServer.Save(userDto);
+            this._userDocumentServer.Update(userDto);
         }
     }
 }

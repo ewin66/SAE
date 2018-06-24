@@ -1,7 +1,8 @@
 ﻿/// <reference path="../../lib/requirejs/require.js" />
 /// <reference path="../../lib/knockout/dist/knockout.js" />
 /// <reference path="../../lib/jquery/dist/jquery.min.js" />
-require(["ko", "vm", "convert"], function (ko, vm) {
+define(["ko","method"], function (ko,method) {
+    
     var converObervable = function (obj) {
         return ko.isObservable(obj) ? obj : ko.observable(obj);
     }
@@ -12,36 +13,36 @@ require(["ko", "vm", "convert"], function (ko, vm) {
             template: { require: url },
         });
     };
-    var method = vm.method;
     //表格模板
     registerTemplate("sae-table", "text!sae-table", function (params) {
-
+        var self = this;
         if (params.items == null) {
             console.error('Property "items" not null')
         }
-        this.items = params.items;
+        
+        self.items = params.items;
         //定义keys
         if (params.keys == null) {
-            var keys = [];
+            
             if (ko.isObservable(this.items)) {
-                this.keys = ko.computed(function () {
-                    if ((!this.hasOwnProperty("key") || this.keys.peek().length <= 0) && this.items.peek().length > 0) {
-                        keys = objToString(this.items.peek()[0]);
+                self.keys = ko.pureComputed(function () {
+                    if ((!this.hasOwnProperty("key") || self.keys.peek().length <= 0) && self.items().length > 0) {
+                        return method.objToString(self.items.peek()[0]);
                     }
-                    return keys;
-                }, this);
+                    return [];
+                }, self);
             } else {
                 if (this.items.length <= 0) {
                     console.warn("The array items element is 0 ")
                 } else {
+                    self.keys = [];
                     for (var key in this.items[0]) {
-                        keys.push(key);
+                        self.keys.push(key);
                     }
                 }
             }
-            this.keys = keys;
         } else {
-            this.keys = params.keys;
+            self.keys = params.keys;
         }
         //定义转换
         if (params.converts != null) {
@@ -51,21 +52,29 @@ require(["ko", "vm", "convert"], function (ko, vm) {
         }
         //定义头部
         if (params.heads == null) {
-            this.heads = this.keys;
+            self.heads = self.keys;
         } else {
-            this.heads = params.heads;
+            self.heads = params.heads;
         }
+    
+        self.events = method.getValueOrDefault(params.events, {});
+
+        self.isEdit = self.events.hasOwnProperty("onEdit");
+        self.isRemove = self.events.hasOwnProperty("onRemove");
 
     });
     //分页模板
     registerTemplate("sae-paging", "text!sae-paging", function (params) {
         var self = this;
+        var href = window.location.href;
+        var hrefIndex = href.indexOf("?");
+        self.url = method.getValueOrDefault(params.paging.url, hrefIndex != -1 ? href.substr(0, hrefIndex) : href);
         //当前索引
-        self.index = converObervable(params.index);
+        self.index = converObervable(params.paging.index);
         //总长度
-        self.count = converObervable(params.count);
+        self.count = converObervable(params.paging.count);
         //每页大小
-        self.size = converObervable(params.size);
+        self.size = converObervable(params.paging.size);
         //最大值
         self.max = ko.pureComputed(function () {
             var size = self.size.peek();
@@ -77,6 +86,8 @@ require(["ko", "vm", "convert"], function (ko, vm) {
             }
             return max;
         });
+        //分页数据
+        self.items = params.paging.items;
         //所有展示页
         self.indexs = ko.pureComputed(function () {
             var cur = self.index();
@@ -108,19 +119,14 @@ require(["ko", "vm", "convert"], function (ko, vm) {
             if (cur < 1 || cur > max) {
                 method.log.warn("页面超出索引{0}".format(cur));
             } else {
-                method.changeUrl("index=" + cur);
                 self.index(cur);
                 self.pullData();
             }
         }
-        //显示"上一页"
-        self.displayPrevious = function () {
+        //显示
+        self.display = ko.pureComputed(function () {
             return self.max() > 1;
-        }
-        //显示"下一页"
-        self.displayNext = function () {
-            return self.max() > 1;
-        }
+        });
         //禁用上一页
         self.disabledPrevious = ko.pureComputed(function () {
             return self.index() <= 1;
@@ -144,15 +150,44 @@ require(["ko", "vm", "convert"], function (ko, vm) {
             var index = self.index();
             return cur == index;
         }
+   
+        if (params.paging.pullData == null) {
+            params.paging.pullData = method.config.paging.request;
+        }
+
         //拉取数据
         self.pullData = function () {
-            var index = self.index.peek();
-            if (params.pullData == null) {
-                method.log.warn("没有为分页组件定义拉取函数");
-            } else {
-                params.pullData();
-            }
+            params.paging.pullData(self);
+        }
+       
+        if (params.paging.init) {
+            self.pullData();
         }
     });
 
+    //表单元素:text
+    registerTemplate("sae-form-text", "text!sae-form-text", function (params) {
+        if (params.hasOwnProperty("object")) {
+            params=params.object;
+        }
+        var self = this;
+        self.attr = method.getValueOrDefault(params.attr, {});
+        if (!self.attr.hasOwnProperty("placeholder")) {
+            self.attr.placeholder = method.getValueOrDefault(params.placeholder, ko.observable(""));
+        }
+        
+        if (!self.attr.hasOwnProperty("readonly")) {
+            self.attr.readonly = method.getValueOrDefault(params.readonly, null);
+        }
+        if (!self.attr.hasOwnProperty("name")) {
+            self.attr.name = method.getValueOrDefault(params.name, new Date().getTime());
+        }
+        
+        self.displayName = method.getValueOrDefault(params.displayName, ko.observable());
+        self.icon = method.getValueOrDefault(params.icon, "fa-bars");
+        self.value = method.getValueOrDefault(params.value, ko.observable());
+        
+    });
+
+    return registerTemplate;
 });

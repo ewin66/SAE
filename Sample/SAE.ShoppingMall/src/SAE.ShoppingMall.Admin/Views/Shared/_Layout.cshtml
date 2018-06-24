@@ -9,7 +9,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 2 | Starter</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -344,6 +343,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="~/lib/requirejs/require.js"></script>
     <script src="~/content/js/config.js"></script>
-    @RenderSection("Js")
+    @if (IsSectionDefined("Js"))
+    {
+        @RenderSection("Js")
+    }
+
 </body>
 </html>

@@ -22,20 +22,29 @@ namespace SAE.ShoppingMall.DocumentService
         {
             this.Storage = storage;
         }
-        public virtual void Save(TDto dto)
+        public virtual void Add(TDto dto)
         {
             this.Storage.Add(dto);
+        }
+
+        public void Update(TDto dto)
+        {
+            this.Storage.Update(dto);
         }
 
         public virtual IPagingResult<TDto> Paging(IPaging paging, ISpecification<TDto> specification)
         {
             var query = this.Storage.AsQueryable<TDto>();
-            if (specification != null && specification.Expression != null)
+            if (specification?.Expression != null)
             {
                 query = query.Where(specification.Expression);
             }
 
+            paging.Count = query.LongCount();
+
             return PagingResult.Build(paging, query.Skip((paging.Index - 1) * paging.Size).Take(paging.Size));
         }
+
+    
     }
 }

@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../lib/knockout/dist/knockout.js" />
-define(["ko", "method", "template", "convert"], function (ko, method) {
+define(["ko", "method"], function (ko, method) {
     ko.mapping = {
         formJs: function (o) {
             if (o == null) {
@@ -21,7 +21,33 @@ define(["ko", "method", "template", "convert"], function (ko, method) {
 
         }
     };
+
     var viewModel = {};
+
+
     viewModel.method = method;
+    //创建一个分页对象
+    method.createPaging = function (url,init) {
+        return {
+            items: ko.observableArray([]),//分页数据
+            index: ko.observable(0),//分页索引
+            size: ko.observable(0),//分页大小
+            count: ko.observable(0),//总页数
+            url: url,
+            init: init != null ? init : false
+        }
+    };
+    //配置一个默认的分页请求
+    method.config.paging.request = function (paging) {
+        method.setRequestQueryString("index", paging.index.peek());
+        var queryString = window.location.search;
+        method.getRequest(method.joinUrl(paging.url, queryString), null, function (data) {
+            paging.items(data.items);
+            paging.index(data.index);
+            paging.size(data.size);
+            paging.count(data.count);
+        });
+    }
+
     return viewModel;
 });

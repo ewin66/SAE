@@ -1,4 +1,4 @@
 ﻿/// <reference path="../../lib/requirejs/require.js" />
 /// <reference path="../../lib/knockout/dist/knockout.js" />
 /// <reference path="../../lib/jquery/dist/jquery.min.js" />
-require(["bootstrap", "adminlte"]);
+define(["bootstrap", "adminlte"]);

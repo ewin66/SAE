@@ -101,6 +101,8 @@ namespace SAE.ShoppingMall.Identity.Domain
             });
         }
 
+        
+
         public void ChangeSecret(string secret)
         {
             this.EditMode();

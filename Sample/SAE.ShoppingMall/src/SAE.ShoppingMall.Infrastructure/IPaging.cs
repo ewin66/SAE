@@ -24,8 +24,8 @@ namespace SAE.ShoppingMall.Infrastructure
         /// </summary>
         long Count { get; set; }
         /// <summary>
-        /// 
+        /// 总页数
         /// </summary>
-        int TotalCount { get; }
+        int Total { get; }
     }
 }

@@ -60,6 +60,8 @@ namespace SAE.ShoppingMall.Infrastructure.Specification.Expression
         /// <returns></returns>
         public static Expression<Func<TSpec,bool>> And<TSpec>(this Expression<Func<TSpec, bool>> one, Expression<Func<TSpec, bool>> two)
         {
+            if (one == null) return two;
+            if (two == null) return one;
             var parameterExpression = exp.Expression.Parameter(typeof(TSpec));
             var parameterReplacer = new ParameterReplacer(parameterExpression);
             var left = parameterReplacer.Replace(one);
@@ -77,6 +79,8 @@ namespace SAE.ShoppingMall.Infrastructure.Specification.Expression
         /// <returns></returns>
         public static Expression<Func<TSpec,bool>> Or<TSpec>(this Expression<Func<TSpec,bool>> one,Expression<Func<TSpec,bool>> two)
         {
+            if (one == null) return two;
+            if (two == null) return one;
             var parameterExpression = exp.Expression.Parameter(typeof(TSpec));
             var parameterReplacer = new ParameterReplacer(parameterExpression);
             var left = parameterReplacer.Replace(one);

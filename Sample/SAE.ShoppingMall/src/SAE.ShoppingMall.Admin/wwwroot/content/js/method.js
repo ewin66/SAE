@@ -34,13 +34,20 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
+
+    if (typeof String.prototype.startsWith != 'function') {
+        String.prototype.startsWith = function (prefix) {
+            return this.slice(0, prefix.length) === prefix;
+        };
+    }
+
     var method = {};
     //全局配置
     method.config = {
         //分页
         paging: {
             //因子
-            minuend: 7
+            minuend: 7,
         },
         //jquery ajax
         ajax: {
@@ -102,7 +109,7 @@
         if (!method.isArray(obj) && method.isObject(obj)) {
             for (var key in obj) {
                 var name = str + (str.length > 0 ? "." : "") + key;
-                result = result.concat(proeprtyToString(obj[key], name));
+                result = result.concat(this.proeprtyToString(obj[key], name));
             }
         } else {
             result = [str];
@@ -183,6 +190,7 @@
     method.getValueOrDefault = function (val, def) {
         return val == null ? def : val;
     }
+
     /**
      * post请求
      * @param {string} url 地址
@@ -216,13 +224,69 @@
             var index = href.indexOf("?");
             var curUrl = href;
             if (index > 0) {
-                curUrl = href.substr(0, index) + "?";
-            } else {
-                curUrl += "?";
+                curUrl = href.substr(0, index)
             }
             history.replaceState(null, null, curUrl + data);
         }
     }
+
+    /**
+     * 获得请求参数
+     * @param {any} name 查询的key
+     */
+    method.getRequestQueryString = function (name) {
+        var urlSearch = window.location.search;
+        var regExp = new RegExp("{0}=([^&]+)".format(name));
+        if (regExp.test(urlSearch)) {
+            return urlSearch.match(regExp)[1];
+        } else {
+            return null;
+        }
+    }
+    /**
+     * 设置浏览器QueryString
+     * @param {any} name 要设置的name
+     * @param {any} value 设置的值
+     */
+    method.setRequestQueryString = function (name, value) {
+        
+        var urlSearch = window.location.search;
+        var regExp = new RegExp("({0}=)([^&]*)".format(name));
+        if (regExp.test(urlSearch)) {
+            urlSearch = urlSearch.replace(regExp, "$1" + value);
+        } else {
+            if (urlSearch.length <= 0) {
+                urlSearch += "?";   
+            } else {
+                urlSearch += "&";
+            }
+            urlSearch += "{0}={1}".format(name, value);
+        }
+        method.changeUrl(urlSearch);
+    }
+    /**
+     * 连接两个地址
+     * @param {any} left 带有域名的url
+     * @param {any} right 纯search
+     */
+    method.joinUrl = function (left, right) {
+        var url;
+        if (left.indexOf("?")!=-1) {
+            if (right.indexOf("?") != -1) {
+                url = left + right.replace("?", "&");
+            } else {
+                url = left + right.startsWith("&")?"":"&" + right;
+            }
+        } else {
+            if (right.indexOf("?") != -1) {
+                url = left + right;
+            } else {
+                url = left + right.startsWith("&") ? "?" + right.substring(1, right.length) : "?" + right;
+            }
+        }
+        return url;
+    }
+
     /**
      * 日志记录器
      */
@@ -253,6 +317,15 @@
         },
     
     }
+    /**
+    *  生成guid
+    */
+    method.getGuid = function () {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        }).toUpperCase();
+    };
 
     return method;
 })
