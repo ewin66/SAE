@@ -3,6 +3,8 @@ using SAE.CommonLibrary.EventStore;
 using SAE.ShoppingMall.Identity.Domain.Event;
 using SAE.ShoppingMall.Identity.Domain.ValueObject;
 using SAE.ShoppingMall.Infrastructure;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SAE.ShoppingMall.Identity.Domain
 {
@@ -16,6 +18,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         public User(Credentials credentials)
         {
             this.Create(credentials);
+            this.Roles = new List<string>();
         }
 
         public override IIdentity Identity => IdentityGenerator.Build(this.Id.ToString());
@@ -46,6 +49,8 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// </summary>
         public Credentials Credentials { get; set; }
 
+        public ICollection<string> Roles { get; set; }
+
         /// <summary>
         /// 状态
         /// </summary>
@@ -54,6 +59,11 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+        public bool Authorize(string input,Func<IIdentity,Role> roleProvider,Func<IIdentity,Permission> permissionProvider)
+        {
+            
+        }
 
     }
 
