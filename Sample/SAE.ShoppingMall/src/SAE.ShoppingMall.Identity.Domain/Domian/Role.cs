@@ -10,7 +10,8 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             this.Permissions = new List<string>();
         }
-        public override IIdentity Identity => throw new NotImplementedException();
+        public override IIdentity Identity => IdentityGenerator.Build(this.Id);
+        public string Id { get; set; }
         /// <summary>
         /// 角色名称
         /// </summary>
@@ -29,16 +30,13 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public bool Authorize(string input, Func<IIdentity, Permission> permissionProvider)
         {
-            foreach (string permissionId in this.Permissions)
+            foreach (CommonLibrary.EventStore.Identity permissionId in this.Permissions)
             {
-                var id = IdentityGenerator.Build(permissionId);
-
-                var permission = permissionProvider.Invoke(id);
+                var permission = permissionProvider.Invoke(permissionId);
 
                 if (permission.Comparison(input))
                     return true;
             }
-
             return false;
         }
     }

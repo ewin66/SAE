@@ -2,14 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.0.3</Version>
+    <Version>1.0.0.5</Version>
     <PackageTags>EventStore</PackageTags>
-    <PackageReleaseNotes>^ #0,修复当IEvent为显示实现时IEvent.Id和IEvent.Version反转对象为null</PackageReleaseNotes>
+    <PackageReleaseNotes>1、改变id生成规则（有序的guid）
+2、Identity到string的转换</PackageReleaseNotes>
     <Description>EventStore抽象接口</Description>
     <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.0.3</AssemblyVersion>
-    <FileVersion>1.0.0.3</FileVersion>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

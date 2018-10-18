@@ -5,6 +5,7 @@ using SAE.ShoppingMall.Identity.Domain.ValueObject;
 using SAE.ShoppingMall.Infrastructure;
 using System.Linq;
 using System.Collections.Generic;
+using SAE.CommonLibrary.Common;
 
 namespace SAE.ShoppingMall.Identity.Domain
 {
@@ -20,8 +21,10 @@ namespace SAE.ShoppingMall.Identity.Domain
             this.Create(credentials);
             this.Roles = new List<string>();
         }
-
-        public override IIdentity Identity => IdentityGenerator.Build(this.Id.ToString());
+        /// <summary>
+        /// 
+        /// </summary>
+        public override IIdentity Identity => (CommonLibrary.EventStore.Identity)Id;
         /// <summary>
         /// id
         /// </summary>
@@ -60,9 +63,21 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// </summary>
         public DateTime CreateTime { get; set; }
 
+        /// <summary>
+        /// 授权
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="roleProvider"></param>
+        /// <param name="permissionProvider"></param>
+        /// <returns></returns>
         public bool Authorize(string input,Func<IIdentity,Role> roleProvider,Func<IIdentity,Permission> permissionProvider)
         {
-            
+            foreach(CommonLibrary.EventStore.Identity roleId in this.Roles)
+            {
+                var role = roleProvider.Invoke(roleId);
+                if (role.Authorize(input, permissionProvider)) return true;
+            }
+            return false;
         }
 
     }
@@ -77,7 +92,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             this.Apply(new RegisterUserEvent
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Utility.GenerateId().ToString(),
                 LoginName = credentials.Name,
                 Password = credentials.Password,
                 Salt = credentials.Salt,

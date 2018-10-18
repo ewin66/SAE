@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE.CommonLibrary.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,16 +19,16 @@ namespace SAE.CommonLibrary.EventStore
         /// </summary>
         public Identity()
         {
-            this.Id = Guid.NewGuid().ToString();
+            this.Id = Utility.GenerateId().ToString();
         }
         /// <summary>
-        /// 
+        /// 根据<paramref name="id"/>构造一个<seealso cref="对象"/>
         /// </summary>
         /// <param name="id"></param>
         public Identity(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
-                id = Guid.NewGuid().ToString();
+                id = Utility.GenerateId().ToString();
             this.Id = id;
         }
         /// <summary>
@@ -38,6 +39,23 @@ namespace SAE.CommonLibrary.EventStore
         {
             return this.Id;
         }
+        
+        /// <summary>
+        /// 隐式转换
+        /// </summary>
+        /// <param name="identity"></param>
+        public static implicit operator Identity(string identity)
+        {
+            return new Identity(identity);
+        }
 
+        /// <summary>
+        /// 隐式转换
+        /// </summary>
+        /// <param name="identity"></param>
+        public static implicit operator string(Identity identity)
+        {
+            return identity.ToString();
+        }
     }
 }

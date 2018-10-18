@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using SAE.CommonLibrary.Json;
 using Xunit.Abstractions;
 
 namespace SAE.ShoppingMall.Test
@@ -18,7 +19,7 @@ namespace SAE.ShoppingMall.Test
 
         protected virtual void Show(object @object)
         {
-            this._testOutputHelper.WriteLine(CommonLibrary.Json.JsonHelper.Serialize(@object));
+            this._testOutputHelper.WriteLine(JsonHelper.Serialize(@object));
         }
     }
 }
