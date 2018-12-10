@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace SAE.CommonLibrary.EventStore.Document
 {
+    /// <summary>
+    /// 文档存储
+    /// </summary>
     public interface IDocumentStore
     {
         /// <summary>
@@ -27,7 +30,6 @@ namespace SAE.CommonLibrary.EventStore.Document
         /// <summary>
         /// 保存文件操作事件
         /// </summary>
-        /// <param name="identity"></param>
         /// <param name="document"></param>
         Task SaveAsync(IDocument document);
 

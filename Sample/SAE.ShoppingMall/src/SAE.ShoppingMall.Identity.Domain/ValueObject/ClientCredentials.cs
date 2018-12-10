@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SAE.CommonLibrary.Common.Check;
+using SAE.CommonLibrary.EventStore;
 
 namespace SAE.ShoppingMall.Identity.Domain.ValueObject
 {
@@ -10,11 +11,11 @@ namespace SAE.ShoppingMall.Identity.Domain.ValueObject
     /// </summary>
     public class ClientCredentials
     {
-        public ClientCredentials():this(Guid.NewGuid().ToString(),Guid.NewGuid().ToString())
+        public ClientCredentials():this(IdentityGenerator.Build().ToString(), IdentityGenerator.Build().ToString())
         {
 
         }
-        public ClientCredentials(string secret):this(Guid.NewGuid().ToString(),secret)
+        public ClientCredentials(string secret):this(IdentityGenerator.Build().ToString(), secret)
         {
 
         }

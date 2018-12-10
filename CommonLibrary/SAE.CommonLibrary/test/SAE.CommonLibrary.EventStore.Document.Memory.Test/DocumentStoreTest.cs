@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SAE.CommonLibrary.EventStore.Document.Memory.Test.Domain;
+using SAE.CommonLibrary.EventStore.Document.Memory.Test.Event;
+using SAE.CommonLibrary.EventStore.Queryable;
+using SAE.CommonLibrary.MQ;
 using SAE.Test.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
@@ -9,10 +12,31 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
     public class DocumentStoreTest:BaseTest
     {
         private readonly IDocumentStore _documentStore;
+        private readonly IMQ _mq;
+        private readonly IPersistenceService _persistenceService;
         public DocumentStoreTest(ITestOutputHelper testOutputHelper):base(testOutputHelper)
         {
-            this._documentStore = Unit.GetProvider(s => s.AddMemberDocument())
-                                    .GetService<IDocumentStore>();
+            var serviceProvider = Unit.GetProvider(s => s.AddMemberDocument()
+                                                         .AddMemoryPersistenceService()
+                                                         .AddDefaultTransferService()
+                                                         .AddMemoryMQ()
+                                                         .AddQueryableHandle());
+            serviceProvider.UseDefaultDocumentPublish()
+                           .UseServiceProvider();
+
+            this._documentStore=serviceProvider.GetService<IDocumentStore>();
+            
+            this._mq = serviceProvider.UseServiceProvider()
+                                      .GetService<IMQ>();
+            //this._mq.SubscibeAssembly();
+            ;
+            this._mq.GetQueryableBuilder()
+                    .RegisterAssembly()
+                    .Mapping<User, AddEvent>()
+                    .Mapping<User, UpdateEvent>()
+                    .Build();
+            this._persistenceService = serviceProvider.GetService<IPersistenceService>();
+            
         }
 
         [Theory]
@@ -23,6 +47,9 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             user.Create(loginName, password);
             _documentStore.Save(user);
             this.Show(user);
+            var u = this._persistenceService.GetById<User>(user.Id);
+            Assert.NotNull(u);
+            this.Show(u);
             return user;
         }
         [Theory]

@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SAE.Commonlibrary.EventStore.Document.Memory\SAE.CommonLibrary.EventStore.Document.Memory.csproj" />
+    <ProjectReference Include="..\..\src\SAE.Commonlibrary.EventStore.Document\SAE.CommonLibrary.EventStore.Document.csproj" />
+    <ProjectReference Include="..\..\src\SAE.CommonLibrary.EventStore.Queryable\SAE.CommonLibrary.EventStore.Queryable.csproj" />
     <ProjectReference Include="..\SAE.Test.Infrastructure\SAE.Test.Infrastructure.csproj" />
   </ItemGroup>
 

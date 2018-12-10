@@ -63,27 +63,27 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// </summary>
         public DateTime CreateTime { get; set; }
 
-        /// <summary>
-        /// 授权
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="roleProvider"></param>
-        /// <param name="permissionProvider"></param>
-        /// <returns></returns>
-        public bool Authorize(string input,Func<IIdentity,Role> roleProvider,Func<IIdentity,Permission> permissionProvider)
-        {
-            foreach(CommonLibrary.EventStore.Identity roleId in this.Roles)
-            {
-                var role = roleProvider.Invoke(roleId);
-                if (role.Authorize(input, permissionProvider)) return true;
-            }
-            return false;
-        }
-
     }
 
     public partial class User
     {
+        /// <summary>
+        /// 授权
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="roleProvider"></param>
+        /// <param name="permissionProvider"></param>
+        /// <returns></returns>
+        public bool Authorize(string flag, Func<IIdentity, Role> roleProvider, Func<IIdentity, Permission> permissionProvider)
+        {
+            foreach (CommonLibrary.EventStore.Identity roleId in this.Roles)
+            {
+                var role = roleProvider.Invoke(roleId);
+                if (role.Authorize(flag, permissionProvider)) return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// 创建用户
         /// </summary>
@@ -99,6 +99,7 @@ namespace SAE.ShoppingMall.Identity.Domain
                 CreateTime=DateTime.Now,
                 Status= (int)Status.Enable
             });
+
             this.ChangeInformation(new UserInfo(Sex.Woman, DateTime.Now, "", new Contact()));
         }
 

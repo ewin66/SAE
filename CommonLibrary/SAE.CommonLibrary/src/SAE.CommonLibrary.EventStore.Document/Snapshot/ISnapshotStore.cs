@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace SAE.CommonLibrary.EventStore.Snapshot
 {
+    /// <summary>
+    /// 快照存储
+    /// </summary>
     public interface ISnapshotStore
     {
         /// <summary>

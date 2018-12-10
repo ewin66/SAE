@@ -76,36 +76,10 @@ namespace SAE.CommonLibrary.MQ
         /// <returns></returns>
         public static Task<IMQ> SubscibeTypeAsync<THandler>(this IMQ mq)where THandler:IHandler
         {
-            var typeHandler = typeof(THandler);
-            if (typeHandler.IsInterface)
-            {
-                return Task.FromResult(mq);
-            }
-            var handleInterface = typeof(IHandler<>);
-            var subscibeMethod = typeof(MQExtension).GetMethod("SubscibeInternelHandle",BindingFlags.NonPublic|
-                                                                                        BindingFlags.Static|
-                                                                                        BindingFlags.IgnoreCase);
-            var internalHandleType = typeof(Handle<>);
-            Func<object> funcObject = () => _provide.Invoke(typeHandler);
-            return Task.Run(() =>
-            {
-                foreach (var @interface in typeHandler.GetInterfaces())
-                {
-                    if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == handleInterface)
-                    {
-                        var argumentType = @interface.GenericTypeArguments[0];
-                        var handleType = internalHandleType.MakeGenericType(argumentType);
-
-                        var internalHandleObject = handleType.GetConstructors().First().Invoke(new object[] { funcObject });
-                        subscibeMethod.MakeGenericMethod(argumentType)
-                                      .Invoke(null, new object[] { mq,internalHandleObject});
-                    }
-                }
-            }).ContinueWith(t =>
-            {
-                return mq;
-            });
+            return mq.SubscibeTypeAsync(typeof(THandler));
         }
+
+      
 
         /// <summary>
         /// 订阅<typeparamref name="THandler"/>的所有<seealso cref="IHandler{TMessage}"/>接口的实现
@@ -115,9 +89,55 @@ namespace SAE.CommonLibrary.MQ
         /// <returns></returns>
         public static IMQ SubscibeType<THandler>(this IMQ mq) where THandler : IHandler
         {
-            return mq.SubscibeTypeAsync<THandler>()
-                     .GetAwaiter()
-                     .GetResult();
+            return mq.SubscibeType(typeof(THandler));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mq"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static IMQ SubscibeType(this IMQ mq,Type type)
+        {
+            var typeHandler = type;
+            if (typeHandler.IsInterface)
+            {
+                return mq;
+            }
+            var handleInterface = typeof(IHandler<>);
+            var subscibeMethod = typeof(MQExtension).GetMethod(nameof(SubscibeInternelHandle), BindingFlags.NonPublic |
+                                                                                        BindingFlags.Static |
+                                                                                        BindingFlags.IgnoreCase);
+            var internalHandleType = typeof(Handle<>);
+            Func<object> funcObject = () => _provide.Invoke(typeHandler);
+            foreach (var @interface in typeHandler.GetInterfaces())
+            {
+                if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == handleInterface)
+                {
+                    var argumentType = @interface.GenericTypeArguments[0];
+                    var handleType = internalHandleType.MakeGenericType(argumentType);
+
+                    var internalHandleObject = handleType.GetConstructors().First().Invoke(new object[] { funcObject });
+                    subscibeMethod.MakeGenericMethod(argumentType)
+                                  .Invoke(null, new object[] { mq, internalHandleObject });
+                }
+            }
+            return mq;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mq"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static  Task<IMQ> SubscibeTypeAsync(this IMQ mq, Type type)
+        {
+            return Task.Run(() =>
+            {
+                return mq.SubscibeType(type);
+            });
         }
 
         /// <summary>
@@ -133,25 +153,11 @@ namespace SAE.CommonLibrary.MQ
                 assemblys = new Assembly[] { Assembly.GetCallingAssembly() };
             }
 
-            var handleType = typeof(IHandler);
-
-            var method = typeof(MQExtension).GetMethod("SubscibeType", new Type[] { typeof(IMQ) });
 
             return Task.Run(() =>
             {
-                foreach (var assembly in assemblys)
-                {
-                    foreach (var type in assembly.GetTypes())
-                    {
-                        if (type.IsClass && !type.IsInterface && handleType.IsAssignableFrom(type))
-                        {
-                            var methodInfo = method.MakeGenericMethod(type);
-                            methodInfo.Invoke(null, new object[] { mq });
-                        }
-                    }
-                }
-            }).ContinueWith(t => mq);
-            
+                return mq.SubscibeAssembly(assemblys);
+            });
         }
 
         /// <summary>
@@ -166,9 +172,23 @@ namespace SAE.CommonLibrary.MQ
             {
                 assemblys = new Assembly[] { Assembly.GetCallingAssembly() };
             }
-            return mq.SubscibeAssemblyAsync(assemblys)
-                     .GetAwaiter()
-                     .GetResult();
+
+            var handleType = typeof(IHandler);
+
+            var method = typeof(MQExtension).GetMethod(nameof(SubscibeType), new Type[] { typeof(IMQ) });
+            foreach (var assembly in assemblys)
+            {
+                foreach (var type in assembly.GetTypes())
+                {
+                    if (type.IsClass && !type.IsInterface && handleType.IsAssignableFrom(type))
+                    {
+                        var methodInfo = method.MakeGenericMethod(type);
+                        methodInfo.Invoke(null, new object[] { mq });
+                    }
+                }
+            }
+
+            return mq;
         }
 
         private static IMQ SubscibeInternelHandle<TMessage>(this IMQ mq,Handle<TMessage> handle)
@@ -182,10 +202,21 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="serviceFactory"></param>
         /// <returns></returns>
-        public static IMQ SetServiceFactory(this IMQ mq,Func<Type,object> serviceFactory)
+        public static IMQ UseServiceFactory(this IMQ mq,Func<Type,object> serviceFactory)
         {
             _provide = serviceFactory;
             return mq;
+        }
+        /// <summary>
+        /// 使用 <paramref name="service"/>作为服务工厂
+        /// </summary>
+        /// <param name="service">服务提供者</param>
+        /// <returns></returns>
+        public static IServiceProvider UseServiceProvider(this IServiceProvider service)
+        {
+            var mq = service.GetService(typeof(IMQ)) as IMQ;
+            mq.UseServiceFactory(service.GetService);
+            return service;
         }
 
         /// <summary>

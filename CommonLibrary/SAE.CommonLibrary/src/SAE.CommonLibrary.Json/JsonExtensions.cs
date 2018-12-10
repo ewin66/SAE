@@ -6,6 +6,9 @@ using SAE.CommonLibrary.Json.Imp;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// json扩展程序
+    /// </summary>
     public static class JsonExtensions
     {
         /// <summary>

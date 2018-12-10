@@ -34,7 +34,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test.Domain
             if (string.IsNullOrWhiteSpace(password))
                 throw new NullReferenceException($"{nameof(password)}无效");
 
-            this.Apply(new RegisterEvent
+            this.Apply(new AddEvent
             {
                 LoginName = loginName,
                 Password = password,
@@ -77,7 +77,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test.Domain
             ((dynamic)this).When((dynamic)@event);
         }
 
-        protected void When(RegisterEvent @event)
+        protected void When(AddEvent @event)
         {
             this.LoginName = @event.LoginName;
             this.Password = @event.Password;

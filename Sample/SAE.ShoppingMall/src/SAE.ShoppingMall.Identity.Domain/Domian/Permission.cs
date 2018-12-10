@@ -4,13 +4,20 @@ using SAE.CommonLibrary.EventStore;
 
 namespace SAE.ShoppingMall.Identity.Domain
 {
-    public class Permission: AggregateRoot
+    public partial class Permission: AggregateRoot
     {
         public Permission()
         {
             
         }
-        public override IIdentity Identity => throw new NotImplementedException();
+
+        public Permission(string name)
+        {
+            this.Name = name;
+            this.Id = IdentityGenerator.Build().ToString();
+        }
+        public override IIdentity Identity => this.Id.ToIdentity();
+        public string Id { get; set; }
         /// <summary>
         /// 权限名称
         /// </summary>
@@ -29,5 +36,15 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             return Regex.Match(input, this.Pattern).Success;
         }
+    }
+
+    public partial class Permission
+    {
+
+    }
+
+    public partial class Permission
+    {
+
     }
 }

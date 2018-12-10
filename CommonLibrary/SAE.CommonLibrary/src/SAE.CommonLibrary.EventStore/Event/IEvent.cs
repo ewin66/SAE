@@ -1,4 +1,6 @@
-﻿namespace SAE.CommonLibrary.EventStore
+﻿using System;
+
+namespace SAE.CommonLibrary.EventStore
 {
     /// <summary>
     /// 事件接口

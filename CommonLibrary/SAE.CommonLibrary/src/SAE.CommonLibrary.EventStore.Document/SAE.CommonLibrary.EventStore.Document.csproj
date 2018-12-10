@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SAE.Commonlibrary.EventStore\SAE.CommonLibrary.EventStore.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.MQ\SAE.CommonLibrary.MQ.csproj" />
   </ItemGroup>
 
 </Project>
