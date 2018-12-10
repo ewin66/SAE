@@ -38,6 +38,7 @@ namespace SAE.CommonLibrary.MQ.RabbitMQ.Test
             //          .GetService<IMQ>();
 
             _mq = Unit.GetProvider(s => s.AddMemoryMQ())
+                      .UseServiceProvider()
                       .GetService<IMQ>();
 
         }
@@ -50,7 +51,7 @@ namespace SAE.CommonLibrary.MQ.RabbitMQ.Test
         [Fact]
         public async Task PublishMessage()
         {
-            _mq.SetServiceFactory(t =>  new SudentHandle(this._output));
+            
 
             await _mq.SubscibeAsync<ClassGrade>(cg =>
             {

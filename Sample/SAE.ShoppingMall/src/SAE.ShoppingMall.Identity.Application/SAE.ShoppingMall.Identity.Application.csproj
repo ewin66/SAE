@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.EventStore.Document.Memory\SAE.CommonLibrary.EventStore.Document.Memory.csproj" />
     <ProjectReference Include="..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.Ioc\SAE.CommonLibrary.Ioc.csproj" />
     <ProjectReference Include="..\SAE.ShoppingMall.Identity.DocumentService\SAE.ShoppingMall.Identity.DocumentService.csproj" />
     <ProjectReference Include="..\SAE.ShoppingMall.Identity.Domain\SAE.ShoppingMall.Identity.Domain.csproj" />

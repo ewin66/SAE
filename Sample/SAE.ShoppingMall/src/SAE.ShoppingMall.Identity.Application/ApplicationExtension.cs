@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceProvider UseApplicationService(this IServiceProvider provider)
         {
             var mq = provider.GetService<IMQ>();
-            mq.SetServiceFactory(provider.GetService);
+            mq.UseServiceFactory(provider.GetService);
             mq.SubscibeAssembly(typeof(UserHandle).Assembly);
 
             var appService = provider.GetService<IAppService>();

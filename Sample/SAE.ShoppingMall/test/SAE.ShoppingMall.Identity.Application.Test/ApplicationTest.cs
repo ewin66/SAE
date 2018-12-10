@@ -39,6 +39,10 @@ namespace SAE.ShoppingMall.Identity.Application.Test
             this._services.AddApplicationService();
 
             var provider = this._services.BuildServiceProvider();
+            provider.UseApplicationService()
+                    .UseDefaultDocumentPublish()
+                    .UseServiceProvider();
+                    
             this._identityService = provider.GetService<IIdentityService>();
             this._userQueryServer = provider.GetService<IUserQueryService>();
             this._appService = provider.GetService<IAppService>();
