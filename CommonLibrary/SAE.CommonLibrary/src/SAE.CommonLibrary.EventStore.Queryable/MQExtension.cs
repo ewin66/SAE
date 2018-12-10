@@ -16,14 +16,24 @@ namespace SAE.CommonLibrary.EventStore.Queryable
     /// </summary>
     public static class MQExtension
     {
-        public static IServiceCollection AddQueryableHandle(this IServiceCollection services)
+        /// <summary>
+        /// 添加查询处理器
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddQueryableHandler(this IServiceCollection services)
         {
             services.TryAddScoped(typeof(DefaultAddHandler<,>), typeof(DefaultAddHandler<,>));
             services.TryAddScoped(typeof(DefaultUpdateHandler<,>), typeof(DefaultUpdateHandler<,>));
             services.TryAddScoped(typeof(DefaultRemoveHandler<,>), typeof(DefaultRemoveHandler<,>));
             return services;
         }
-        public static IRegistrationBuilder GetQueryableBuilder(this IMQ mq)
+        /// <summary>
+        /// 创建查询构建者
+        /// </summary>
+        /// <param name="mq"></param>
+        /// <returns></returns>
+        public static IRegistrationBuilder CreateQueryableBuilder(this IMQ mq)
         {
             return new RegistrationBuilder(mq);
         }
@@ -58,15 +68,21 @@ namespace SAE.CommonLibrary.EventStore.Queryable
         }
 
         /// <summary>
-        /// 映射对象
+        /// 搜索<typeparamref name="TEvent"/>的<seealso cref="ModelAttribute"/>特性，
+        /// 或使用命名约束的方式映射一个默认的处理对象
         /// </summary>
-        /// <typeparam name="TModel"></typeparam>
-        /// <typeparam name="TEvent"></typeparam>
-        /// <param name="builder"></param>
+        /// <typeparam name="TModel">具体类型</typeparam>
+        /// <typeparam name="TEvent">事件对象</typeparam>
+        /// <param name="builder">构建接口</param>
         /// <returns></returns>
         public static IRegistrationBuilder Mapping<TModel, TEvent>(this IRegistrationBuilder builder)where TModel:class where TEvent:class
         {
-            return builder.Mapping(typeof(TModel), typeof(TEvent));
+            return builder.Mapping<TModel, TEvent>(HandlerEnum.None);
+        }
+
+        public static IRegistrationBuilder Mapping<TModel, TEvent>(this IRegistrationBuilder builder,HandlerEnum handler) where TModel : class where TEvent : class
+        {
+            return builder.Mapping(typeof(TModel), typeof(TEvent), handler);
         }
 
         /// <summary>
@@ -78,11 +94,22 @@ namespace SAE.CommonLibrary.EventStore.Queryable
         /// <returns></returns>
         public static IRegistrationBuilder Mapping(this IRegistrationBuilder builder,Type model,Type @event)
         {
-            var registration= builder as RegistrationBuilder;
-            registration.Map(model, @event);
+       
+            return builder.Mapping(model,@event,HandlerEnum.None);
+        }
+
+        public static IRegistrationBuilder Mapping(this IRegistrationBuilder builder, Type model, Type @event,HandlerEnum handler)
+        {
+            var registration = builder as RegistrationBuilder;
+            registration.Map(model, @event, handler);
             return registration;
         }
 
+        /// <summary>
+        /// 构建
+        /// </summary>
+        /// <param name="registrationBuilder"></param>
+        /// <returns></returns>
         public static IMQ Build(this IRegistrationBuilder registrationBuilder)
         {
             var builder = registrationBuilder as RegistrationBuilder;

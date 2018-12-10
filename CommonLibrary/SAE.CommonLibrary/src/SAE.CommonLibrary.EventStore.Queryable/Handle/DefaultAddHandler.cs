@@ -6,7 +6,7 @@ using System.Text;
 namespace SAE.CommonLibrary.EventStore.Queryable.Handle
 {
     public sealed class DefaultAddHandler<Model, TEvent> : DefaultHandler<Model, TEvent> where Model 
-                                             : class, new() where TEvent : IEvent
+                                                         : class, new() where TEvent : IEvent
     {
 
         public DefaultAddHandler(IPersistenceService persistenceService, IAssignmentService assignmentService) : base(persistenceService, assignmentService)

@@ -2,6 +2,7 @@
 using SAE.CommonLibrary.EventStore.Document.Memory.Test.Domain;
 using SAE.CommonLibrary.EventStore.Document.Memory.Test.Event;
 using SAE.CommonLibrary.EventStore.Queryable;
+using SAE.CommonLibrary.EventStore.Queryable.Builder;
 using SAE.CommonLibrary.MQ;
 using SAE.Test.Infrastructure;
 using Xunit;
@@ -20,7 +21,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
                                                          .AddMemoryPersistenceService()
                                                          .AddDefaultTransferService()
                                                          .AddMemoryMQ()
-                                                         .AddQueryableHandle());
+                                                         .AddQueryableHandler());
             serviceProvider.UseDefaultDocumentPublish()
                            .UseServiceProvider();
 
@@ -30,9 +31,10 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
                                       .GetService<IMQ>();
             //this._mq.SubscibeAssembly();
             ;
-            this._mq.GetQueryableBuilder()
+            this._mq.CreateQueryableBuilder()
                     .RegisterAssembly()
-                    .Mapping<User, AddEvent>()
+                    .Mapping<User,ChangePasswordEvent>(HandlerEnum.Update)
+                    .Mapping<User,AddEvent>()
                     .Mapping<User, UpdateEvent>()
                     .Build();
             this._persistenceService = serviceProvider.GetService<IPersistenceService>();
@@ -52,6 +54,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             this.Show(u);
             return user;
         }
+
         [Theory]
         [InlineData("Aa123456","111111")]
         public void ChangePassword(string originalPassword, string password)
