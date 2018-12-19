@@ -8,6 +8,9 @@ using SAE.CommonLibrary.EventStore.Queryable.Handle;
 
 namespace SAE.CommonLibrary.EventStore.Queryable.Builder
 {
+    /// <summary>
+    /// 处理类型
+    /// </summary>
     public enum HandlerEnum : int
     {
         /// <summary>
@@ -17,30 +20,84 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
         /// <summary>
         /// 添加
         /// </summary>
-        Add,
+        Add = 0,
         /// <summary>
         /// 更新
         /// </summary>
-        Update,
+        Update = 1,
         /// <summary>
         /// 移除
         /// </summary>
-        Remove
+        Remove = 2
     }
 
-    internal class Map
+    /// <summary>
+    /// 映射对象
+    /// </summary>
+    public class Map
     {
-        public Map(Type type, HandlerEnum handle)
+        /// <summary>
+        /// 创建一个完整的Map对象
+        /// </summary>
+        /// <param name="modelType">模型类型</param>
+        /// <param name="eventType">事件类型</param>
+        /// <param name="handle">处理方式</param>
+        public Map(Type modelType, Type eventType, HandlerEnum handle)
         {
-            this.Type = type;
+            this.ModelType = modelType;
+            this.EventType = eventType;
             this.Handle = handle;
         }
-        public Type Type { get; }
-        public HandlerEnum Handle { get; set; }
+        /// <summary>
+        /// 创建一个拥有<seealso cref="Map.EventType"/>和<seealso cref="Map.Handle"/>的Map
+        /// </summary>
+        /// <param name="eventType">事件类型</param>
+        /// <param name="handle">处理方式</param>
+        public Map(Type eventType, HandlerEnum handle) : this(eventType)
+        {
+            this.Handle = handle;
+        }
+        /// <summary>
+        /// 创建一个拥有<seealso cref="Map.EventType"/>和<seealso cref="HandlerEnum.None"/>的Map
+        /// </summary>
+        /// <param name="eventType">事件类型</param>
+        public Map(Type eventType)
+        {
+            this.Handle = HandlerEnum.None;
+            
+            var modelType = typeof(ModelAttribute);
 
+            var attribute = eventType.GetCustomAttributes<ModelAttribute>().FirstOrDefault();
+            //扫描ModelAttribute类型
+            if (attribute != null)
+            {
+                this.ModelType = attribute.Type;
+                this.Handle = attribute.Handle;
+            }
+            this.EventType = eventType;
+        }
+        /// <summary>
+        /// 模型类型
+        /// </summary>
+        public Type ModelType { get; internal set; }
+        /// <summary>
+        /// 事件类型
+        /// </summary>
+        public Type EventType { get; internal set; }
+        /// <summary>
+        /// 处理方式
+        /// </summary>
+        public HandlerEnum Handle { get; internal set; }
+
+        /// <summary>
+        /// 获得处理程序
+        /// </summary>
+        /// <returns></returns>
         public Type GetHandle()
         {
+
             Type handleType = null;
+            if (this.ModelType == null) return handleType;
 
             if (this.Handle == HandlerEnum.None)
             {
@@ -64,9 +121,10 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
                         handleType = typeof(DefaultRemoveHandler<,>);
                         break;
                     }
+                default: return handleType;
             }
 
-            return handleType;
+            return handleType.MakeGenericType(this.ModelType, this.EventType);
         }
 
         /// <summary>
@@ -74,7 +132,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
         /// </summary>
         private void NamingConventionsScan()
         {
-            var type = this.Type;
+            var type = this.EventType;
 
             if (type.Name.StartsWith(nameof(HandlerEnum.Add)))
             {
@@ -91,113 +149,89 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
                 this.Handle = HandlerEnum.Update;
             }
         }
+
+        #region override object
+        public override bool Equals(object obj)
+        {
+            return this == (Map)obj;
+        }
+
+        public static bool operator ==(Map left, Map right)
+        {
+            if ((object)left == null || (object)right == null) return false;
+
+            if (ReferenceEquals(left, right)) return true;
+
+            return left.ToString() == right.ToString();
+        }
+        public static bool operator !=(Map left, Map right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{this.Handle}_{(this.ModelType?.ToString() ?? string.Empty)}_{(this.EventType?.ToString() ?? string.Empty)}";
+        } 
+        #endregion
     }
 
-   
+
     /// <summary>
     /// 构建者具体的实现
     /// </summary>
     internal class RegistrationBuilder : IRegistrationBuilder
     {
         /// <summary>
-        /// 
+        /// 创建一个构建者对象
         /// </summary>
         /// <param name="mq"></param>
         internal RegistrationBuilder(IMQ mq)
         {
             this.MQ = mq;
-            this._store = new List<Type>();
-            this._maps = new Dictionary<Type, IList<Map>>();
+            this._store = new List<Map>();
         }
 
-        public RegistrationBuilder(IMQ mq, params Assembly[] assemblies) : this(mq)
+
+
+
+        private IMQ MQ { get; }
+
+        private readonly List<Map> _store;
+
+        public IEnumerable<Map> Maps { get => this._store; }
+
+        public void Add(Map map)
         {
-            this.Add(assemblies);
-        }
-
-        public readonly List<Type> _store;
-
-        internal IMQ MQ { get; }
-
-        private readonly IDictionary<Type, IList<Map>> _maps;
-
-        public RegistrationBuilder(IMQ mq, params Type[] types) : this(mq)
-        {
-            this.Add(types);
-        }
-
-        /// <summary>
-        /// 添加事件类型
-        /// </summary>
-        /// <param name="types"></param>
-        public void Add(params Type[] types)
-        {
-            if (types == null || !types.Any()) return;
-
-            var eventType=typeof(IEvent);
-
-            var typesList = types.Where(t => !t.IsInterface &&
-                                             !t.IsAbstract &&
-                                             t.IsClass &&
-                                             eventType.IsAssignableFrom(t));
-            if (typesList.Any())
-                this._store.AddRange(typesList);
-        }
-
-        public void Add(params Assembly[] assemblies)
-        {
-            if (assemblies != null && assemblies.Any())
-                foreach (var assembly in assemblies)
-                    this.Add(assembly.GetTypes());
-
-        }
-
-        public void Map(Type model, Type @event, HandlerEnum handle)
-        {
-            IList<Map> maps;
-            if (!this._maps.TryGetValue(model, out maps))
+            if (this.Maps.Any(t => t == map))
             {
-                maps = new List<Map>();
-                this._maps[model] = maps;
-            }
-
-            if (!maps.Any(t => t.Type == @event))
-            {
-                maps.Add(new Map(@event, handle));
+                var mp = this.Maps.FirstOrDefault(t => t == map);
+                mp.Handle = map.Handle;
             }
             else
             {
-                var map = maps.FirstOrDefault(t => t.Type == @event);
-                map.Handle = handle;
+                this._store.Add(map);
             }
         }
 
         public void Build()
         {
-            var modelType = typeof(ModelAttribute);
-
-            foreach (var type in this._store.Where(t => t.IsDefined(modelType, false)))
+            foreach (var map in this.Maps)
             {
-                var attributes = type.GetCustomAttributes<ModelAttribute>();
-                foreach (var attribute in attributes)
+                var handle = map.GetHandle();
+                if (handle != null)
                 {
-                    this.Map(attribute.Type, type, attribute.Handle);
-                }
-            }
-
-            foreach (var mapList in this._maps)
-            {
-                foreach (var map in mapList.Value)
-                {
-                    var handle = map.GetHandle();
-                    if (handle != null)
-                    {
-                        var handleType = handle.MakeGenericType(mapList.Key, map.Type);
-                        this.MQ.SubscibeType(handleType);
-                    }
+                    //订阅事件
+                    this.MQ.SubscibeType(handle);
                 }
             }
         }
+
 
     }
 }

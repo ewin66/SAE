@@ -25,20 +25,11 @@ namespace SAE.ShoppingMall.Identity.Application.Test
         protected readonly IAppQueryService _appQueryService;
         public ApplicationTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            //this._services.AddSingleton<IIdentityService, IdentityService>()
-            //              .AddSingleton<IUserQueryService, UserDocumentService>()
-            //              .AddSingleton<IAppService,AppService>()
-            //              .AddSingleton<IAppQueryService,AppDocuemntService>()
-            //              .AddSingleton<IDocumentService<UserDto>, UserDocumentService>()
-            //              .AddMemberDocument()
-            //              .AddSingleton<IDocumentEvent, DocumentPublish>()
-            //              .AddMemoryMQ()
-            //              .AddMemoryStorage()
-            //              .AddSingleton<UserHandle>();
 
             this._services.AddApplicationService();
 
             var provider = this._services.BuildServiceProvider();
+
             provider.UseApplicationService()
                     .UseDefaultDocumentPublish()
                     .UseServiceProvider();
