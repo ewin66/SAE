@@ -9,7 +9,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable
     /// </summary>
     public interface IPersistenceService
     {
-        T GetById<T>(string id) where T : class;
+        T Find<T>(string id) where T : class;
         void Add<T>(T t) where T : class;
         void Update<T>(T t) where T : class;
         void Remove<T>(T t) where T : class;

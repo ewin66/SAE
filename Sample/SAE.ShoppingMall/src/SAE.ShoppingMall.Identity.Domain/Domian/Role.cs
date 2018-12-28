@@ -1,9 +1,10 @@
-﻿using SAE.CommonLibrary.Common.Check;
+﻿using SAE.CommonLibrary.Common;
+using SAE.CommonLibrary.Common.Check;
 using SAE.CommonLibrary.EventStore;
 using SAE.ShoppingMall.Identity.Domain.Event;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace SAE.ShoppingMall.Identity.Domain
 {
     public partial class Role: AggregateRoot
@@ -15,7 +16,7 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public Role(string name)
         {
-            
+            this.Create(name);
         }
         public override IIdentity Identity => IdentityGenerator.Build(this.Id);
         public string Id { get; set; }
@@ -26,10 +27,19 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// <summary>
         /// 权限集合
         /// </summary>
-        public ICollection<string> Permissions { get; set; }
+        public IEnumerable<string> Permissions { get; set; }
 
         public DateTime CreateTime { get; set; }
 
+        public void Clear()
+        {
+            this.Apply(new GrantRolePermissionEvent { Permissions = Enumerable.Empty<string>() });
+        }
+
+        public void AddRange(IEnumerable<string> permissions)
+        {
+            this.Apply(new GrantRolePermissionEvent { Permissions = permissions });
+        }
     }
 
     public partial class Role
@@ -65,15 +75,25 @@ namespace SAE.ShoppingMall.Identity.Domain
                 CreateTime = DateTime.Now
             });
         }
-    }
 
-    public partial class Role
-    {
-        internal void When(CreateRoleEvent @event)
+        public void AddRange(IEnumerable<Permission> permissions)
         {
-            this.Id = @event.Id;
-            this.CreateTime = @event.CreateTime;
-            this.Name = @event.Name;
+            if (permissions.Any())
+            {
+                this.Apply(new GrantRolePermissionEvent
+                {
+                    Permissions = permissions.Select(s => s.Id)
+                });
+            }
         }
+        public void Change(Role role)
+        {
+            if (this.Name != role.Name) { }
+            this.Apply(new ChangeRoleEvent
+            {
+                Name = role.Name
+            });
+        }
+        
     }
 }

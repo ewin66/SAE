@@ -20,6 +20,12 @@ namespace SAE.CommonLibrary.Storage
         /// <returns></returns>
         IQueryable<T> AsQueryable<T>();
         /// <summary>
+        /// 根据id获得<typeparamref name="T"/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        T Find<T>(object id);
+        /// <summary>
         /// 添加
         /// </summary>
         /// <typeparam name="T"></typeparam>

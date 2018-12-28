@@ -13,7 +13,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Handle
 
         public override void Handle(TEvent @event)
         {
-            var model = this._persistenceService.GetById<Model>(@event.Id);
+            var model = this._persistenceService.Find<Model>(@event.Id);
             this._assignmentService.Transfer(@event, model);
             this._persistenceService.Update(model);
         }

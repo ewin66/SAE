@@ -76,7 +76,6 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void ChangeEndopint(SignEndpoint signEndpoint)
         {
-            this.EditMode();
             this.Apply(new ChangeAppEndpointEvent
             {
                 Signin = signEndpoint.Signin,
@@ -86,7 +85,6 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void ChangeName(string name)
         {
-            this.EditMode();
             this.Apply(new ChangeAppNameEvent
             {
                  Name=name
@@ -105,17 +103,10 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void ChangeSecret(string secret)
         {
-            this.EditMode();
             this.Apply(new ChangeAppSecretEvent
             {
                 Secret = secret
             });
-        }
-
-        private void EditMode()
-        {
-            Assert.Build(this.Status == Status.Delete)
-                  .False();
         }
     }
 

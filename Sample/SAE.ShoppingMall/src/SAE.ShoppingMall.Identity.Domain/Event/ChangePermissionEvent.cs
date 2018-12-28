@@ -8,5 +8,6 @@ namespace SAE.ShoppingMall.Identity.Domain.Event
     {
         public string Name { get; set; }
         public string Pattern { get; set; }
+        public string Group { get; set; }
     }
 }

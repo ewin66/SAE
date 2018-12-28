@@ -39,9 +39,11 @@ namespace SAE.CommonLibrary.Storage.MongoDB.Test
             classGrade.Id = Guid.NewGuid().ToString();
             //此处设置了默认Id为10
             _storage.Add(classGrade);
+            var grade = this._storage.Find<ClassGrade>(classGrade.Id);
             Assert.True(_storage.AsQueryable<ClassGrade>()
                                 .Count(s => s.Id == classGrade.Id) == 1);
-            return classGrade;
+            Assert.NotNull(grade);
+            return grade;
         }
 
         /// <summary>

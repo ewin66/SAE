@@ -6,6 +6,15 @@ namespace SAE.ShoppingMall.Identity.Dto
 {
     public class AppDto
     {
+
+        public string Id
+        {
+            get { return this.AppId; }
+            set
+            {
+                this.AppId = value;
+            }
+        }
         public string AppId { get; set; }
         public string AppSecret { get; set; }
         public DateTime CreateTime { get; set; }

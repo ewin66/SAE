@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using Nelibur.ObjectMapper;
+﻿using SAE.CommonLibrary.Common;
 using SAE.CommonLibrary.Common.Check;
 using SAE.CommonLibrary.EventStore;
 using SAE.CommonLibrary.EventStore.Document;
-using SAE.CommonLibrary.EventStore.Identity;
-using SAE.ShoppingMall.Identity.DocumentService;
+using SAE.CommonLibrary.Storage;
 using SAE.ShoppingMall.Identity.Domain;
 using SAE.ShoppingMall.Identity.Domain.ValueObject;
 using SAE.ShoppingMall.Identity.Dto;
 using SAE.ShoppingMall.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SAE.ShoppingMall.Identity.Application.Implement
 {
     public class IdentityService : ApplicationService,IIdentityService
     {
         
-        private readonly IUserQueryService _userQueryService;
-        public IdentityService(IDocumentStore documentStore,IUserQueryService userQueryService):base(documentStore)
+        public IdentityService(IDocumentStore documentStore,IStorage storage):base(documentStore, storage)
         {
-            this._userQueryService = userQueryService;
+            
         }
 
         public bool Authorization(string userId, string flag)
@@ -40,15 +39,25 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
             this._documentStore.Save(permission);
         }
 
-        public UserDto Find(string id)
+        public UserDto GetById(string id)
         {
             var user = this._documentStore.Find<User>(id.ToIdentity());
-            return new UserDto();
+            return user.To<UserDto>();
+        }
+
+        public UserDto GetByLoginName(string loginName)
+        {
+            var userDto = this._storage.AsQueryable<UserDto>()
+                                       .FirstOrDefault(s => s.Credentials.Name == loginName);
+            return userDto;
         }
 
         public void GrantRolePermissions(string roleId, IEnumerable<string> permissions)
         {
-            throw new NotImplementedException();
+            var role = this._documentStore.Find<Role>(roleId.ToIdentity());
+            Assert.Build(role).NotNull();
+            role.Clear();
+            role.AddRange(permissions);
         }
 
         public void GrantUserRoles(string userId, IEnumerable<string> roles)
@@ -56,9 +65,10 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
             throw new NotImplementedException();
         }
 
-        public UserDto Login(CredentialsDto credentialsDto)
+        public UserDto Authentication(CredentialsDto credentialsDto)
         {
-            var userDto = this._userQueryService.Find(credentialsDto.Name);
+            var userDto = this._storage.AsQueryable<UserDto>()
+                                       .FirstOrDefault(s => s.Credentials.Name == credentialsDto.Name);
 
             Assert.Build(userDto)
                   .NotNull($"用户\"{credentialsDto.Name}\"不存在");
@@ -71,13 +81,43 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
         }
 
 
-        UserDto IIdentityService.Register(CredentialsDto credentialsDto)
+        public void Create(CredentialsDto credentialsDto)
         {
             var user = new User(new Credentials(credentialsDto.Name, credentialsDto.Password));
             this._documentStore.Save(user);
-            return Utils.Map<UserDto>(user);
         }
 
-        
+        public void RemoveUser(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(UserDto dto)
+        {
+            var newUser = dto.To<User>();
+            var user = this._documentStore.Find<User>(dto.Id.ToIdentity());
+            user.ChangeInformation(newUser.Information);
+            this._documentStore.Save(user);
+        }
+
+        public void Update(RoleDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveRole(string roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(PermissionDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemovePermission(string permissionId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

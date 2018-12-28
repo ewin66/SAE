@@ -20,6 +20,17 @@ namespace SAE.CommonLibrary.EventStore.Queryable
         }
 
         /// <summary>
+        /// 添加基于<seealso cref="IStorage"/><seealso cref="IPersistenceService"/>实现
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddStoragePersistenceService(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.TryAddSingleton<IPersistenceService, StoragePersistenceService>();
+            return serviceCollection;
+        }
+
+        /// <summary>
         /// 添加默认的转让服务
         /// </summary>
         /// <param name="serviceCollection"></param>

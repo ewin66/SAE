@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using SAE.ShoppingMall.Identity.DocumentService;
-using SAE.ShoppingMall.Identity.Dto;
-using SAE.ShoppingMall.Test;
+﻿using SAE.ShoppingMall.Identity.Dto;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,41 +11,33 @@ namespace SAE.ShoppingMall.Identity.Application.Test
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="appId"></param>
-        /// <param name="secret"></param>
-        /// <param name="signin"></param>
-        /// <param name="signout"></param>
-        /// <returns></returns>
-        [Theory]
-        [InlineData("mall","mall_nb_666","mall_secrect_666","/login","/logout")]
-        public AppDto Register(string name,string appId,string appSecret,string signin,string signout)
+        
+        [Fact]
+        public AppDto Register()
         {
+            var url = $"www.{this.Random()}.com";
             var appDto = this._appService.Register(new AppDto
             {
-                AppId = appId,
-                AppSecret = appSecret,
-                Name = name,
-                Signin = signin,
-                Signout = signout,
+                AppId = this.Random(),
+                AppSecret = this.Random(),
+                Name = $"test_app_{this.Random()}",
+                Signin = $"{url}/login",
+                Signout = $"{url}/logut",
             });
             this.Show(appDto);
             return appDto;
         }
 
-        [Theory]
-        [InlineData("mall_change", "mall_nb_88888","/oauth/login", "/oauth/logout",2)]
-        public void Change(string name, string appSecret, string signin, string signout,int status)
+        [Fact]
+        public void Change()
         {
-            var dto = this.Register("mall", "mall_nb_666", "mall_secrect_666", "/login", "/logout");
-            dto.Name = name;
-            dto.AppSecret= appSecret;
-            dto.Signin= signin;
-            dto.Signout = signout;
-            dto.Status = status;
+            var url = $"www.{this.Random()}.com";
+            var dto = this.Register();
+            dto.Name = "update_app";
+            dto.AppSecret= this.Random();
+            dto.Signin= this.Random();
+            dto.Signin = $"{url}/login";
+            dto.Signout = $"{url}/logut";
             this._appService.Change(dto);
             this.Show(dto);
         }

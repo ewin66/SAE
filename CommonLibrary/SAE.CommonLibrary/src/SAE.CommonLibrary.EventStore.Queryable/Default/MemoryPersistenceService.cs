@@ -15,7 +15,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Default
             _store[this.GetKey(t)] = t;
         }
 
-        public T GetById<T>(string id) where T : class
+        public T Find<T>(string id) where T : class
         {
             object obj;
             _store.TryGetValue(id, out obj);

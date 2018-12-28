@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
-    <PackageReference Include="TinyMapper" Version="3.0.1-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.TinyMapper\SAE.CommonLibrary.TinyMapper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

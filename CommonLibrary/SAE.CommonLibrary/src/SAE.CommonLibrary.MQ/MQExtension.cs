@@ -19,7 +19,7 @@ namespace SAE.CommonLibrary.MQ
         {
             _provide = t => Activator.CreateInstance(t);
         }
-        private static readonly ConcurrentDictionary<string, object> _store = new ConcurrentDictionary<string, object>();
+        private static readonly ConcurrentDictionary<object,Dictionary<string,object>> _store = new ConcurrentDictionary<object, Dictionary<string, object>>();
         /// <summary>
         /// 异步发布
         /// </summary>
@@ -259,7 +259,9 @@ namespace SAE.CommonLibrary.MQ
             object @object;
             lock (_store)
             {
-                if (_store.TryGetValue(key, out @object))
+                var dic = GetSotrage(mq);
+
+                if(dic.TryGetValue(key, out @object))
                 {
                     actionMessage = @object as Action<TMessage>;
                     actionMessage += action;
@@ -268,10 +270,22 @@ namespace SAE.CommonLibrary.MQ
                 {
                     actionMessage = action;
                 }
-                _store.AddOrUpdate(key, actionMessage, (a, b) => actionMessage);
+                dic[key] = actionMessage;
+                //_store.AddOrUpdate(key, actionMessage, (a, b) => actionMessage);
             }
         }
         
+        private static Dictionary<string,object> GetSotrage(IMQ mq)
+        {
+            Dictionary<string, object> dic;
+            if (!_store.TryGetValue(mq, out dic))
+            {
+                dic = new Dictionary<string, object>();
+                _store.AddOrUpdate(mq, dic, (a, b) => dic);
+            }
+            return dic;
+        }
+
         /// <summary>
         /// 获得处理函数
         /// </summary>
@@ -283,8 +297,10 @@ namespace SAE.CommonLibrary.MQ
             Action<TMessage> actionMessage = null;
 
             var key = NameUtils.Get<TMessage>();
+
             object @object = null;
-            if (_store.TryGetValue(key, out @object))
+            
+            if (GetSotrage(mq).TryGetValue(key, out @object))
             {
                 actionMessage = @object as Action<TMessage>;
             }

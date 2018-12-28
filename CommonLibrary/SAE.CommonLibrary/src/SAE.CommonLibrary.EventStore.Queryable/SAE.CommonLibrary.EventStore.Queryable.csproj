@@ -5,12 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TinyMapper" Version="3.0.2-beta" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SAE.Commonlibrary.EventStore\SAE.CommonLibrary.EventStore.csproj" />
     <ProjectReference Include="..\SAE.CommonLibrary.MQ\SAE.CommonLibrary.MQ.csproj" />
+    <ProjectReference Include="..\SAE.Commonlibrary.Storage\SAE.CommonLibrary.Storage.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.TinyMapper\SAE.CommonLibrary.TinyMapper.csproj" />
   </ItemGroup>
 
 </Project>

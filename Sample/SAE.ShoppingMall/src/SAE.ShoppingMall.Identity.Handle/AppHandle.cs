@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SAE.CommonLibrary.EventStore;
+﻿using SAE.CommonLibrary.EventStore;
 using SAE.CommonLibrary.MQ;
-using SAE.ShoppingMall.DocumentService;
-using SAE.ShoppingMall.Identity.DocumentService;
 using SAE.ShoppingMall.Identity.Domain.Event;
 using SAE.ShoppingMall.Identity.Dto;
 

@@ -1,6 +1,12 @@
 ﻿using SAE.ShoppingMall.Identity.Dto;
 using Xunit;
 using Xunit.Abstractions;
+using System.Linq;
+using System;
+using SAE.CommonLibrary.Common;
+using SAE.CommonLibrary.MQ;
+using SAE.CommonLibrary.EventStore.Queryable.Handle;
+using SAE.ShoppingMall.Identity.Domain.Event;
 
 namespace SAE.ShoppingMall.Identity.Application.Test
 {
@@ -8,46 +14,58 @@ namespace SAE.ShoppingMall.Identity.Application.Test
     {
         public IdentityServiceTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-         
-            
-
+           
         }
 
-        [Theory]
-        [InlineData("pjbname", "6666")]
-        public UserDto Register_User(string loginName, string password)
+        [Fact]
+        public UserDto Register_User()
         {
-            var user = this._identityService.Register(new CredentialsDto
+            var dto = new CredentialsDto
             {
-                Name = loginName,
-                Password = password
-            });
-            this.Show(user);
-            var userDto = this._userQueryServer.Find(loginName);
-            Assert.Equal(user.Credentials.Name,userDto.Credentials.Name);
+                Name = this.Random(),
+                Password = this.Random()
+            };
+            this._identityService.Create(dto);
+            var userDto = this._identityService.GetByLoginName(dto.Name);
+            this.Show(userDto);
+            var user = this._storage.AsQueryable<UserDto>()
+                                       .FirstOrDefault(s => s.Credentials.Name == dto.Name);
+            Assert.NotNull(user);
+            Assert.Equal(user.Credentials.Name, userDto.Credentials.Name);
             return user;
         }
 
-        [Theory]
-        [InlineData("mypjb1994","6666666666")]
-        public void Login(string loginName,string password)
+        [Fact]
+        public void Login()
         {
-            var userDto = this.Register_User(loginName, password);
-            
-            var user = this._identityService.Login(new CredentialsDto
-            {
-                Name = loginName,
-                Password = password
-            });
+            var dto = this.Register_User();
+
+            var user = this._identityService.Authentication(dto.Credentials);
             this.Show(user);
-            Assert.Equal(userDto.Credentials.Name,user.Credentials.Name);
-            
+            Assert.Equal(dto.Credentials.Name, user.Credentials.Name);
+
         }
-        [Theory]
-        [InlineData("mypjb1994", "6666666666")]
-        public void ChangeInfo(string loginName, string password)
+        [Fact]
+        public void ChangeInfo()
         {
-            var userDto = this.Register_User(loginName, password);
+            var dto = this.Register_User();
+            dto.Information = new UserInfoDto
+            {
+                QQ = this.Random().Substring(0, 9),
+                Phone = this.Random().Substring(0, 11),
+                BirthDate = DateTime.Now,
+                Email = $"{this.Random()}.@sae.com",
+                Sex = 1,
+                Hometown = "中国"
+            };
+            this._identityService.Update(dto);
+            dto.Information.Phone += "1";
+            var user = this._identityService.GetById(dto.Id);
+            Assert.Equal(dto.Information.BirthDate, user.Information.BirthDate);
+            Assert.Equal(dto.Information.Email, user.Information.Email);
+            Assert.Equal(dto.Information.QQ, user.Information.QQ);
+            Assert.NotEqual(dto.Information.Phone, user.Information.Phone);
+            Assert.Equal(dto.Information.Sex, user.Information.Sex);
         }
     }
 }

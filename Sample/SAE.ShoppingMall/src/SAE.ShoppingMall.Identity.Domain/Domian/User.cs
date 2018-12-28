@@ -13,18 +13,20 @@ namespace SAE.ShoppingMall.Identity.Domain
     {
         public User()
         {
-            
+            this.Credentials = new Credentials();
+            this.Information = new UserInfo();
+            this.Roles = new List<string>();
         }
 
-        public User(Credentials credentials)
+        public User(Credentials credentials):this()
         {
             this.Create(credentials);
-            this.Roles = new List<string>();
+            
         }
         /// <summary>
         /// 
         /// </summary>
-        public override IIdentity Identity => (CommonLibrary.EventStore.Identity)Id;
+        public override IIdentity Identity => this.Id.ToIdentity();
         /// <summary>
         /// id
         /// </summary>
@@ -92,7 +94,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             this.Apply(new RegisterUserEvent
             {
-                Id = Utility.GenerateId().ToString(),
+                Id = Utils.GenerateId().ToString(),
                 LoginName = credentials.Name,
                 Password = credentials.Password,
                 Salt = credentials.Salt,
@@ -105,15 +107,7 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void ChangeInformation(UserInfo userInfo)
         {
-            this.Apply(new ChangeUserInfoEvent
-            {
-                BirthDate = userInfo.BirthDate,
-                Email = userInfo.Contact.Email,
-                Hometown = userInfo.Hometown,
-                Phone = userInfo.Contact.Phone,
-                QQ = userInfo.Contact.QQ,
-                Sex = (int)userInfo.Sex,
-            });
+            this.Apply(userInfo.To<ChangeUserInfoEvent>());
             
         }
 
@@ -137,12 +131,12 @@ namespace SAE.ShoppingMall.Identity.Domain
             this.Credentials = new Credentials(@event.LoginName, @event.Password, @event.Salt);
             this.Name = this.Credentials.Name;
             this.CreateTime = @event.CreateTime;
-            this.Status = Utils.EnumTo<Status>(@event.Status);
+            this.Status = @event.Status.EnumTo<Status>();
             
         }
         internal void When(ChangeUserInfoEvent @event)
         {
-            this.Information = new UserInfo(Utils.EnumTo<Sex>(@event.Sex),
+            this.Information = new UserInfo(@event.Sex.EnumTo<Sex>(),
                                             @event.BirthDate,
                                             @event.Hometown,
                                             new Contact

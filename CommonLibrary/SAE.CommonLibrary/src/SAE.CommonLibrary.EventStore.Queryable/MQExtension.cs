@@ -154,6 +154,21 @@ namespace SAE.CommonLibrary.EventStore.Queryable
         {
             return new LimitRegistrationBuilder<TModel>(limitRegistrationBuilder.RegistrationBuilder);
         }
+
+
+        /// <summary>
+        /// 指定接下来的映射是以<typeparamref name="TModel"/>为ModelType的
+        /// </summary>
+        /// <typeparam name="TModel">模型类型</typeparam>
+        /// <param name="limitRegistrationBuilder">受限的构建者</param>
+        /// <returns>返回一个受限的构建者</returns>
+        public static ILimitRegistrationBuilder Mapping<TEvent>(this ILimitRegistrationBuilder limitRegistrationBuilder,HandlerEnum handler) where TEvent : IEvent
+        {
+            limitRegistrationBuilder.RegistrationBuilder.Mapping(limitRegistrationBuilder.ModelType, typeof(TEvent), handler);
+            return limitRegistrationBuilder;
+        }
+
+
         /// <summary>
         /// 将<seealso cref="ILimitRegistrationBuilder.RegistrationBuilder"/>中所有未被定义处理方式和ModelType的的都指定为<paramref name="handler"/>
         /// </summary>

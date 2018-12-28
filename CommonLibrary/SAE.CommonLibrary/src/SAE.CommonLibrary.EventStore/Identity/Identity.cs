@@ -19,7 +19,7 @@ namespace SAE.CommonLibrary.EventStore
         /// </summary>
         public Identity()
         {
-            this.Id = Utility.GenerateId().ToString();
+            this.Id = Utils.GenerateId().ToString();
         }
         /// <summary>
         /// 根据<paramref name="id"/>构造一个<seealso cref="对象"/>
@@ -28,7 +28,7 @@ namespace SAE.CommonLibrary.EventStore
         public Identity(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
-                id = Utility.GenerateId().ToString();
+                id = Utils.GenerateId().ToString();
             this.Id = id;
         }
         /// <summary>

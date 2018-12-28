@@ -115,8 +115,8 @@ namespace SAE.CommonLibrary.Storage.MongoDB
             var collection=this.GetCollection<T>();
 
             collection.Remove(query);
-
-            this._log.Debug($"Remove {collection.Name}:{id}");
+            
+            this._log.Info($"Remove {collection.Name}:{id}");
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace SAE.CommonLibrary.Storage.MongoDB
             Delegate @delegate;
             if (!_idDelegateStorage.TryGetValue(type, out @delegate))
             {
-                _log.Debug("Identity Delegate:Get Id Property");
+                _log.Info("Identity Delegate:Get Id Property");
                 var property = type.GetTypeInfo()
                                    .GetProperties()
                                    .Where(s => s.Name.ToLower() == "_id" || s.Name.ToLower() == "id")
@@ -153,6 +153,12 @@ namespace SAE.CommonLibrary.Storage.MongoDB
             }
 
             return @delegate.DynamicInvoke(model);
+        }
+
+        public T Find<T>(object id)
+        {
+            return this.GetCollection<T>()
+                       .FindOneById(BsonValue.Create(id));
         }
     }
 }

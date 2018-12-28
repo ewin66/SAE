@@ -6,6 +6,11 @@ namespace SAE.ShoppingMall.Identity.Dto
 {
     public class UserDto
     {
+        public UserDto()
+        {
+            this.Credentials = new CredentialsDto();
+            this.Information = new UserInfoDto();
+        }
         public string Id { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }

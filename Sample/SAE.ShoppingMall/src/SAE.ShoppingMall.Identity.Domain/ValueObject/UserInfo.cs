@@ -8,9 +8,9 @@ namespace SAE.ShoppingMall.Identity.Domain.ValueObject
     {
         public UserInfo()
         {
-
+            this.Contact = new Contact();
         }
-        public UserInfo(Sex sex,DateTime birthDate,string hometown,Contact contact)
+        public UserInfo(Sex sex,DateTime birthDate,string hometown,Contact contact):this()
         {
             this.Sex = Sex;
             this.BirthDate = birthDate;

@@ -2,16 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.EventStore.Queryable\SAE.CommonLibrary.EventStore.Queryable.csproj" />
-    <ProjectReference Include="..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.Ioc\SAE.CommonLibrary.Ioc.csproj" />
-    <ProjectReference Include="..\SAE.ShoppingMall.Identity.DocumentService\SAE.ShoppingMall.Identity.DocumentService.csproj" />
     <ProjectReference Include="..\SAE.ShoppingMall.Identity.Domain\SAE.ShoppingMall.Identity.Domain.csproj" />
     <ProjectReference Include="..\SAE.ShoppingMall.Identity.Dto\SAE.ShoppingMall.Identity.Dto.csproj" />
-    <ProjectReference Include="..\SAE.ShoppingMall.Identity.Handle\SAE.ShoppingMall.Identity.Handle.csproj" />
     <ProjectReference Include="..\SAE.ShoppingMall.Infrastructure\SAE.ShoppingMall.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Maps\" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Nelibur.ObjectMapper;
-
+﻿using SAE.CommonLibrary.ObjectMapper;
 namespace SAE.CommonLibrary.EventStore.Queryable.Default
 {
     public class TransferService : IAssignmentService
@@ -11,7 +7,10 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Default
         {
             var sourceType = source.GetType();
             var targetType = target.GetType();
-            TinyMapper.Bind(sourceType, targetType);
+            if (!TinyMapper.BindingExists(sourceType, targetType))
+            {
+                TinyMapper.Bind(sourceType, targetType);
+            }
             TinyMapper.Map(source.GetType(), target.GetType(), source, target);
         }
     }

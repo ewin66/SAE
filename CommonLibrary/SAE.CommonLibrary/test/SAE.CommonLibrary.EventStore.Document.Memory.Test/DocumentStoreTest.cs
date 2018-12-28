@@ -75,7 +75,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             user.Create(loginName, password);
             _documentStore.Save(user);
             this.Show(user);
-            var newUser = this._persistenceService.GetById<User>(user.Id);
+            var newUser = this._persistenceService.Find<User>(user.Id);
             Assert.NotNull(newUser);
             Assert.Equal(user.Id, newUser.Id);
             Assert.Equal(user.LoginName, newUser.LoginName);
@@ -97,7 +97,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             user = _documentStore.Find<User>(user.Identity);
             user.ChangePassword(originalPassword, password);
             _documentStore.Save(user);
-            var newUser = this._persistenceService.GetById<User>(user.Id);
+            var newUser = this._persistenceService.Find<User>(user.Id);
             Assert.NotNull(newUser);
             Assert.Equal(user.Id, newUser.Id);
             Assert.Equal(user.LoginName, newUser.LoginName);
@@ -120,7 +120,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             user = _documentStore.Find<User>(user.Identity);
             user.SetProperty(name,sex);
             _documentStore.Save(user);
-            var newUser = this._persistenceService.GetById<User>(user.Id);
+            var newUser = this._persistenceService.Find<User>(user.Id);
             Assert.NotNull(newUser);
             Assert.Equal(user.Id, newUser.Id);
             Assert.Equal(user.LoginName, newUser.LoginName);

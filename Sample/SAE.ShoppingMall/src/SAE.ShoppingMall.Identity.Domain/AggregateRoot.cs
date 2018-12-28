@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SAE.CommonLibrary.Common;
 using SAE.CommonLibrary.EventStore;
 using SAE.CommonLibrary.EventStore.Document;
 
@@ -21,8 +22,9 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         void IDocument.Mutate(IEvent @event)
         {
-            dynamic self = this;
-            self.When((dynamic)@event);
+            this.Extend(@event);
+            //dynamic self = this;
+            //self.When((dynamic)@event);
         }
     }
 }

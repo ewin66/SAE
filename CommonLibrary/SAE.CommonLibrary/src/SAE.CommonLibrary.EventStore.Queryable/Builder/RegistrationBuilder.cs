@@ -158,11 +158,13 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
 
         public static bool operator ==(Map left, Map right)
         {
-            if ((object)left == null || (object)right == null) return false;
+            if ((object)left == null) return (object)right==null;
+
+            if ((object)right == null) return false;
 
             if (ReferenceEquals(left, right)) return true;
 
-            return left.ToString() == right.ToString();
+            return left.GetHashCode() == right.GetHashCode() && left.ToString() == right.ToString();
         }
         public static bool operator !=(Map left, Map right)
         {

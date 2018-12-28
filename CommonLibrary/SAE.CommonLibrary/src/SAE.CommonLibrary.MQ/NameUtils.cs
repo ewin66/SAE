@@ -68,7 +68,7 @@ namespace SAE.CommonLibrary.MQ
 
             if (attr == null)
             {
-                key= $"{type.Namespace}.{type.Name}".Replace(".","_");
+                key= $"{type.Namespace}.{type.FullName}".Replace(".","_");
             }
             else
             {

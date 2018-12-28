@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using SAE.CommonLibrary.EventStore;
+using SAE.ShoppingMall.Identity.Domain.Event;
 
 namespace SAE.ShoppingMall.Identity.Domain
 {
@@ -27,6 +28,8 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// </summary>
         public string Pattern { get; set; }
 
+        public string Group { get; set; }
+
         /// <summary>
         /// 比对两者是否匹配
         /// </summary>
@@ -40,11 +43,37 @@ namespace SAE.ShoppingMall.Identity.Domain
 
     public partial class Permission
     {
+        public void Create(Permission permission)
+        {
+            this.Apply(new CreatePermissionEvent
+            {
+                Name = permission.Name,
+                Group = permission.Group,
+                Id = permission.Id,
+                Pattern = permission.Pattern
+            });
+        }
 
+        public void Change(Permission permission)
+        {
+            this.Apply(new ChangePermissionEvent
+            {
+                Name = permission.Name,
+                Group = permission.Group,
+                Pattern = permission.Pattern
+            });
+        }
     }
 
     public partial class Permission
     {
+        internal void When(ChangePermissionEvent @event)
+        {
+            
+        }
 
+        internal void When(CreatePermissionEvent @event)
+        {
+        }
     }
 }

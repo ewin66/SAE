@@ -17,19 +17,36 @@ namespace SAE.CommonLibrary.Storage.Memory
         }
         public void Add<T>(T model)
         {
+            dynamic @dynamic = model;
             this.GetStoreage<T>()
-                .Add(model);
+                .Add(@dynamic.Id,model);
         }
 
         public IQueryable<T> AsQueryable<T>()
         {
-            return this.GetStoreage<T>().AsQueryable();
+            return this.GetStoreage<T>()
+                       .Values
+                       .AsQueryable();
+        }
+
+        public T Find<T>(object id)
+        {
+            T value;
+            this.GetStoreage<T>()
+                .TryGetValue(id, out value);
+            return value;
+
         }
 
         public void Remove<T>(T model)
         {
-            this.GetStoreage<T>()
-                .Remove(model);
+            var storage = this.GetStoreage<T>();
+
+            if (storage.ContainsValue(model))
+            {
+                var kv = storage.First(s => s.Value.Equals(model));
+                storage.Remove(kv.Key);
+            }
         }
 
         public void Update<T>(T model)
@@ -37,17 +54,17 @@ namespace SAE.CommonLibrary.Storage.Memory
             
         }
 
-        private  List<T> GetStoreage<T>()
+        private Dictionary<object, T> GetStoreage<T>()
         {
             var type = typeof(T);
-            object storage;
-            if(!this._storage.TryGetValue(type,out storage))
+            object o;
+            if(!this._storage.TryGetValue(type,out o))
             {
-                storage = new List<T>();
-                this._storage.Add(type, storage);
+                o = new Dictionary<object, T>();
+                this._storage.Add(type, o);
             }
 
-            return storage as List<T>;
+            return o as Dictionary<object, T>;
             
         }
     }

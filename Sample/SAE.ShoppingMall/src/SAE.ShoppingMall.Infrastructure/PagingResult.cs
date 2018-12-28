@@ -10,7 +10,7 @@ namespace SAE.ShoppingMall.Infrastructure
     {
         public static IPagingResult<TResult> Build<TResult>(IPaging paging,IEnumerable<TResult> results)
         {
-            return Build<TResult>(paging.Index, paging.Size, paging.Count, results);
+            return Build(paging.Index, paging.Size, paging.Count, results);
         }
 
         public static IPagingResult<TResult> Build<TResult>(int index, int size, long count, IEnumerable<TResult> results)
@@ -25,7 +25,7 @@ namespace SAE.ShoppingMall.Infrastructure
         internal PagingResult(int index,int size,long count,IEnumerable<TResult> lists)
         {
             
-            this.results = new List<TResult>(lists ?? new List<TResult>());
+            this.Items = new List<TResult>(lists ?? new List<TResult>());
 
             this.Count = count;
 
@@ -39,7 +39,6 @@ namespace SAE.ShoppingMall.Infrastructure
             
         }
 
-        private readonly IEnumerable<TResult> results;
         [JsonProperty("index")]
         public int Index
         {
@@ -52,8 +51,8 @@ namespace SAE.ShoppingMall.Infrastructure
         [JsonProperty("total")]
         public int Total { get; }
         [JsonProperty("items")]
-        public IEnumerable<TResult> Items { get => this.results; }
-        public IEnumerator<TResult> GetEnumerator() => this.results.GetEnumerator();
+        public IEnumerable<TResult> Items { get; }
+        public IEnumerator<TResult> GetEnumerator() => this.Items.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }

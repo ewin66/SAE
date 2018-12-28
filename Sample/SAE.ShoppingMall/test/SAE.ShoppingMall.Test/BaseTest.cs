@@ -9,12 +9,12 @@ namespace SAE.ShoppingMall.Test
 {
     public abstract class BaseTest
     {
-        protected readonly IServiceCollection _services;
+        protected IServiceCollection Services { get; set; }
         protected ITestOutputHelper _testOutputHelper;
         public BaseTest(ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
-            _services = new ServiceCollection();
+            Services = new ServiceCollection();
         }
 
         protected virtual void Show(object @object)
