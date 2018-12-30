@@ -33,12 +33,17 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void Clear()
         {
-            this.Apply(new GrantRolePermissionEvent { Permissions = Enumerable.Empty<string>() });
+            this.Apply(new RoleGrantPermissionEvent { Permissions = Enumerable.Empty<string>() });
         }
 
         public void AddRange(IEnumerable<string> permissions)
         {
-            this.Apply(new GrantRolePermissionEvent { Permissions = permissions });
+            this.Apply(new RoleGrantPermissionEvent { Permissions = permissions });
+        }
+
+        public void Destroy()
+        {
+            this.Apply(this.To<RemoveRoleEvent>());
         }
     }
 
@@ -68,7 +73,7 @@ namespace SAE.ShoppingMall.Identity.Domain
             Assert.Build(name,"角色名称")
                   .NotNullOrWhiteSpace(name);
 
-            this.Apply(new CreateRoleEvent
+            this.Apply(new RoleCreateEvent
             {
                 Name = name,
                 Id = IdentityGenerator.Build().ToString(),
@@ -80,7 +85,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             if (permissions.Any())
             {
-                this.Apply(new GrantRolePermissionEvent
+                this.Apply(new RoleGrantPermissionEvent
                 {
                     Permissions = permissions.Select(s => s.Id)
                 });
@@ -89,7 +94,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         public void Change(Role role)
         {
             if (this.Name != role.Name) { }
-            this.Apply(new ChangeRoleEvent
+            this.Apply(new RoleChangeEvent
             {
                 Name = role.Name
             });

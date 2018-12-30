@@ -10,7 +10,7 @@ namespace SAE.ShoppingMall.Infrastructure
     {
         public static IPagingResult<TResult> Build<TResult>(IPaging paging,IEnumerable<TResult> results)
         {
-            return Build(paging.Index, paging.Size, paging.Count, results);
+            return Build(paging.PageIndex, paging.PageSize, paging.TotalNumber, results);
         }
 
         public static IPagingResult<TResult> Build<TResult>(int index, int size, long count, IEnumerable<TResult> results)
@@ -27,29 +27,29 @@ namespace SAE.ShoppingMall.Infrastructure
             
             this.Items = new List<TResult>(lists ?? new List<TResult>());
 
-            this.Count = count;
+            this.TotalNumber = count;
 
-            if (this.Count > 0)
+            if (this.TotalNumber > 0)
             {
-                this.Size = size <= 0 ? 10 : size;
-                this.Count = count;
-                this.Total = (int)Math.Ceiling(this.Total / (this.Size * 1.0M));
-                this.Index = this.Index > this.Total ? this.Total : this.Index;
+                this.PageSize = size <= 0 ? 10 : size;
+                this.TotalNumber = count;
+                this.PageCount = (int)Math.Ceiling(this.PageCount / (this.PageSize * 1.0M));
+                this.PageIndex = this.PageIndex > this.PageCount ? this.PageCount : this.PageIndex;
             }
             
         }
 
-        [JsonProperty("index")]
-        public int Index
+        [JsonProperty("pageIndex")]
+        public int PageIndex
         {
             get;
         }
-        [JsonProperty("size")]
-        public int Size { get; }
-        [JsonProperty("count")]
-        public long Count { get; set; }
-        [JsonProperty("total")]
-        public int Total { get; }
+        [JsonProperty("pageSize")]
+        public int PageSize { get; }
+        [JsonProperty("totalNumber")]
+        public long TotalNumber { get; set; }
+        [JsonProperty("pageCount")]
+        public int PageCount { get; }
         [JsonProperty("items")]
         public IEnumerable<TResult> Items { get; }
         public IEnumerator<TResult> GetEnumerator() => this.Items.GetEnumerator();

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class ChangeRoleEvent:Event
+    public class RoleChangeEvent:Event
     {
         public string Name { get; set; }
     }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using SAE.CommonLibrary.Json;
+using SAE.CommonLibrary.Json.Imp;
 
 namespace SAE.CommonLibrary.Http.Test
 {
@@ -28,8 +29,10 @@ namespace SAE.CommonLibrary.Http.Test
         private readonly HttpClient _client;
         private readonly Student _student;
         private readonly Dictionary<string, string> _dic;
+        private readonly IJsonConvertor _jsonConvertor;
         public HttpRestTest(ITestOutputHelper outpub)
         {
+            _jsonConvertor = new ServiceCollection().AddJson().BuildServiceProvider().UseServiceFacade().GetService<IJsonConvertor>();
             _dic = new Dictionary<string, string>
             {
                 {"name","01111" },
@@ -121,7 +124,7 @@ namespace SAE.CommonLibrary.Http.Test
 
             var resultString = await response.AsStringAsync();
 
-            var json = JsonHelper.Serialize(resultModel);
+            var json = _jsonConvertor.Serialize(resultModel);
 
             var bytes = new byte[resultStream.Length];
 
@@ -131,7 +134,7 @@ namespace SAE.CommonLibrary.Http.Test
 
             _outpub.WriteLine("Stream:" + Encoding.UTF8.GetString(bytes));
 
-            _outpub.WriteLine("String:" + Json.JsonHelper.Serialize(resultString));
+            _outpub.WriteLine("String:" + _jsonConvertor.Serialize(resultString));
 
             Assert.Equal(json, resultString.Trim());
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using SAE.CommonLibrary.Common;
 using SAE.CommonLibrary.EventStore;
 using SAE.ShoppingMall.Identity.Domain.Event;
 
@@ -39,13 +40,18 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             return Regex.Match(input, this.Pattern).Success;
         }
+
+        public void Destory()
+        {
+            this.Apply(this.To<RemovePermissionEvent>());
+        }
     }
 
     public partial class Permission
     {
         public void Create(Permission permission)
         {
-            this.Apply(new CreatePermissionEvent
+            this.Apply(new PermissionCreateEvent
             {
                 Name = permission.Name,
                 Group = permission.Group,
@@ -56,7 +62,7 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void Change(Permission permission)
         {
-            this.Apply(new ChangePermissionEvent
+            this.Apply(new PermissionChangeEvent
             {
                 Name = permission.Name,
                 Group = permission.Group,
@@ -67,12 +73,12 @@ namespace SAE.ShoppingMall.Identity.Domain
 
     public partial class Permission
     {
-        internal void When(ChangePermissionEvent @event)
+        internal void When(PermissionChangeEvent @event)
         {
             
         }
 
-        internal void When(CreatePermissionEvent @event)
+        internal void When(PermissionCreateEvent @event)
         {
         }
     }

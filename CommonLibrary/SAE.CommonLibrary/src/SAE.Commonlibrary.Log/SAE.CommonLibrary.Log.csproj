@@ -16,11 +16,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
-    <PackageReference Include="NLog" Version="4.5.0" />
+    <PackageReference Include="NLog" Version="4.5.11" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SAE.CommonLibrary.Common\SAE.CommonLibrary.Common.csproj" />
     <ProjectReference Include="..\SAE.Commonlibrary.Json\SAE.CommonLibrary.Json.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Provider\SAE.CommonLibrary.Provider.csproj" />
   </ItemGroup>
 
   <ItemGroup>

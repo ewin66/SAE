@@ -4,11 +4,8 @@ using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class CreatePermissionEvent:Event
+    public class AppRemoveEvent:Event
     {
         public string Id { get; set; }
-        public string Name { get; set; }
-        public string Pattern { get; set; }
-        public string Group { get; set; }
     }
 }

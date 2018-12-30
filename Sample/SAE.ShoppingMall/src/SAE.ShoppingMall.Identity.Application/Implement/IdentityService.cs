@@ -56,13 +56,15 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
         {
             var role = this._documentStore.Find<Role>(roleId.ToIdentity());
             Assert.Build(role).NotNull();
-            role.Clear();
             role.AddRange(permissions);
+            this._documentStore.Save(role);
         }
 
         public void GrantUserRoles(string userId, IEnumerable<string> roles)
         {
-            throw new NotImplementedException();
+            var user = this._documentStore.Find<User>(userId.ToIdentity());
+            user.GrantRole(roles);
+            this._documentStore.Save(user);
         }
 
         public UserDto Authentication(CredentialsDto credentialsDto)
@@ -75,9 +77,10 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
 
             var user = this._documentStore.Find<User>(userDto.Id.ToIdentity());
 
-            user.VerifyPassword(credentialsDto.Password);
+            Assert.Build(user.VerifyPassword(credentialsDto.Password))
+                  .True("密码不正确");
 
-            return userDto;
+            return user.To<UserDto>();
         }
 
 
@@ -90,34 +93,34 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
         public void RemoveUser(string id)
         {
             throw new NotImplementedException();
+            var user = this._documentStore.Find<User>(id.ToIdentity());
+            user.Destory();
+            this._documentStore.Save(user);
         }
 
         public void Update(UserDto dto)
         {
-            var newUser = dto.To<User>();
-            var user = this._documentStore.Find<User>(dto.Id.ToIdentity());
-            user.ChangeInformation(newUser.Information);
-            this._documentStore.Save(user);
+            this.Update<UserDto, User>(dto);
         }
 
         public void Update(RoleDto dto)
         {
-            throw new NotImplementedException();
+            this.Update<RoleDto, Role>(dto);
         }
 
         public void RemoveRole(string roleId)
         {
-            throw new NotImplementedException();
+            this.Remove<Role>(roleId);
         }
 
         public void Update(PermissionDto dto)
         {
-            throw new NotImplementedException();
+            this.Update<PermissionDto, Permission>(dto);
         }
 
         public void RemovePermission(string permissionId)
         {
-            throw new NotImplementedException();
+            this.Remove<Permission>(permissionId);
         }
     }
 }

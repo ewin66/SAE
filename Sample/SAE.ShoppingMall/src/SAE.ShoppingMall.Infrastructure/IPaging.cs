@@ -12,20 +12,20 @@ namespace SAE.ShoppingMall.Infrastructure
         /// <summary>
         /// 索引
         /// </summary>
-        int Index { get; }
+        int PageIndex { get; }
 
         /// <summary>
         /// 容量
         /// </summary>
-        int Size { get; }
+        int PageSize { get; }
 
-        /// <summary>
-        /// 总长度
-        /// </summary>
-        long Count { get; set; }
         /// <summary>
         /// 总页数
         /// </summary>
-        int Total { get; }
+        long TotalNumber { get; set; }
+        /// <summary>
+        /// 总长度
+        /// </summary>
+        int PageCount { get; }
     }
 }

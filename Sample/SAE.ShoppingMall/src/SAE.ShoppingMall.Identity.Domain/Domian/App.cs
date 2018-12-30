@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SAE.CommonLibrary.Common;
 using SAE.CommonLibrary.Common.Check;
 using SAE.CommonLibrary.EventStore;
 using SAE.ShoppingMall.Identity.Domain.Event;
@@ -16,9 +17,10 @@ namespace SAE.ShoppingMall.Identity.Domain
         [Obsolete()]
         public App()
         {
-
+            this.Client = new ClientCredentials();
+            this.Endpoint = new SignEndpoint();
         }
-        public App(string name,ClientCredentials clientCredentials, SignEndpoint signEndpoint)
+        public App(string name, ClientCredentials clientCredentials, SignEndpoint signEndpoint) : this()
         {
             this.Create(name, clientCredentials, signEndpoint);
         }
@@ -49,9 +51,9 @@ namespace SAE.ShoppingMall.Identity.Domain
 
     public partial class App
     {
-        public void Create(string name,ClientCredentials credentials,SignEndpoint signEndpoint)
+        public void Create(string name, ClientCredentials credentials, SignEndpoint signEndpoint)
         {
-            this.Apply(new RegisterAppEvent
+            this.Apply(new AppCreateEvent
             {
                 Id = credentials.Id,
                 Name = name,
@@ -69,14 +71,14 @@ namespace SAE.ShoppingMall.Identity.Domain
             if (this.Name != app.Name)
                 this.ChangeName(app.Name);
             if (this.Endpoint != app.Endpoint)
-                this.ChangeName(app.Name);
+                this.ChangeEndopint(app.Endpoint);
             if (this.Status != app.Status)
                 this.ChangeStatus(app.Status);
         }
 
         public void ChangeEndopint(SignEndpoint signEndpoint)
         {
-            this.Apply(new ChangeAppEndpointEvent
+            this.Apply(new AppChangeEndpointEvent
             {
                 Signin = signEndpoint.Signin,
                 Signout = signEndpoint.Signout
@@ -85,34 +87,39 @@ namespace SAE.ShoppingMall.Identity.Domain
 
         public void ChangeName(string name)
         {
-            this.Apply(new ChangeAppNameEvent
+            this.Apply(new AppChangeNameEvent
             {
-                 Name=name
+                Name = name
             });
         }
 
         public void ChangeStatus(Status status)
         {
-            this.Apply(new ChangeAppStatusEvent
+            this.Apply(new AppChangeStatusEvent
             {
                 Status = Status
             });
         }
 
-        
+
 
         public void ChangeSecret(string secret)
         {
-            this.Apply(new ChangeAppSecretEvent
+            this.Apply(new AppChangeSecretEvent
             {
                 Secret = secret
             });
+        }
+
+        public void Remove()
+        {
+            this.Apply(this.To<AppRemoveEvent>());
         }
     }
 
     public partial class App
     {
-        internal void When(RegisterAppEvent @event)
+        internal void When(AppCreateEvent @event)
         {
             this.Client = new ClientCredentials(@event.Id, @event.Secret);
             this.Endpoint = new SignEndpoint(@event.Signin, @event.Signout);
@@ -121,21 +128,21 @@ namespace SAE.ShoppingMall.Identity.Domain
             this.Status = @event.Status;
         }
 
-        internal void When(ChangeAppEndpointEvent @event)
+        internal void When(AppChangeEndpointEvent @event)
         {
-            this.Endpoint = new SignEndpoint(@event.Signin,@event.Signout);
+            this.Endpoint = new SignEndpoint(@event.Signin, @event.Signout);
         }
 
-        internal void When(ChangeAppNameEvent @event)
+        internal void When(AppChangeNameEvent @event)
         {
             this.Name = @event.Name;
         }
 
-        internal void When(ChangeAppSecretEvent @event)
+        internal void When(AppChangeSecretEvent @event)
         {
             this.Client.Secret = @event.Secret;
         }
-        internal void When(ChangeAppStatusEvent @event)
+        internal void When(AppChangeStatusEvent @event)
         {
             this.Status = @event.Status;
         }

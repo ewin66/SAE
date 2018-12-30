@@ -98,5 +98,15 @@ namespace SAE.CommonLibrary.Common
 
             return TinyMapper.Map<TModel>(o);
         }
+
+        /// <summary>
+        /// 如果<paramref name="str"/>为null或空字符串或一连串空的字符串则返回<seealso cref="bool.TrueString"/>
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpace(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
+        }
     }
 }

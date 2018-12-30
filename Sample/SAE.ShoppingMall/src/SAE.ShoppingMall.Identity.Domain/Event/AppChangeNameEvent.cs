@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class ChangeAppStatusEvent:Event
+    public class AppChangeNameEvent:Event
     {
-        public Status Status { get; set; }
+        public string Name { get; set; }
     }
 }

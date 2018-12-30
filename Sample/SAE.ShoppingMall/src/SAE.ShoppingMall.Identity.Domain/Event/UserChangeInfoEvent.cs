@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class ChangeUserInfoEvent:Event
+    public class UserChangeInfoEvent:Event
     {
       
         public int Sex { get; set; }

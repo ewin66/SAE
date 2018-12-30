@@ -18,7 +18,6 @@ namespace SAE.ShoppingMall.Identity.Domain
     /// </summary>
     public enum Status
     {
-        Delete,
         Enable,
         Disable
     }

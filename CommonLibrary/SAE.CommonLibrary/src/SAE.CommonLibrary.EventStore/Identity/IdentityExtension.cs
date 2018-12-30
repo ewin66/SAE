@@ -21,5 +21,6 @@ namespace SAE.CommonLibrary.EventStore
                   .NotNull();
             return IdentityGenerator.Build(id);
         }
+
     }
 }

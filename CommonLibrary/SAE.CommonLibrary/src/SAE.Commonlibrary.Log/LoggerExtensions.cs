@@ -1,8 +1,7 @@
-﻿#if !NET45
+﻿
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using SAE.CommonLibrary.Log;
 using SAE.CommonLibrary.Log.Imp;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,10 +19,9 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             serviceCollection.TryAddSingleton<ILogFactory, LogFactory>();
             serviceCollection.TryAddSingleton(typeof(ILog<>),typeof(Log<>));
-            
+            serviceCollection.AddJson();
             return serviceCollection;
         }
     }
 
 }
-#endif

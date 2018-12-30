@@ -22,38 +22,22 @@ namespace SAE.CommonLibrary.Log
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="condition"></param>
-        /// <param name="message"></param>
-        public void Assert(bool condition, string message)
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public bool IsEnabled(Level level)
         {
-            _log.Assert(condition, message);
+            return this._log.IsEnabled(level);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public void Write(string message)
+        /// <param name="level"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public ILog Write(string message, Level level, Exception exception)
         {
-            _log.Write(message);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="messageType"></param>
-        public void Write(string message, MessageType messageType)
-        {
-            _log.Write(message, messageType);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="messageType"></param>
-        /// <param name="ex"></param>
-        public void Write(string message, MessageType messageType, Exception ex)
-        {
-            _log.Write(message, messageType, ex);
+           return this._log.Write(message, level, exception);
         }
     }
 }

@@ -65,6 +65,15 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// </summary>
         public DateTime CreateTime { get; set; }
 
+        public void Destory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GrantRole(IEnumerable<string> roles)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public partial class User
@@ -92,7 +101,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// <param name="credentials">身份证明</param>
         public void Create(Credentials credentials)
         {
-            this.Apply(new RegisterUserEvent
+            this.Apply(new UserRegisterEvent
             {
                 Id = Utils.GenerateId().ToString(),
                 LoginName = credentials.Name,
@@ -105,9 +114,15 @@ namespace SAE.ShoppingMall.Identity.Domain
             this.ChangeInformation(new UserInfo(Sex.Woman, DateTime.Now, "", new Contact()));
         }
 
+        public void Change(User user)
+        {
+            this.ChangeInformation(user.Information);
+        }
+        
+
         public void ChangeInformation(UserInfo userInfo)
         {
-            this.Apply(userInfo.To<ChangeUserInfoEvent>());
+            this.Apply(userInfo.To<UserChangeInfoEvent>());
             
         }
 
@@ -125,7 +140,7 @@ namespace SAE.ShoppingMall.Identity.Domain
     public partial class User
     {
 
-        internal void When(RegisterUserEvent @event)
+        internal void When(UserRegisterEvent @event)
         {
             this.Id = @event.Id;
             this.Credentials = new Credentials(@event.LoginName, @event.Password, @event.Salt);
@@ -134,7 +149,7 @@ namespace SAE.ShoppingMall.Identity.Domain
             this.Status = @event.Status.EnumTo<Status>();
             
         }
-        internal void When(ChangeUserInfoEvent @event)
+        internal void When(UserChangeInfoEvent @event)
         {
             this.Information = new UserInfo(@event.Sex.EnumTo<Sex>(),
                                             @event.BirthDate,

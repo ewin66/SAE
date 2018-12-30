@@ -16,16 +16,31 @@ namespace SAE.ShoppingMall.Identity.Application.Test
         public AppDto Register()
         {
             var url = $"www.{this.Random()}.com";
-            var appDto = this._appService.Register(new AppDto
+            var dto = new AppDto
             {
                 AppId = this.Random(),
                 AppSecret = this.Random(),
                 Name = $"test_app_{this.Random()}",
                 Signin = $"{url}/login",
                 Signout = $"{url}/logut",
-            });
-            this.Show(appDto);
-            return appDto;
+            };
+            this._appService.Register(dto);
+            
+            this.Valid(dto);
+            return dto;
+        }
+
+        private void Valid(AppDto dto)
+        {
+            var app = this._appService.GetById(dto.AppId);
+            Assert.NotNull(app);
+            this.Show(app);
+            Assert.Equal(dto.AppId, app.AppId);
+            Assert.Equal(dto.AppSecret, app.AppSecret);
+            Assert.NotEqual(dto.CreateTime, app.CreateTime);
+            Assert.Equal(dto.Name, app.Name);
+            Assert.Equal(dto.Signin, app.Signin);
+            Assert.Equal(dto.Signout, app.Signout);
         }
 
         [Fact]
@@ -35,11 +50,10 @@ namespace SAE.ShoppingMall.Identity.Application.Test
             var dto = this.Register();
             dto.Name = "update_app";
             dto.AppSecret= this.Random();
-            dto.Signin= this.Random();
             dto.Signin = $"{url}/login";
             dto.Signout = $"{url}/logut";
             this._appService.Change(dto);
-            this.Show(dto);
+            this.Valid(dto);
         }
     }
 }

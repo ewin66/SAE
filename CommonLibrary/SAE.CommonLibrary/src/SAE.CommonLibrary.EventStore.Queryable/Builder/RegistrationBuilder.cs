@@ -134,17 +134,17 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
         {
             var type = this.EventType;
 
-            if (type.Name.StartsWith(nameof(HandlerEnum.Add)))
+            if (type.Name.EndsWith("CreateEvent"))
             {
                 this.Handle = HandlerEnum.Add;
             }
 
-            if (type.Name.StartsWith(nameof(HandlerEnum.Remove)))
+            if (type.Name.EndsWith($"{nameof(HandlerEnum.Remove)}Event"))
             {
                 this.Handle = HandlerEnum.Remove;
             }
 
-            if (type.Name.StartsWith(nameof(HandlerEnum.Update)))
+            if (type.Name.EndsWith($"{nameof(HandlerEnum.Update)}Event"))
             {
                 this.Handle = HandlerEnum.Update;
             }
@@ -198,10 +198,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Builder
             this.MQ = mq;
             this._store = new List<Map>();
         }
-
-
-
-
+        
         private IMQ MQ { get; }
 
         private readonly List<Map> _store;

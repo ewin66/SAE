@@ -6,6 +6,7 @@ using SAE.ShoppingMall.Identity.Domain.ValueObject;
 using SAE.ShoppingMall.Identity.Dto;
 using SAE.ShoppingMall.Infrastructure;
 using SAE.CommonLibrary.Common;
+using SAE.ShoppingMall.Identity.Dto.Query;
 
 namespace SAE.ShoppingMall.Identity.Application.Implement
 {
@@ -17,32 +18,31 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
 
         public void Change(AppDto appDto)
         {
-            var app= this._documentStore.Find<App>(IdentityGenerator.Build(appDto.AppId));
-            var newApp = appDto.To<App>();
-            app.Change(newApp);
-            this._documentStore.Save(app);
+            this.Update<AppDto, App>(appDto);
         }
 
-        public AppDto Find(string appId)
+        public AppDto GetById(string appId)
         {
             var app = this._documentStore.Find<App>(IdentityGenerator.Build(appId));
             return app.To<AppDto>();
         }
 
-        public AppDto Register(AppDto appDto)
+        public IPagingResult<AppDto> Paging(AppQuery query)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Register(AppDto appDto)
         {
             var app = new App(appDto.Name,
                               new ClientCredentials(appDto.AppId, appDto.AppSecret),
                               new SignEndpoint(appDto.Signin, appDto.Signout));
             this._documentStore.Save(app);
-            return app.To<AppDto>();
         }
 
         public void Remove(string appId)
         {
-            var app = this._documentStore.Find<App>(IdentityGenerator.Build(appId));
-            app.ChangeStatus(Status.Delete);
-            this._documentStore.Save(app);
+            this.Remove<App>(appId);
         }
     }
 }

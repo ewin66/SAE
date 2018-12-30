@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SAE.CommonLibrary.Common\SAE.CommonLibrary.Common.csproj" />
     <ProjectReference Include="..\SAE.Commonlibrary.Json\SAE.CommonLibrary.Json.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Provider\SAE.CommonLibrary.Provider.csproj" />
   </ItemGroup>
 
 </Project>

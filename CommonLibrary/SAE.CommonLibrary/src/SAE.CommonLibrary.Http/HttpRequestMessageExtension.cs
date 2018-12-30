@@ -1,4 +1,5 @@
 ﻿using SAE.CommonLibrary.Json;
+using SAE.CommonLibrary.Provider;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,8 +10,12 @@ using System.Threading.Tasks;
 
 namespace SAE.CommonLibrary.Http
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class HttpRequestMessageExtension
     {
+        internal static readonly Lazy<IJsonConvertor> _jsonConvertor = new Lazy<IJsonConvertor>(ServiceFacade.Provider.GetService<IJsonConvertor>);
         /// <summary>
         /// 
         /// </summary>
@@ -107,7 +112,8 @@ namespace SAE.CommonLibrary.Http
         /// <returns></returns>
         public static HttpRequestMessage AddJsonContent<TModel>(this HttpRequestMessage request, TModel model) where TModel : class
         {
-            var json = model == null ? "" : JsonHelper.Serialize(model);
+            var json = model == null ? "" : _jsonConvertor.Value
+                                                         .Serialize(model);
             
             return request.AddContent(value: json);
         }

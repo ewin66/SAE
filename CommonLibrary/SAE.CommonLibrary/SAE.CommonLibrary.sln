@@ -81,6 +81,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.TinyMappe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.TinyMapper", "src\SAE.CommonLibrary.TinyMapper\SAE.CommonLibrary.TinyMapper.csproj", "{6D1B9AFE-E59B-4482-9F01-76AB0C0421D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE.CommonLibrary.Provider", "src\SAE.CommonLibrary.Provider\SAE.CommonLibrary.Provider.csproj", "{4F8C5512-8887-4656-B528-FD0AA7C2735F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -235,6 +237,10 @@ Global
 		{6D1B9AFE-E59B-4482-9F01-76AB0C0421D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D1B9AFE-E59B-4482-9F01-76AB0C0421D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D1B9AFE-E59B-4482-9F01-76AB0C0421D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8C5512-8887-4656-B528-FD0AA7C2735F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8C5512-8887-4656-B528-FD0AA7C2735F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8C5512-8887-4656-B528-FD0AA7C2735F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8C5512-8887-4656-B528-FD0AA7C2735F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -277,6 +283,7 @@ Global
 		{4BE6642E-7BDF-4151-9365-BA1B82BCA0DA} = {0F0093DB-2C4D-4367-AB49-4B4D0C9C6330}
 		{F68DD734-084C-42DE-82F8-B994A3D0B8DF} = {DD75371B-490B-4728-8706-A82A88CF413D}
 		{6D1B9AFE-E59B-4482-9F01-76AB0C0421D3} = {0F0093DB-2C4D-4367-AB49-4B4D0C9C6330}
+		{4F8C5512-8887-4656-B528-FD0AA7C2735F} = {0F0093DB-2C4D-4367-AB49-4B4D0C9C6330}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {344EC8E5-C365-4594-9850-DB05265E5EE5}

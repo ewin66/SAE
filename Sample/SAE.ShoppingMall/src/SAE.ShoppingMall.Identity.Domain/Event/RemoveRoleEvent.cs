@@ -6,6 +6,6 @@ namespace SAE.ShoppingMall.Identity.Domain.Event
 {
     public class RemoveRoleEvent : Event
     {
-
+        public string Id { get; set; }
     }
 }

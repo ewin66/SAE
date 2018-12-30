@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SAE.CommonLibrary.EventStore
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class EventStoreExtension
     {
 
@@ -46,6 +49,7 @@ namespace SAE.CommonLibrary.EventStore
         /// <summary>
         /// 使用<paramref name="identity"/>返回当前版本号
         /// </summary>
+        /// <param name="store"></param>
         /// <param name="identity">事件流标识</param>
         /// <returns></returns>
         public static long GetVersion(this IEventStore store, IIdentity identity)

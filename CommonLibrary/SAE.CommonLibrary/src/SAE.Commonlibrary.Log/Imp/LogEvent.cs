@@ -1,5 +1,4 @@
-﻿using SAE.CommonLibrary.Json;
-using System;
+﻿using System;
 
 namespace SAE.CommonLibrary.Log.Imp
 {
@@ -40,9 +39,5 @@ namespace SAE.CommonLibrary.Log.Imp
         /// </summary>
         public string Message { get; set; }
 
-        public override string ToString()
-        {
-            return JsonHelper.Serialize(this);
-        }
     }
 }

@@ -21,13 +21,15 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
                                                          .AddMemoryPersistenceService()
                                                          .AddDefaultTransferService()
                                                          .AddMemoryMQ()
-                                                         .AddDefaultHandler());
+                                                         .AddDefaultHandler()
+                                                         .AddLogger());
+                                                         
             serviceProvider.UseDefaultDocumentPublish()
-                           .UseServiceProvider();
+                           .UseServiceFacade();
 
             this._documentStore=serviceProvider.GetService<IDocumentStore>();
             
-            this._mq = serviceProvider.UseServiceProvider()
+            this._mq = serviceProvider.UseServiceFacade()
                                       .GetService<IMQ>();
 
             this._persistenceService = serviceProvider.GetService<IPersistenceService>();
@@ -55,7 +57,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
                 default:
                     {
                         builder.Mapping<User, ChangePasswordEvent>(HandlerEnum.Update)
-                               .Mapping<User, AddEvent>()
+                               .Mapping<User, CreateEvent>()
                                .Mapping<User, UpdateEvent>();
                         break;
                     }

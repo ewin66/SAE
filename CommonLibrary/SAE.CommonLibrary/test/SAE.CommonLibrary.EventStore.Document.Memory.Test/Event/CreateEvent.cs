@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SAE.CommonLibrary.EventStore.Document.Memory.Test.Event
 {
-    public class AddEvent:IEvent
+    public class CreateEvent:IEvent
     {
         public string LoginName { get; set; }
         public string Password { get; set; }

@@ -1,10 +1,13 @@
-﻿using System;
+﻿using SAE.CommonLibrary.Common.Check;
+using SAE.CommonLibrary.Log;
+using SAE.CommonLibrary.Provider;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace SAE.CommonLibrary.MQ
 {
@@ -13,13 +16,11 @@ namespace SAE.CommonLibrary.MQ
     /// </summary>
     public static class MQExtension
     {
-
-        private static Func<Type, object> _provide;
         static MQExtension()
         {
-            _provide = t => Activator.CreateInstance(t);
         }
-        private static readonly ConcurrentDictionary<object,Dictionary<string,object>> _store = new ConcurrentDictionary<object, Dictionary<string, object>>();
+
+        private static readonly ConcurrentDictionary<object, Dictionary<string, object>> _store = new ConcurrentDictionary<object, Dictionary<string, object>>();
         /// <summary>
         /// 异步发布
         /// </summary>
@@ -27,7 +28,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static Task<IMQ> PublishAsync<TMessage>(this IMQ mq,TMessage message)
+        public static Task<IMQ> PublishAsync<TMessage>(this IMQ mq, TMessage message)
         {
             return Task.Run(() => mq.Publish(message));
         }
@@ -39,7 +40,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static Task<IMQ> SubscibeAsync<TMessage>(this IMQ mq,Action<TMessage> action)
+        public static Task<IMQ> SubscibeAsync<TMessage>(this IMQ mq, Action<TMessage> action)
         {
             return Task.Run(() => mq.Subscibe(action));
         }
@@ -51,7 +52,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public static IMQ Subscibe<TMessage>(this IMQ mq,IHandler<TMessage> handler)
+        public static IMQ Subscibe<TMessage>(this IMQ mq, IHandler<TMessage> handler)
         {
             return mq.Subscibe<TMessage>(m => handler.Handle(m));
         }
@@ -63,7 +64,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public static Task<IMQ> SubscibeAsync<TMessage>(this IMQ mq,IHandler<TMessage> handler)
+        public static Task<IMQ> SubscibeAsync<TMessage>(this IMQ mq, IHandler<TMessage> handler)
         {
             return Task.Run(() => mq.Subscibe(handler));
         }
@@ -74,12 +75,12 @@ namespace SAE.CommonLibrary.MQ
         /// <typeparam name="THandler"></typeparam>
         /// <param name="mq"></param>
         /// <returns></returns>
-        public static Task<IMQ> SubscibeTypeAsync<THandler>(this IMQ mq)where THandler:IHandler
+        public static Task<IMQ> SubscibeTypeAsync<THandler>(this IMQ mq) where THandler : IHandler
         {
             return mq.SubscibeTypeAsync(typeof(THandler));
         }
 
-      
+
 
         /// <summary>
         /// 订阅<typeparamref name="THandler"/>的所有<seealso cref="IHandler{TMessage}"/>接口的实现
@@ -98,7 +99,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static IMQ SubscibeType(this IMQ mq,Type type)
+        public static IMQ SubscibeType(this IMQ mq, Type type)
         {
             var typeHandler = type;
             if (typeHandler.IsInterface)
@@ -110,7 +111,7 @@ namespace SAE.CommonLibrary.MQ
                                                                                         BindingFlags.Static |
                                                                                         BindingFlags.IgnoreCase);
             var internalHandleType = typeof(Handle<>);
-            Func<object> funcObject = () => _provide.Invoke(typeHandler);
+            Func<object> funcObject = () => ServiceFacade.Provider.GetService(typeHandler);
             foreach (var @interface in typeHandler.GetInterfaces())
             {
                 if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == handleInterface)
@@ -132,7 +133,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static  Task<IMQ> SubscibeTypeAsync(this IMQ mq, Type type)
+        public static Task<IMQ> SubscibeTypeAsync(this IMQ mq, Type type)
         {
             return Task.Run(() =>
             {
@@ -146,7 +147,7 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="assemblys">程序集合</param>
         /// <returns></returns>
-        public static Task<IMQ> SubscibeAssemblyAsync(this IMQ mq,params Assembly[] assemblys)
+        public static Task<IMQ> SubscibeAssemblyAsync(this IMQ mq, params Assembly[] assemblys)
         {
             if (assemblys?.Count() <= 0)
             {
@@ -191,32 +192,9 @@ namespace SAE.CommonLibrary.MQ
             return mq;
         }
 
-        private static IMQ SubscibeInternelHandle<TMessage>(this IMQ mq,Handle<TMessage> handle)
-        {            
+        private static IMQ SubscibeInternelHandle<TMessage>(this IMQ mq, Handle<TMessage> handle)
+        {
             return mq.Subscibe<TMessage>(handle.Invoke); ;
-        }
-
-        /// <summary>
-        /// 设置服务提供工厂函数
-        /// </summary>
-        /// <param name="mq"></param>
-        /// <param name="serviceFactory"></param>
-        /// <returns></returns>
-        public static IMQ UseServiceFactory(this IMQ mq,Func<Type,object> serviceFactory)
-        {
-            _provide = serviceFactory;
-            return mq;
-        }
-        /// <summary>
-        /// 使用 <paramref name="service"/>作为服务工厂
-        /// </summary>
-        /// <param name="service">服务提供者</param>
-        /// <returns></returns>
-        public static IServiceProvider UseServiceProvider(this IServiceProvider service)
-        {
-            var mq = service.GetService(typeof(IMQ)) as IMQ;
-            mq.UseServiceFactory(service.GetService);
-            return service;
         }
 
         /// <summary>
@@ -231,7 +209,7 @@ namespace SAE.CommonLibrary.MQ
             NameUtils.Add(typeof(TMessage), key);
             return mq;
         }
-        
+
         /// <summary>
         /// 获得默认的编码
         /// </summary>
@@ -242,7 +220,7 @@ namespace SAE.CommonLibrary.MQ
             return Encoding.UTF8;
         }
 
-        
+
         /// <summary>
         /// 添加事件处理
         /// </summary>
@@ -252,7 +230,7 @@ namespace SAE.CommonLibrary.MQ
         /// <returns></returns>
         public static void Add<TMessage>(this IMQ mq, Action<TMessage> action)
         {
-            Action<TMessage> actionMessage=null;
+            Action<TMessage> actionMessage = null;
 
             var key = NameUtils.Get<TMessage>();
 
@@ -261,7 +239,7 @@ namespace SAE.CommonLibrary.MQ
             {
                 var dic = GetSotrage(mq);
 
-                if(dic.TryGetValue(key, out @object))
+                if (dic.TryGetValue(key, out @object))
                 {
                     actionMessage = @object as Action<TMessage>;
                     actionMessage += action;
@@ -274,8 +252,8 @@ namespace SAE.CommonLibrary.MQ
                 //_store.AddOrUpdate(key, actionMessage, (a, b) => actionMessage);
             }
         }
-        
-        private static Dictionary<string,object> GetSotrage(IMQ mq)
+
+        private static Dictionary<string, object> GetSotrage(IMQ mq)
         {
             Dictionary<string, object> dic;
             if (!_store.TryGetValue(mq, out dic))
@@ -299,7 +277,7 @@ namespace SAE.CommonLibrary.MQ
             var key = NameUtils.Get<TMessage>();
 
             object @object = null;
-            
+
             if (GetSotrage(mq).TryGetValue(key, out @object))
             {
                 actionMessage = @object as Action<TMessage>;
@@ -309,7 +287,9 @@ namespace SAE.CommonLibrary.MQ
             {
                 return m =>
                 {
-                    Log.LogHelper.Info<IMQ>($"订阅函数:\"{key}\"不存在");
+                    var log = ServiceFacade.Provider
+                                           .GetService<ILog<IMQ>>();
+                    log.Info($"订阅函数:\"{key}\"不存在");
                 };
             }
             else
@@ -336,6 +316,8 @@ namespace SAE.CommonLibrary.MQ
         private readonly Func<object> _handler;
         public Handle(Func<object> handler)
         {
+            Assert.Build(handler)
+                  .NotNull($"${this.GetType()}:{nameof(handler)}为Null");
             this._handler = handler;
         }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class CreateRoleEvent : Event
+    public class RoleCreateEvent : Event
     {
         /// <summary>
         /// 角色Id

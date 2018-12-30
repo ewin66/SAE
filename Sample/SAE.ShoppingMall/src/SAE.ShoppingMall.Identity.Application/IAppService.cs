@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SAE.ShoppingMall.Identity.Dto;
+using SAE.ShoppingMall.Identity.Dto.Query;
 using SAE.ShoppingMall.Infrastructure;
 
 namespace SAE.ShoppingMall.Identity.Application
@@ -16,7 +17,7 @@ namespace SAE.ShoppingMall.Identity.Application
         /// </summary>
         /// <param name="appDto"></param>
         /// <returns></returns>
-        AppDto Register(AppDto appDto);
+        void Register(AppDto appDto);
         /// <summary>
         /// 更改应用
         /// </summary>
@@ -34,6 +35,12 @@ namespace SAE.ShoppingMall.Identity.Application
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        AppDto Find(string appId);
+        AppDto GetById(string appId);
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <returns></returns>
+        IPagingResult<AppDto> Paging(AppQuery query);
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class RegisterAppEvent:Event
+    public class AppCreateEvent:Event
     {
         public string Id { get; set; }
         public string Secret { get; set; }

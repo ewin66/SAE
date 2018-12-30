@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD2_0
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using SAE.CommonLibrary.MQ;
 using SAE.CommonLibrary.MQ.Memory;
 
@@ -22,5 +21,3 @@ namespace Microsoft.Extensions.DependencyInjection
         }
     }
 }
-
-#endif

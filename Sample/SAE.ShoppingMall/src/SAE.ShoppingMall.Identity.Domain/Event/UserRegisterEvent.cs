@@ -3,7 +3,7 @@ using SAE.CommonLibrary.EventStore;
 
 namespace SAE.ShoppingMall.Identity.Domain.Event
 {
-    public class RegisterUserEvent : Event
+    public class UserRegisterEvent : Event
     {
         public string Id { get; set; }
         public string LoginName { get; set; }
