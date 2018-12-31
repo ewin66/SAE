@@ -9,7 +9,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Handle
                                                 : class, new() where TEvent : IEvent
     {
         public DefaultRemoveHandler(IPersistenceService persistenceService,
-                                    ILog<DefaultHandler<Model, TEvent>> log) : base(persistenceService, log)
+                                    ILog<DefaultRemoveHandler<Model, TEvent>> log) : base(persistenceService, log)
         {
 
         }
@@ -19,7 +19,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Handle
             var model = this._persistenceService.Find<Model>(@event.Id);
             if (model==null)
             {
-                this._log.Info($"The id is not found '{@event.Id}' '{typeof(Model)}'");
+                this._log.Info($"The id is not found '{@event.Id}' '{typeof(Model).Name}'");
                 throw new NullReferenceException(nameof(model));
             }
             this._persistenceService.Remove(model);

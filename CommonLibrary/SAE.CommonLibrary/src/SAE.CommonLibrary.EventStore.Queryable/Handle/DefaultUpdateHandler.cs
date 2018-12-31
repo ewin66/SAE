@@ -11,7 +11,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Handle
                                                 : class, new() where TEvent : IEvent
     {
         public DefaultUpdateHandler(IPersistenceService persistenceService,
-                                    ILog<DefaultHandler<Model, TEvent>> log) : base(persistenceService, log)
+                                    ILog<DefaultUpdateHandler<Model, TEvent>> log) : base(persistenceService, log)
         {
         }
 
@@ -20,11 +20,11 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Handle
             var model = this._persistenceService.Find<Model>(@event.Id);
             if (model == null)
             {
-                this._log.Info($"The id is not found '{@event.Id}' '{typeof(Model)}'");
+                this._log.Info($"The id is not found '{@event.Id}' '{typeof(Model).Name}'");
                 throw new NullReferenceException(nameof(model));
             }
 
-            this._log.Info("model:{1}", model);
+            this._log.Info("model:{0}", model);
 
             model.Extend(@event);
 

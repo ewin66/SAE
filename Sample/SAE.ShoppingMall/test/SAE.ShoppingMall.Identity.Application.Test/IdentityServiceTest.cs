@@ -26,12 +26,12 @@ namespace SAE.ShoppingMall.Identity.Application.Test
                 Password = this.Random()
             };
             this._identityService.Create(dto);
-            var userDto = this._identityService.GetByLoginName(dto.Name);
-            this.Show(userDto);
-            var user = this._storage.AsQueryable<UserDto>()
-                                       .FirstOrDefault(s => s.Credentials.Name == dto.Name);
+            this.Show(new { Credentials=dto });
+            var user = this._identityService.GetByLoginName(dto.Name);
+            var dataTime = DateTime.Now;
             Assert.NotNull(user);
-            Assert.Equal(user.Credentials.Name, userDto.Credentials.Name);
+            this.Show(user);
+            Assert.Equal(dto.Name, user.Credentials.Name);
             return user;
         }
 
@@ -58,9 +58,12 @@ namespace SAE.ShoppingMall.Identity.Application.Test
                 Sex = 1,
                 Hometown = "中国"
             };
+            dto.Name = "更新用户";
             this._identityService.Update(dto);
             dto.Information.Phone += "1";
             var user = this._identityService.GetById(dto.Id);
+            this.Show(user);
+            //Assert.Equal(dto.Name, user.Name);
             Assert.Equal(dto.Information.BirthDate, user.Information.BirthDate);
             Assert.Equal(dto.Information.Email, user.Information.Email);
             Assert.Equal(dto.Information.QQ, user.Information.QQ);

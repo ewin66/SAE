@@ -18,4 +18,10 @@
     <ProjectReference Include="..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.Json\SAE.CommonLibrary.Json.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="SAE.CommonLibrary.Provider">
+      <HintPath>..\..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.Provider\bin\Debug\netstandard2.0\SAE.CommonLibrary.Provider.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

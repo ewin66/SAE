@@ -270,7 +270,7 @@ namespace SAE.CommonLibrary.Log
                     }
                     else
                     {
-                        strArray.SetValue(_jsonConvertor.Value.Serialize(arg), i);
+                        strArray.SetValue(_jsonConvertor.Value?.Serialize(arg) ?? arg.ToString(), i);
                     }
                 }
 

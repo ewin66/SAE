@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE.CommonLibrary.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +11,21 @@ namespace SAE.CommonLibrary.Storage.Memory
     /// </summary>
     public class MemoryStorage : IStorage
     {
-        private readonly Dictionary<Type,object> _storage;
-        public MemoryStorage()
+        private readonly static object _lock = new object();
+        private static readonly Dictionary<Type, object> _storage = new Dictionary<Type, object>();
+        private readonly ILog _log;
+        public MemoryStorage(ILog<MemoryStorage> log)
         {
-            this._storage = new Dictionary<Type, object>();
+            this._log = log;
         }
         public void Add<T>(T model)
         {
-            dynamic @dynamic = model;
+            var id = ((dynamic)model).Id;
+
             this.GetStoreage<T>()
-                .Add(@dynamic.Id,model);
+                .Add(id, model);
+
+            this._log.Info("Add - {0}: {1}", model.GetType().Name, model);
         }
 
         public IQueryable<T> AsQueryable<T>()
@@ -32,10 +38,13 @@ namespace SAE.CommonLibrary.Storage.Memory
         public T Find<T>(object id)
         {
             T value;
-            this.GetStoreage<T>()
-                .TryGetValue(id, out value);
-            return value;
+            if (!this.GetStoreage<T>()
+                    .TryGetValue(id, out value))
+            {
+                this._log.Info("Find Id “{0}” Not Exist", id);
+            }
 
+            return value;
         }
 
         public void Remove<T>(T model)
@@ -45,27 +54,36 @@ namespace SAE.CommonLibrary.Storage.Memory
             if (storage.ContainsValue(model))
             {
                 var kv = storage.First(s => s.Value.Equals(model));
+                this._log.Info("Remove Key “{0}” Model:{1}", kv.Key, kv.Value);
                 storage.Remove(kv.Key);
             }
+
         }
 
         public void Update<T>(T model)
         {
-            
+
         }
 
         private Dictionary<object, T> GetStoreage<T>()
         {
             var type = typeof(T);
+
             object o;
-            if(!this._storage.TryGetValue(type,out o))
+
+            if (!_storage.TryGetValue(type, out o))
             {
-                o = new Dictionary<object, T>();
-                this._storage.Add(type, o);
+                lock (_lock)
+                {
+                    if (!_storage.TryGetValue(type, out o))
+                    {
+                        o = new Dictionary<object, T>();
+                        _storage.Add(type, o);
+                    }
+                }
             }
 
             return o as Dictionary<object, T>;
-            
         }
     }
 }

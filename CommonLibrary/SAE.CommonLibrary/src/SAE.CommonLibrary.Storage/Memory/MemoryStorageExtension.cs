@@ -1,5 +1,4 @@
-﻿#if !NET45
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using SAE.CommonLibrary.Storage;
 using SAE.CommonLibrary.Storage.Memory;
 
@@ -17,11 +16,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddMemoryStorage(this IServiceCollection serviceCollection)
         {
-         
             serviceCollection.TryAddSingleton<IStorage, MemoryStorage>();
+            serviceCollection.AddLogger();
             return serviceCollection;
         }
         
     }
 }
-#endif

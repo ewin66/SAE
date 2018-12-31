@@ -9,7 +9,7 @@ namespace SAE.CommonLibrary.EventStore.Serialize
         private readonly Lazy<IJsonConvertor> _jsonConvertor;
         public DefaultSerializer()
         {
-            _jsonConvertor = new Lazy<IJsonConvertor>(() => ServiceFacade.Provider.GetService(typeof(IJsonConvertor)) as IJsonConvertor);
+            _jsonConvertor = new Lazy<IJsonConvertor>(ServiceFacade.Provider.GetService<IJsonConvertor>);
         }
 
         public object Deserialize(string input, Type type)

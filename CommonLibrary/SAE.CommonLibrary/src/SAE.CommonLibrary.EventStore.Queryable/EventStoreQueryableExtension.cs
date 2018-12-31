@@ -30,17 +30,6 @@ namespace SAE.CommonLibrary.EventStore.Queryable
             return serviceCollection;
         }
 
-        /// <summary>
-        /// 添加默认的转让服务
-        /// </summary>
-        /// <param name="serviceCollection"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddDefaultTransferService(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.TryAddSingleton<IAssignmentService, TransferService>();
-
-            return serviceCollection;
-        }
 
         /// <summary>
         /// 添加默认处理器

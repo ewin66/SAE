@@ -12,7 +12,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Default
 
         public void Add<T>(T t) where T : class
         {
-            _store[this.GetKey(t)] = t;
+            _store.AddOrUpdate(this.GetKey(t), t, (a, b) => t);
         }
 
         public T Find<T>(string id) where T : class
@@ -31,7 +31,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Default
 
         public void Update<T>(T t) where T : class
         {
-            _store[this.GetKey(t)] = t;
+            _store.AddOrUpdate(this.GetKey(t), t, (a, b) => t);
         }
 
         private string GetKey(object o)

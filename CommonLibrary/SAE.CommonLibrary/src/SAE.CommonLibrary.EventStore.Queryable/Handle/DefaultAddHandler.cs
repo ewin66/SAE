@@ -11,7 +11,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Handle
         private readonly IJsonConvertor _jsonConvertor;
         public DefaultAddHandler(IPersistenceService persistenceService,
                                  IJsonConvertor jsonConvertor,
-                                 ILog<DefaultHandler<Model,TEvent>> log) : base(persistenceService, log)
+                                 ILog<DefaultAddHandler<Model,TEvent>> log) : base(persistenceService, log)
         {
             this._jsonConvertor = jsonConvertor;
         }

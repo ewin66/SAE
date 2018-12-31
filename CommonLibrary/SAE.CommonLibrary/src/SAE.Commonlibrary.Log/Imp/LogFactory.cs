@@ -47,7 +47,8 @@ namespace SAE.CommonLibrary.Log.Imp
         /// <returns></returns>
         public ILog Create<TCategoryName>()
         {
-            var logName=typeof(TCategoryName).FullName;
+            var type = typeof(TCategoryName);
+            var logName=$"{type.Namespace}{type.Name}";
 
             return this.Create(logName);
         }

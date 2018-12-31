@@ -28,9 +28,9 @@ namespace SAE.CommonLibrary.MQ
         /// <param name="mq"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static Task<IMQ> PublishAsync<TMessage>(this IMQ mq, TMessage message)
+        public static async Task<IMQ> PublishAsync<TMessage>(this IMQ mq, TMessage message)
         {
-            return Task.Run(() => mq.Publish(message));
+            return await Task.Factory.StartNew(() => mq.Publish(message), TaskCreationOptions.AttachedToParent);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace SAE.CommonLibrary.MQ
                 {
                     var log = ServiceFacade.Provider
                                            .GetService<ILog<IMQ>>();
-                    log.Info($"订阅函数:\"{key}\"不存在");
+                    log?.Info($"订阅函数:\"{key}\"不存在");
                 };
             }
             else
@@ -323,7 +323,19 @@ namespace SAE.CommonLibrary.MQ
 
         public void Invoke(T t)
         {
-            (this._handler.Invoke() as IHandler<T>).Handle(t);
+            var handle = this._handler.Invoke() as IHandler<T>;
+            if(handle==null)
+            {
+                ServiceFacade.Provider.GetService<ILog<Handle<T>>>()
+                                      .Error("对象没有继承{0}",typeof(IHandler<T>));
+            }
+
+            if (t == null)
+            {
+                ServiceFacade.Provider.GetService<ILog<Handle<T>>>()
+                                      .Error("事件{0}不存在", typeof(T));
+            }
+            handle.Handle(t);
         }
     }
 }

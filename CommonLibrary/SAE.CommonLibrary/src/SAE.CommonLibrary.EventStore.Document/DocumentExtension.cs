@@ -4,6 +4,7 @@ using SAE.CommonLibrary.MQ;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SAE.CommonLibrary.EventStore.Document
 {
@@ -85,10 +86,10 @@ namespace SAE.CommonLibrary.EventStore.Document
         {
             var documentEvent = provider.GetService<IDocumentEvent>() as DefaultDocumentEvent;
             var mq = provider.GetService<IMQ>();
-            documentEvent.OnAppend += async (document, events) =>
+            documentEvent.OnAppend +=async (document, events) =>
             {
                 foreach (var @event in events)
-                    await mq.PublishAsync(@event);
+                   await mq.PublishAsync(@event);
             };
             return provider;
         }

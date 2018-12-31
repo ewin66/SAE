@@ -126,7 +126,7 @@ namespace SAE.CommonLibrary.EventStore.Document
             }
 
             //从快照存储获取对应快照
-            var snapshot=await this._snapshot.FindAsync(identity);
+            var snapshot =await this._snapshot.FindAsync(identity);
             //反序列化文档
             document = this._serializer.Deserialize(snapshot.Data, Type.GetType(snapshot.Type)) as IDocument;
             //重放事件
@@ -136,7 +136,6 @@ namespace SAE.CommonLibrary.EventStore.Document
             }
             //
             await this._snapshot.SaveAsync(new Snapshot.Snapshot(identity, document, version));
-            
         }
     }
 }

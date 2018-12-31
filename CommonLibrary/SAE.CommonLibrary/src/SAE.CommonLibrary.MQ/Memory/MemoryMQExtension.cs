@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using SAE.CommonLibrary.MQ;
 using SAE.CommonLibrary.MQ.Memory;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -17,7 +18,18 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMemoryMQ(this IServiceCollection serviceCollection)
         {
             serviceCollection.TryAddSingleton<IMQ, MemoryMQ>();
+            serviceCollection.AddLogger();
             return serviceCollection;
+        }
+
+        /// <summary>
+        /// 使用MQ设施
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static IServiceProvider UseMQ(this IServiceProvider serviceProvider)
+        {
+            return serviceProvider.UseServiceFacade();
         }
     }
 }

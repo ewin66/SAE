@@ -2,6 +2,8 @@
 using SAE.CommonLibrary.EventStore.Queryable;
 using SAE.CommonLibrary.EventStore.Queryable.Builder;
 using SAE.CommonLibrary.MQ;
+using SAE.ShoppingMall.Identity.Application;
+using SAE.ShoppingMall.Identity.Application.Implement;
 using SAE.ShoppingMall.Identity.Domain;
 using SAE.ShoppingMall.Identity.Domain.Event;
 using SAE.ShoppingMall.Identity.Dto;
@@ -13,39 +15,38 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
-
-            services.AddMemoryMQ()
+            services.AddSingleton<IIdentityService, IdentityService>()
+                    .AddSingleton<IAppService, AppService>()
+                    .AddMemoryMQ()
                     .AddMemoryStorage()
                     .AddMemberDocument()
-                    .AddDefaultTransferService()
                     .AddStoragePersistenceService()
                     .AddDefaultHandler();
                     
-                   
             return services;
         }
 
         public static IServiceProvider UseApplicationService(this IServiceProvider provider)
         {
-            provider.UseServiceProvider();
+            provider.UseServiceFacade();
 
             var mq = provider.GetService<IMQ>();
             mq.CreateBuilder()
               .RegisterAssembly(typeof(IAggregateRoot).Assembly)
               .Mapping<UserDto>()
               .Mapping<UserRegisterEvent>(HandlerEnum.Add)
-              .Mapping(HandlerEnum.Update,t=> t.Name.StartsWith($"Change{nameof(User)}"))
+              .Mapping(HandlerEnum.Update,t=> t.Name.StartsWith($"{nameof(User)}Change"))
               .Mapping<AppDto>()
               .Mapping<AppCreateEvent>(HandlerEnum.Add)
-              .Mapping(HandlerEnum.Update, t => t.Name.StartsWith($"Change{nameof(App)}"))
+              .Mapping(HandlerEnum.Update, t => t.Name.StartsWith($"{nameof(App)}Change"))
               .Mapping<Permission>()
-              .Mapping(HandlerEnum.Update, t => t.Name.StartsWith($"Change{nameof(Permission)}"))
+              .Mapping(HandlerEnum.Update, t => t.Name.StartsWith($"{nameof(Permission)}Change"))
               .Mapping<RoleDto>()
-              .Mapping(HandlerEnum.Update,t => t.Name.StartsWith($"Change{nameof(Role)}"))
+              .Mapping(HandlerEnum.Update,t => t.Name.StartsWith($"{nameof(Role)}Change"))
               .RegistrationBuilder
               .Build();
               
-            provider.UseServiceProvider();
+            provider.UseServiceFacade();
 
             
 

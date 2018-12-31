@@ -20,9 +20,9 @@ namespace SAE.CommonLibrary.EventStore.Document
         /// </summary>
         /// <param name="document"></param>
         /// <param name="events"></param>
-        public Task AppendAsync(IDocument document, IEnumerable<IEvent> events)
+        public async Task AppendAsync(IDocument document, IEnumerable<IEvent> events)
         {
-            return this.OnAppend==null?Task.CompletedTask:this.OnAppend.Invoke(document,events);
+            await this.OnAppend?.Invoke(document, events);
         }
     }
 }
