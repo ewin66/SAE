@@ -11,4 +11,8 @@
     <PackageReference Include="xunit.abstractions" Version="2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SAE.CommonLibrary.Provider\SAE.CommonLibrary.Provider.csproj" />
+  </ItemGroup>
+
 </Project>

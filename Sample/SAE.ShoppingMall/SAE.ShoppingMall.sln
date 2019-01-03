@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.TinyMappe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Provider", "..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.Provider\SAE.CommonLibrary.Provider.csproj", "{08688C28-3871-418B-A0FF-B6A7D7977A52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE.ShoppingMall.Identity", "src\SAE.ShoppingMall.Identity\SAE.ShoppingMall.Identity.csproj", "{633EB2A3-4892-4EB9-8920-B4A510A5BAC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{08688C28-3871-418B-A0FF-B6A7D7977A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08688C28-3871-418B-A0FF-B6A7D7977A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08688C28-3871-418B-A0FF-B6A7D7977A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{633EB2A3-4892-4EB9-8920-B4A510A5BAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{633EB2A3-4892-4EB9-8920-B4A510A5BAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{633EB2A3-4892-4EB9-8920-B4A510A5BAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{633EB2A3-4892-4EB9-8920-B4A510A5BAC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,6 +193,7 @@ Global
 		{FF13CAB4-DEC7-4161-8786-B18672AA9DD1} = {4BEF4E24-94E6-4439-A372-C506E270F925}
 		{3BD413E5-3CFD-4B96-A6A6-0EAC2F20F29C} = {4BEF4E24-94E6-4439-A372-C506E270F925}
 		{08688C28-3871-418B-A0FF-B6A7D7977A52} = {4BEF4E24-94E6-4439-A372-C506E270F925}
+		{633EB2A3-4892-4EB9-8920-B4A510A5BAC2} = {651E6595-8EF2-404A-9BAE-657CEE6C061A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1BA8C3B-9C35-46EF-8C84-B1F455C97D73}

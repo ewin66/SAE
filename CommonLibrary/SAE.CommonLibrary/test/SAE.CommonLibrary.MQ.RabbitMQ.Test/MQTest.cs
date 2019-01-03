@@ -38,7 +38,6 @@ namespace SAE.CommonLibrary.MQ.RabbitMQ.Test
             //          .GetService<IMQ>();
 
             _mq = Unit.GetProvider(s => s.AddMemoryMQ())
-                      .UseServiceFacade()
                       .GetService<IMQ>();
 
         }

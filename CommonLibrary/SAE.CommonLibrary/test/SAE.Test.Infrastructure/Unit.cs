@@ -15,7 +15,8 @@ namespace SAE.Test.Infrastructure
         {
             var serviceCollection = new ServiceCollection();
             action(serviceCollection);
-            return serviceCollection.BuildServiceProvider();
+            return serviceCollection.BuildServiceProvider()
+                                    .UseServiceFacade();
         }
         static Unit()
         {

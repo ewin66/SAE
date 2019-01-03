@@ -22,14 +22,5 @@ namespace Microsoft.Extensions.DependencyInjection
             return serviceCollection;
         }
 
-        /// <summary>
-        /// 使用MQ设施
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <returns></returns>
-        public static IServiceProvider UseMQ(this IServiceProvider serviceProvider)
-        {
-            return serviceProvider.UseServiceFacade();
-        }
     }
 }

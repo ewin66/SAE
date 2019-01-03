@@ -19,18 +19,15 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
         {
             var serviceProvider = Unit.GetProvider(s => s.AddMemberDocument()
                                                          .AddMemoryPersistenceService()
-                                                         .AddDefaultTransferService()
                                                          .AddMemoryMQ()
                                                          .AddDefaultHandler()
                                                          .AddLogger());
                                                          
-            serviceProvider.UseDefaultDocumentPublish()
-                           .UseServiceFacade();
+            serviceProvider.UseDefaultDocumentPublish();
 
             this._documentStore=serviceProvider.GetService<IDocumentStore>();
             
-            this._mq = serviceProvider.UseServiceFacade()
-                                      .GetService<IMQ>();
+            this._mq = serviceProvider.GetService<IMQ>();
 
             this._persistenceService = serviceProvider.GetService<IPersistenceService>();
             

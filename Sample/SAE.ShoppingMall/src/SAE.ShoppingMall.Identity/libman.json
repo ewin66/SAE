@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "defaultDestination": "wwwroot/lib",
+  "packages": [],
+  "libraries": [
+    {
+      "library": "jquery@3.3.1",
+      "destination": "wwwroot/lib/jquery",
+      "files": [
+        "jquery.js",
+        "jquery.min.js"
+      ]
+    },
+    {
+      "library": "require.js@2.3.6",
+      "destination": "wwwroot/lib/require"
+    },
+    {
+      "library": "require-css@0.1.10",
+      "destination": "wwwroot/lib/require"
+    },
+    {
+      "library": "require-text@2.0.12",
+      "destination": "wwwroot/lib/require"
+    },
+    {
+      "library": "requirejs-plugins@1.0.3",
+      "destination": "wwwroot/lib/require",
+      "files": [ "json.min.js" ]
+    },
+    {
+      "library": "admin-lte@2.4.8",
+      "destination": "wwwroot/lib/admin-lte"
+    },
+    {
+      "library": "react@16.7.0",
+      "destination": "wwwroot/lib/react"
+    },
+    {
+      "library": "react-dom@16.7.0",
+      "destination": "wwwroot/lib/react"
+    },
+    {
+      "library": "redux@4.0.1",
+      "destination": "wwwroot/lib/redux"
+    }
+  ]
+}

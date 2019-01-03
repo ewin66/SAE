@@ -13,7 +13,6 @@ namespace SAE.CommonLibrary.Log.Test
             //-----------------------------------------------------------------------------------------//
             //创建一个LogHelperTest的日志记录器
             this._log = Unit.GetProvider(server=>server.AddLogger())
-                            .UseServiceFacade()
                             .GetService<ILog<LogHelperTest>>();
         }
         [Theory]
