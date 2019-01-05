@@ -32,8 +32,7 @@ namespace SAE.ShoppingMall.Identity.Application.Test
 
             this._provider = this._services.BuildServiceProvider()
                              //new AutofacServiceProvider(containerBuilder.Build())
-                             .UseApplicationService()
-                             .UseDefaultDocumentPublish();
+                             .UseApplicationService();
 
 
             this._identityService = _provider.GetService<IIdentityService>();

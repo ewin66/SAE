@@ -38,9 +38,9 @@ namespace SAE.CommonLibrary.EventStore.Queryable
         /// <returns></returns>
         public static IServiceCollection AddDefaultHandler(this IServiceCollection services)
         {
-            services.TryAddScoped(typeof(DefaultAddHandler<,>), typeof(DefaultAddHandler<,>));
-            services.TryAddScoped(typeof(DefaultUpdateHandler<,>), typeof(DefaultUpdateHandler<,>));
-            services.TryAddScoped(typeof(DefaultRemoveHandler<,>), typeof(DefaultRemoveHandler<,>));
+            services.TryAddTransient(typeof(DefaultAddHandler<,>), typeof(DefaultAddHandler<,>));
+            services.TryAddTransient(typeof(DefaultUpdateHandler<,>), typeof(DefaultUpdateHandler<,>));
+            services.TryAddTransient(typeof(DefaultRemoveHandler<,>), typeof(DefaultRemoveHandler<,>));
             return services;
         }
     }

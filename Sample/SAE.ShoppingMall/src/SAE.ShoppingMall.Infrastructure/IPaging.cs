@@ -22,10 +22,11 @@ namespace SAE.ShoppingMall.Infrastructure
         /// <summary>
         /// 总页数
         /// </summary>
-        long TotalNumber { get; set; }
-        /// <summary>
-        /// 总长度
-        /// </summary>
         int PageCount { get; }
+        /// <summary>
+        /// 总个数
+        /// </summary>
+        long TotalNumber { get; set; }
+        
     }
 }

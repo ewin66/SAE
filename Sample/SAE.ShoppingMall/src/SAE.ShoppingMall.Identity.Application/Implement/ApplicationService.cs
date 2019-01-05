@@ -7,6 +7,10 @@ using SAE.ShoppingMall.Identity.Domain;
 using SAE.ShoppingMall.Identity.Domain.Event;
 using SAE.ShoppingMall.Identity.Domain.ValueObject;
 using SAE.ShoppingMall.Identity.Dto;
+using SAE.ShoppingMall.Infrastructure;
+using SAE.ShoppingMall.Infrastructure.Specification;
+using System;
+using System.Linq;
 
 namespace SAE.ShoppingMall.Identity.Application.Implement
 {
@@ -108,7 +112,7 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
             });
         }
 
-        protected virtual void Remove<TAggregateRoot>(string id) where TAggregateRoot :IDocument, new()
+        protected virtual void Remove<TAggregateRoot>(string id) where TAggregateRoot : IDocument, new()
         {
             var aggregate = this._documentStore.Find<TAggregateRoot>(id.ToIdentity());
             dynamic dynamic = aggregate; ;
@@ -116,13 +120,49 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
             this._documentStore.Save(aggregate);
         }
 
-        public virtual void Update<TDto, TAggregateRoot>(TDto dto)where TDto:class where TAggregateRoot : IDocument, new()
+        public virtual void Update<TDto, TAggregateRoot>(TDto dto) where TDto : class where TAggregateRoot : IDocument, new()
         {
             var @object = dto.To<TAggregateRoot>();
             var aggregate = this._documentStore.Find<TAggregateRoot>(@object.Identity);
             dynamic dynamic = aggregate;
             dynamic.Change(@object);
             this._documentStore.Save(aggregate);
+        }
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="TDto">查询对象</typeparam>
+        /// <param name="paging">分页对象</param>
+        /// <param name="specification">查询对象</param>
+        /// <param name="pagingBefore">分页前</param>
+        /// <param name="pagingAfter">分页后</param>
+        /// <returns></returns>
+        public virtual IPagingResult<TDto> Paging<TDto>(IPaging paging,
+            ISpecification<TDto> specification,
+            Func<IQueryable<TDto>, IQueryable<TDto>> pagingBefore = null,
+            Func<IQueryable<TDto>, IQueryable<TDto>> pagingAfter = null)
+        {
+            var query = this._storage.AsQueryable<TDto>();
+            if (specification != null && specification.Expression != null)
+            {
+                query = query.Where(specification.Expression);
+            }
+
+            paging.TotalNumber = query.Count();
+
+            if (pagingBefore != null)
+            {
+                query = pagingBefore(query);
+            }
+
+            query = query.Skip((paging.PageIndex - 1) * paging.PageSize)
+                         .Take(paging.PageSize);
+            if (pagingAfter != null)
+            {
+                query = pagingAfter(query);
+            }
+            return PagingResult.Build(paging, query.ToList());
         }
     }
 }

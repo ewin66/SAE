@@ -1,4 +1,5 @@
-﻿using SAE.CommonLibrary.EventStore.Document.Memory;
+﻿using SAE.CommonLibrary.EventStore.Document;
+using SAE.CommonLibrary.EventStore.Document.Memory;
 using SAE.CommonLibrary.EventStore.Queryable;
 using SAE.CommonLibrary.EventStore.Queryable.Builder;
 using SAE.CommonLibrary.MQ;
@@ -28,9 +29,11 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceProvider UseApplicationService(this IServiceProvider provider)
         {
-            provider.UseServiceFacade();
+            provider.UseServiceFacade()
+                    .UseDefaultDocumentPublish();
 
             var mq = provider.GetService<IMQ>();
+
             mq.CreateBuilder()
               .RegisterAssembly(typeof(IAggregateRoot).Assembly)
               .Mapping<UserDto>()
@@ -45,29 +48,7 @@ namespace Microsoft.Extensions.DependencyInjection
               .Mapping(HandlerEnum.Update,t => t.Name.StartsWith($"{nameof(Role)}Change"))
               .RegistrationBuilder
               .Build();
-              
-            provider.UseServiceFacade();
-
-            
-
-            //var appService = provider.GetService<IAppService>();
-            //var identityService = provider.GetService<IIdentityService>();
-
-            //appService.Register(new AppDto
-            //{
-            //    AppId = "sae.admin.com",
-            //    AppSecret = "sae.admin.secret",
-            //    Name = "SAE Admin",
-            //    Signin = "http://admin.sae.com:12002/signin-oidc",
-            //    Signout = "http://admin.sae.com:12002/signout"
-            //});
-
-            //identityService.Register(new CredentialsDto
-            //{
-            //    Name = "mypjb1994",
-            //    Password = "Aa123456"
-            //});
-
+             
             return provider;
         }
     }

@@ -7,6 +7,8 @@ using SAE.ShoppingMall.Identity.Dto;
 using SAE.ShoppingMall.Infrastructure;
 using SAE.CommonLibrary.Common;
 using SAE.ShoppingMall.Identity.Dto.Query;
+using System.Linq;
+using SAE.ShoppingMall.Infrastructure.Specification;
 
 namespace SAE.ShoppingMall.Identity.Application.Implement
 {
@@ -29,7 +31,7 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
 
         public IPagingResult<AppDto> Paging(AppQuery query)
         {
-            throw new System.NotImplementedException();
+            return this.Paging(query, query);
         }
 
         public void Register(AppDto appDto)

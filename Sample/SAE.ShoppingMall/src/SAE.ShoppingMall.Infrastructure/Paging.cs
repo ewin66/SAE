@@ -42,5 +42,14 @@ namespace SAE.ShoppingMall.Infrastructure
         {
             get; set;
         }
+
+        public int Begin
+        {
+            get => this.PageSize * (this.PageIndex - 1) + 1;
+        }
+        public int End
+        {
+            get => this.pageSize * this.PageIndex;
+        }
     }
 }

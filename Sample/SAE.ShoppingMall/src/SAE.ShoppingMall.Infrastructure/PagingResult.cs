@@ -24,16 +24,15 @@ namespace SAE.ShoppingMall.Infrastructure
     {
         internal PagingResult(int index,int size,long count,IEnumerable<TResult> lists)
         {
-            
             this.Items = new List<TResult>(lists ?? new List<TResult>());
-
+            this.PageIndex = index;
+            this.PageSize = size <= 0 ? 10 : size;
             this.TotalNumber = count;
-
+            
             if (this.TotalNumber > 0)
             {
-                this.PageSize = size <= 0 ? 10 : size;
                 this.TotalNumber = count;
-                this.PageCount = (int)Math.Ceiling(this.PageCount / (this.PageSize * 1.0M));
+                this.PageCount = (int)Math.Ceiling(this.TotalNumber / (this.PageSize * 1.0M));
                 this.PageIndex = this.PageIndex > this.PageCount ? this.PageCount : this.PageIndex;
             }
             
