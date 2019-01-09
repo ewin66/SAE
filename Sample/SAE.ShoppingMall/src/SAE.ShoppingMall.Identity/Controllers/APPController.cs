@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SAE.CommonLibrary.MvcExtension;
 using SAE.ShoppingMall.Identity.Application;
 using SAE.ShoppingMall.Identity.Dto.Query;
 
@@ -17,7 +18,7 @@ namespace SAE.ShoppingMall.Identity.Controllers
             this._appService = appService;
         }
 
-        [HttpGet]
+        [RequestSeparate]
         public IActionResult Index(AppQuery query)
         {
             var data = this._appService.Paging(query);

@@ -16,6 +16,7 @@ define(function () {
     };
     
     route.add("/", "/home/index");
+    route.add("/app", "/app/index");
 
     return route;
 });

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,11 +45,20 @@ namespace SAE.ShoppingMall.Identity
 
                 appService.Register(new AppDto
                 {
-                    AppId = "sae.admin.com",
-                    AppSecret = "sae.admin.secret",
+                    AppId = "admin.sae.com",
+                    AppSecret = "admin.sae.secret",
                     Name = "SAE Admin",
                     Signin = "http://admin.sae.com:12002/signin-oidc",
                     Signout = "http://admin.sae.com:12002/signout"
+                });
+
+                appService.Register(new AppDto
+                {
+                    AppId = "open.sae.com",
+                    AppSecret = "open.sae.secret",
+                    Name = "SAE Open",
+                    Signin = "http://open.sae.com:12002/signin-oidc",
+                    Signout = "http://open.sae.com:12002/signout"
                 });
 
                 identityService.Create(new CredentialsDto
@@ -71,10 +74,8 @@ namespace SAE.ShoppingMall.Identity
                 app.UseHsts();
             }
            
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {

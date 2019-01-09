@@ -1,7 +1,6 @@
 ﻿/// <reference path="../lib/require/require.min.js" />
 (function () {
     const version = new Date().getTime().toString();
-    debugger;
     require.config({
         urlArgs: "v=" + version,
         baseUrl: "/lib",
@@ -20,6 +19,9 @@
             "bootstrap": "bootstrap/js/bootstrap",
             //local
             "route": "/js/route",
+            "template": "/js/template",
+            "common": "/js/common",
+            "httpClient": "/js/httpClient",
         },
         shim: {
             "adminlte": {
