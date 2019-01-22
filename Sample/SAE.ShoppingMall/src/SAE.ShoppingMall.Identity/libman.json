@@ -56,6 +56,10 @@
     {
       "library": "font-awesome@4.7.0",
       "destination": "wwwroot/lib/fontawesome"
+    },
+    {
+      "library": "datatables@1.10.19",
+      "destination": "wwwroot/lib/datatables"
     }
   ]
 }

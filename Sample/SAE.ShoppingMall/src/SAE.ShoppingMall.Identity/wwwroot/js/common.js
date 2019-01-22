@@ -1,6 +1,23 @@
 ﻿/// <reference path="../lib/require/require.min.js" />
 define(function () {
     const common = {};
+    // format date example: date.format("yyyy-MM-dd");
+    Date.prototype.format = function (fmt) { //author: meizz 
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
     if (!String.prototype.format) {
         //format string
         String.prototype.format = function (args) {
@@ -25,19 +42,36 @@ define(function () {
     }
     //http https protocol regexp
     const protocolRegExp = /^https?:\/\//;
-    
+
+    //'obj' is string ?
+    common.isString = function (obj) {
+        return typeof (obj) == 'string';
+    }
+    //'obj' is Array ?
+    common.isArray = function (obj) {
+        return Array.isArray(obj);
+    }
+    //'obj' is function ?
+    common.isFunction = function (obj) {
+        return typeof (obj) == 'function';
+    }
+    //'obj' is object ?
+    common.isObject = function (obj) {
+        return typeof (obj) == "object";
+    }
+
     //change browser address bar url
     common.changeUrl = function (url) {
         if (history.replaceState) {
-            if (!url) {
+            if (url) {
                 if (protocolRegExp.test(url)) {
-                    if (url.indexOf("/")!=-1) {
+                    if (url.indexOf("/") != -1) {
                         url = url.substr(url.indexOf("/"));
                     } else {
                         console.error("Can only change 'pathname' and 'search'");
                     }
                 }
-                if (url.indexOf("?") != 0 || url.indexOf("/") != 0) {
+                if (url.indexOf("?") != 0 && url.indexOf("/") != 0) {
                     if (window.location.search.indexOf("?") == 0) {
                         url = window.location.search + "&" + url;
                     } else {

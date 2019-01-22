@@ -17,6 +17,7 @@
             //adminlte
             "adminlte": "admin-lte/js/adminlte",
             "bootstrap": "bootstrap/js/bootstrap",
+            "dataTables": "datatables/js/jquery.dataTables",
             //local
             "route": "/js/route",
             "template": "/js/template",

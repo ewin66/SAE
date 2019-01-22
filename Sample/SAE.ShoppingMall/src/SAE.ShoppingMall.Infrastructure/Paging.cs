@@ -19,7 +19,7 @@ namespace SAE.ShoppingMall.Infrastructure
             get { return this.pageIndex; }
             set
             {
-                this.pageIndex = value < DefaultIndex ? DefaultIndex : value;
+                this.pageIndex = value < 1 ? DefaultIndex : value;
             }
         }
 
@@ -29,7 +29,7 @@ namespace SAE.ShoppingMall.Infrastructure
             get { return this.pageSize; }
             set
             {
-                this.pageSize = value < DefaultSize ? DefaultSize : value;
+                this.pageSize = value < 1 ? DefaultSize : value;
             }
         }
 
