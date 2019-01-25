@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SAE.ShoppingMall.Identity.Application;
 using SAE.ShoppingMall.Identity.Dto;
+using SAE.CommonLibrary.MvcExtension;
 using System;
 
 namespace SAE.ShoppingMall.Identity
@@ -29,7 +30,9 @@ namespace SAE.ShoppingMall.Identity
             //});
             services.AddApplicationService();
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                    .AddValidation()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

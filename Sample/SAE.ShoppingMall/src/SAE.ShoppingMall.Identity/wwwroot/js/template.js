@@ -217,7 +217,8 @@ function (React, ReactDOM, $, common, httpClient) {
             const self = this;
             this.state.data.forEach(function (row, index) {
                 const tds = self.props.columns.map(function (column) {
-                    return React.createElement("td", {}, (column.render || self.defaultRowRender)(row[column.name], row))
+                    //new Function("function(data){0}".format())
+                    return React.createElement("td", {}, (column.render || self.defaultRowRender)(common.propertyAccessor(row, column.name), row))
                 });
                 if (!self.props.ignoreIndexColumn) {
                     tds.unshift(React.createElement("td", {}, index + 1));
@@ -226,7 +227,7 @@ function (React, ReactDOM, $, common, httpClient) {
                 rows.push(React.createElement("tr", { className: className }, tds));
             });
             if (rows.length == 0) {
-                rows.push(React.createElement("tr", {}, React.createElement("td", { colspan: this.props.columns.length + (self.props.ignoreIndexColumn ? 0 : 1) }, "暂无数据!")));
+                rows.push(React.createElement("tr", {}, React.createElement("td", { colSpan: this.props.columns.length + (self.props.ignoreIndexColumn ? 0 : 1) }, "暂无数据!")));
             }
             return React.createElement("tbody", {}, rows);
         }

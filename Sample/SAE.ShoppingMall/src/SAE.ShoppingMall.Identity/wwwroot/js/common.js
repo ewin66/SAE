@@ -17,7 +17,7 @@ define(function () {
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
-
+    
     if (!String.prototype.format) {
         //format string
         String.prototype.format = function (args) {
@@ -114,7 +114,11 @@ define(function () {
             console.warn("name is null");
         }
     }
-
-
+    // property accessor
+    common.propertyAccessor = function (obj, property) {
+        const func = new Function("o","return o.{0};".format(property));
+        return func(obj);
+    }
+    
     return common;
 });

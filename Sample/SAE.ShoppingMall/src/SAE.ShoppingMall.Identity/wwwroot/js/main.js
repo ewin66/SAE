@@ -11,6 +11,9 @@
             "json": "require/json",
             //jquery
             "jquery": "jquery/jquery",
+            "jquery-validate": "jquery-validate/jquery.validate",
+            "jquery-form":"jquery-form/jquery.form",
+            "validate": "/js/validate",
             //react
             "react": "react/umd/react.development",
             "react-dom": "react/umd/react-dom.development",
@@ -18,11 +21,13 @@
             "adminlte": "admin-lte/js/adminlte",
             "bootstrap": "bootstrap/js/bootstrap",
             "dataTables": "datatables/js/jquery.dataTables",
+            "sweetalert":"sweetalert2/sweetalert2.all",
             //local
             "route": "/js/route",
             "template": "/js/template",
             "common": "/js/common",
             "httpClient": "/js/httpClient",
+            "popup": "/js/popup",
         },
         shim: {
             "adminlte": {
@@ -36,6 +41,9 @@
             },
             "bootstrap": {
                 deps: ["jquery","css!/lib/bootstrap/css/bootstrap"]
+            },
+            "sweetalert": {
+                deps: ["css!/lib/sweetalert2/sweetalert2.min"]
             }
         }
     });

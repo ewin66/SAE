@@ -1,6 +1,6 @@
 ﻿/// <reference path="../lib/require/require.min.js" />
 /// <reference path="../lib/jquery/jquery.min.js" />
-define(["jquery","route"], function ($,route) {
+define(["jquery", "route", "popup", "common"], function ($, route, popup, common) {
 
     //http client object
     const httpClient = function (method, url, data) {
@@ -12,10 +12,10 @@ define(["jquery","route"], function ($,route) {
             url: url,
             data: data,
             success: function (data) {
-                httpClient.defaultSuccess(data, self.success);
+                httpClient.defaultSuccess.call(self, data, self.success);
             },
             error: function (e) {
-                httpClient.defaultError(e, self.error);
+                httpClient.defaultError.call(self, e, self.error);
             }
         };
         //start request
@@ -29,7 +29,7 @@ define(["jquery","route"], function ($,route) {
             if (data.statusCode == 0) {
                 success(data.body);
             } else {
-                httpClient.defaultError(data);
+                httpClient.defaultError.call(this, data, this.error);
             }
         } else {
             success(data);
@@ -38,22 +38,22 @@ define(["jquery","route"], function ($,route) {
     //default error callback
     httpClient.defaultError = function (e, error) {
 
-        if (error && error(e)) {
+        if (error && common.isFunction(error) && error(e)) {
             return;
         }
-
-        if (e && e.statusCode) {
-            console.error(e.statusMessages)
+        debugger;
+        if (e && e.status == null && e.statusCode) {
+            popup.error(e.statusMessages)
         } else if (e.status) {
             switch (e.status) {
                 case 401:
                     window.location.href = route.login;
                     break;
                 case 403:
-                    alert("您没有权限执行该操作");
+                    popup.error("您没有权限执行该操作");
                     break;
                 default:
-                    alert("网络异常，请稍后访问");
+                    popup.error("网络异常，请稍后访问");
                     break;
             }
         }

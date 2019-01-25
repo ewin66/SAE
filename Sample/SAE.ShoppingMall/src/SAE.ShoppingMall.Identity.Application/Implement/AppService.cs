@@ -37,7 +37,6 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
         public void Register(AppDto appDto)
         {
             var app = new App(appDto.Name,
-                              new ClientCredentials(appDto.AppId, appDto.AppSecret),
                               new SignEndpoint(appDto.Signin, appDto.Signout));
             this._documentStore.Save(app);
         }

@@ -10,6 +10,7 @@ namespace SAE.ShoppingMall.Identity.Controllers
     {
         public IActionResult Index()
         {
+            
             return View();
         }
     }

@@ -3,6 +3,8 @@ using SAE.CommonLibrary.Common.Check;
 using SAE.CommonLibrary.ObjectMapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SAE.CommonLibrary.Common
 {
@@ -85,6 +87,20 @@ namespace SAE.CommonLibrary.Common
         /// <returns></returns>
         public static TEnum EnumTo<TEnum>(this int input) where TEnum : struct
         => EnumTo<TEnum>(input);
+
+        /// <summary>
+        /// 获得<paramref name="enum"/>Display“Name”
+        /// </summary>
+        /// <param name="enum"></param>
+        /// <returns></returns>
+        public static string Display(this Enum @enum)
+        {
+            var name = @enum.ToString();
+            var field = @enum.GetType().GetField(name);
+            if (field == null) return name;
+            var attribute = field.GetCustomAttributes(false).OfType<DisplayAttribute>().FirstOrDefault();
+            return attribute == null ? field.Name : attribute.GetName();
+        }
 
         /// <summary>
         /// 映射对象

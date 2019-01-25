@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SAE.CommonLibrary.MvcExtension;
 using SAE.ShoppingMall.Identity.Application;
+using SAE.ShoppingMall.Identity.Dto;
 using SAE.ShoppingMall.Identity.Dto.Query;
 
 namespace SAE.ShoppingMall.Identity.Controllers
@@ -24,6 +25,20 @@ namespace SAE.ShoppingMall.Identity.Controllers
         {
             var data = this._appService.Paging(query);
             return this.Json(data);
+        }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Verify]
+        [StandardOutput]
+        public IActionResult Add(AppDto app)
+        {
+            this._appService.Register(app);
+            return Json(app);
         }
     }
 }
