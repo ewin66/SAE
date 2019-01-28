@@ -40,5 +40,20 @@ namespace SAE.ShoppingMall.Identity.Controllers
             this._appService.Register(app);
             return Json(app);
         }
+
+        public IActionResult Edit(Guid id)
+        {
+            ViewData.Model = this._appService.GetById(id.ToString());
+            return View();
+        }
+
+        [HttpPost]
+        [Verify]
+        [StandardOutput]
+        public IActionResult Edit(AppDto app)
+        {
+            this._appService.Change(app);
+            return Json(app);
+        }
     }
 }

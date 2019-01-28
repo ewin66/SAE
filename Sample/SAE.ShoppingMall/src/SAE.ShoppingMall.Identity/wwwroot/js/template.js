@@ -218,7 +218,8 @@ function (React, ReactDOM, $, common, httpClient) {
             this.state.data.forEach(function (row, index) {
                 const tds = self.props.columns.map(function (column) {
                     //new Function("function(data){0}".format())
-                    return React.createElement("td", {}, (column.render || self.defaultRowRender)(common.propertyAccessor(row, column.name), row))
+                    const __html={__html:(column.render || self.defaultRowRender)(common.propertyAccessor(row, column.name), row)};
+                    return React.createElement("td", { dangerouslySetInnerHTML: __html });
                 });
                 if (!self.props.ignoreIndexColumn) {
                     tds.unshift(React.createElement("td", {}, index + 1));

@@ -42,7 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
               .Mapping<AppDto>()
               .Mapping<AppCreateEvent>(HandlerEnum.Add)
               .Mapping(HandlerEnum.Update, t => t.Name.StartsWith($"{nameof(App)}Change"))
-              .Mapping<Permission>()
+              .Mapping<PermissionDto>()
               .Mapping(HandlerEnum.Update, t => t.Name.StartsWith($"{nameof(Permission)}Change"))
               .Mapping<RoleDto>()
               .Mapping(HandlerEnum.Update,t => t.Name.StartsWith($"{nameof(Role)}Change"))

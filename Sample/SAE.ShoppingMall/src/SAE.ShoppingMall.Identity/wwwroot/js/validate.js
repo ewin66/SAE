@@ -1,22 +1,17 @@
 ﻿/// <reference path="../lib/jquery/jquery.min.js" />
 /// <reference path="../lib/require/require.min.js" />
 /// <reference path="../lib/jquery-validate/jquery.validate.js" />
-define(["jquery", "jquery-validate", "jquery-form", "httpClient"], function ($, validate, ajaxform, httpClient) {
+define(["jquery", "jquery-validate", "jquery-form", "httpClient","common"], function ($, validate, ajaxform, httpClient,common) {
     const verify = {};
     
     $.validator.setDefaults({
         ignore: ".ignore",//忽略.ignore
         errorClass: "help-block"
     });
-
-    const getArgs = function (args) {
-        const array = [];
-        for (let i = 0; i < args.length; i++) {
-            array.push(args[i]);
-        }
-        return array;
-    }
-
+    $.validator.messages.regexp = "格式错误需要{0}的格式{1}{2}{3}";
+    $.validator.addMethod("regexp", function (value, element, param) {
+        return this.optional(element) || RegExp(param).test(value);
+    });
     //重新加载表单验证
     verify.reload = function (form) {
         $((form || "form")).each(function () {
@@ -35,19 +30,19 @@ define(["jquery", "jquery-validate", "jquery-form", "httpClient"], function ($, 
                 const option = {
                     success: function () {
                         if (func.success) {
-                            window[func.success].apply(null, getArgs(arguments));
+                            window[func.success].apply(null, common.getArgs(arguments));
                         }
                     },
                     beforeSubmit: function(){
                         if (func.beforeSubmit) {
-                            window[func.beforeSubmit].apply(null, getArgs(arguments));
+                            window[func.beforeSubmit].apply(null, common.getArgs(arguments));
                         }
                     },
                     error: function () {
                         if (func.error) {
-                            window[func.error].apply(null, getArgs(arguments));
+                            window[func.error].apply(null, common.getArgs(arguments));
                         } else {
-                            httpClient.defaultError.apply(null,getArgs(arguments));
+                            httpClient.defaultError.apply(null, common.getArgs(arguments));
                         }
                     },
                 }

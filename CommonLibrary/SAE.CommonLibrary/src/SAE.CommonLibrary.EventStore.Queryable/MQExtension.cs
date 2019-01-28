@@ -191,7 +191,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable
         {
             var maps = limitRegistration.RegistrationBuilder
                                         .Maps
-                                        .Where(s => s.ModelType == limitRegistration.ModelType &&
+                                        .Where(s => s.ModelType == null &&
                                                s.Handle == HandlerEnum.None);
             List<Map> mapList = new List<Map>();
 

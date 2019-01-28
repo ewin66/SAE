@@ -22,7 +22,7 @@ namespace SAE.CommonLibrary.EventStore.Queryable.Default
 
         public T Find<T>(string id) where T : class
         {
-            return this.Find<T>(id);
+            return this._storage.Find<T>(id);
         }
 
         public void Remove<T>(T t) where T : class

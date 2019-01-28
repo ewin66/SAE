@@ -49,7 +49,8 @@
     });
     
     require(["route", "adminlte"], function (route) {
-        const url = route.search();
-        require(["/js" + url + ".js"]);
+        const trimReg = /(\/*)$/;
+        const url = route.search().replace(trimReg, "");
+        require(["/js" + route.search(url) + ".js"]);
     });
 }())

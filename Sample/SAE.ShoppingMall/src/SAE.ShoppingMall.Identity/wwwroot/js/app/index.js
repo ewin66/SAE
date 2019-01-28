@@ -3,7 +3,7 @@
 /// <reference path="../../lib/react/umd/react.development.js" />
 /// <reference path="../../lib/react/umd/react-dom.development.js" />
 /// <reference path="../template.js" />
-define(["react", "react-dom", "template"], function (React, ReactDOM, parts) {
+define(["template","route"], function (parts,route) {
     parts.dataTable("#table_div", {
         columns: [{
             name: "appId",
@@ -29,6 +29,12 @@ define(["react", "react-dom", "template"], function (React, ReactDOM, parts) {
                     default: result = "已删除"; break;
                 }
                 return result;
+            }
+        }, {
+            name: "id",
+            render: function (id, row) {
+                let html = '<a class="btn btn-block btn-success" href="{0}"><i class="fa fa-edit"></i></a>'.format(route.appEdit.format(id));
+                return html;
             }
         }]
     });

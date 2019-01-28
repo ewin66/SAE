@@ -4,10 +4,10 @@ define(function () {
         let self = this;
         this.store = {};
         this.add = function (key, val) {
-            self.store[key] = val;
+            self.store[key.toLocaleLowerCase()] = val || key;
         };
         this.search = function (key) {
-            key = key || window.location.pathname;
+            key = (key || window.location.pathname).toLocaleLowerCase();
             if (self.store.hasOwnProperty(key)) {
                 key = self.store[key];
             }
@@ -18,5 +18,6 @@ define(function () {
     route.add("/", "/home/index");
     route.add("/app", "/app/index");
 
+    route.appEdit = "/app/edit?id={0}";
     return route;
 });

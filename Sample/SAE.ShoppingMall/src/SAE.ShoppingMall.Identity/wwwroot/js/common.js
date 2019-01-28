@@ -120,5 +120,13 @@ define(function () {
         return func(obj);
     }
     
+    // get arguments parameter list return array
+    common.getArgs = function (args) {
+        const array = [];
+        for (let i = 0; i < args.length; i++) {
+            array.push(args[i]);
+        }
+        return array;
+    };
     return common;
 });
