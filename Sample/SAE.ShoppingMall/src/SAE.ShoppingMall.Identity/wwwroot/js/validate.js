@@ -42,6 +42,7 @@ define(["jquery", "jquery-validate", "jquery-form", "httpClient","common"], func
                         if (func.error) {
                             window[func.error].apply(null, common.getArgs(arguments));
                         } else {
+                            debugger;
                             httpClient.defaultError.apply(null, common.getArgs(arguments));
                         }
                     },
@@ -51,9 +52,8 @@ define(["jquery", "jquery-validate", "jquery-form", "httpClient","common"], func
             }
         });
     }
-    $(function () {
-        verify.reload();
-    });
+
+    verify.reload();
     
     return verify;
 });

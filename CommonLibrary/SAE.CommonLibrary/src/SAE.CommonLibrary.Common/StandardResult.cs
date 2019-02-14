@@ -27,9 +27,8 @@ namespace SAE.CommonLibrary.Common
         /// 
         /// </summary>
         /// <param name="code"></param>
-        public StandardResult(StatusCode code)
+        public StandardResult(StatusCode code):this(code,string.Empty)
         {
-            
         }
         /// <summary>
         /// 

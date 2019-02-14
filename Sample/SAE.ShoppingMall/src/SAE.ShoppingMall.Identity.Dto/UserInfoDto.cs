@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace SAE.ShoppingMall.Identity.Dto
@@ -31,6 +32,7 @@ namespace SAE.ShoppingMall.Identity.Dto
         /// 电话
         /// </summary>
         public string Phone { get; set; }
-
+        public string Name { get; set; }
+        public string Icon { get; set; }
     }
 }

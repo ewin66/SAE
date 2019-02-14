@@ -65,6 +65,7 @@ namespace SAE.CommonLibrary.Common
         /// <param name="message"></param>
         public SAEException(string message):base(message)
         {
+            this.Code = StatusCode.Custom;
         }
         /// <summary>
         /// 
@@ -73,6 +74,7 @@ namespace SAE.CommonLibrary.Common
         /// <param name="innerException"></param>
         public SAEException(string message, Exception innerException):base(message,innerException)
         {
+            this.Code = StatusCode.Custom;
         }
     }
 }

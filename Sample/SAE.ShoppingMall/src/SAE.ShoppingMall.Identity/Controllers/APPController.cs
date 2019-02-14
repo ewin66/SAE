@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAE.CommonLibrary.MvcExtension;
 using SAE.ShoppingMall.Identity.Application;
@@ -11,6 +12,7 @@ using SAE.ShoppingMall.Identity.Dto.Query;
 
 namespace SAE.ShoppingMall.Identity.Controllers
 {
+    [Authorize]
     public class AppController : Controller
     {
 

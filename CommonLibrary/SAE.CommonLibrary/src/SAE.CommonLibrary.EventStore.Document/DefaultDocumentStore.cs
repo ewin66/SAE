@@ -30,6 +30,10 @@ namespace SAE.CommonLibrary.EventStore.Document
             TDocument document;
             if (snapshot.Version <= 0)
             {
+                if (eventStream == null || eventStream.Version <= 0)
+                {
+                    return default(TDocument);
+                }
                 document = new TDocument();
             }
             else

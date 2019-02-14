@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show</title>
+</head>
+<body>
+    @(User.Identity?.Name ?? "未知的")
+    <a asp-action="logout" asp-controller="account">退出</a>
+</body>
+</html>

@@ -58,16 +58,20 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
                 config.Bind(s => s.Phone, t => t.Information.Contact.Phone);
                 config.Bind(s => s.QQ, t => t.Information.Contact.QQ);
                 config.Bind(s => s.Sex, t => t.Information.Sex);
+                config.Bind(s => s.Name, t => t.Information.Name);
+                config.Bind(s => s.Icon, t => t.Information.Icon);
             });
 
-            TinyMapper.Bind<UserInfo, UserChangeInfoEvent>(config =>
+            TinyMapper.Bind<User, UserChangeInfoEvent>(config =>
             {
-                config.Bind(s => s.BirthDate, t => t.BirthDate);
-                config.Bind(s => s.Contact.Email, t => t.Email);
-                config.Bind(s => s.Hometown, t => t.Hometown);
-                config.Bind(s => s.Contact.Phone, t => t.Phone);
-                config.Bind(s => s.Contact.QQ, t => t.QQ);
-                config.Bind(s => s.Sex, t => t.Sex);
+                config.Bind(s => s.Information.BirthDate, t => t.BirthDate);
+                config.Bind(s => s.Information.Contact.Email, t => t.Email);
+                config.Bind(s => s.Information.Hometown, t => t.Hometown);
+                config.Bind(s => s.Information.Contact.Phone, t => t.Phone);
+                config.Bind(s => s.Information.Contact.QQ, t => t.QQ);
+                config.Bind(s => s.Information.Sex, t => t.Sex);
+                config.Bind(s => s.Information.Name, t => t.Name);
+                config.Bind(s => s.Information.Sex, t => t.Sex);
             });
 
             TinyMapper.Bind<AppDto, App>(config =>

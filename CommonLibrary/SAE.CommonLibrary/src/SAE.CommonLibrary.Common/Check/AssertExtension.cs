@@ -59,7 +59,7 @@ namespace SAE.CommonLibrary.Common.Check
         {
             if (string.IsNullOrWhiteSpace(assert.Current))
             {
-                throw new SAEException($"{assert.Name},是null空或一连串连续空格组成");
+                throw new SAEException(message);
             }
             return assert;
         }
@@ -87,7 +87,7 @@ namespace SAE.CommonLibrary.Common.Check
         {
             if (!assert.Current)
             {
-                throw new SAEException($"{assert.Name},不满足true条件");
+                throw new SAEException(message);
             }
             return assert;
         }
@@ -111,7 +111,7 @@ namespace SAE.CommonLibrary.Common.Check
         {
             if (assert.Current)
             {
-                throw new SAEException($"{assert.Name},不满足false条件");
+                throw new SAEException(message);
             }
             return assert;
         }
@@ -138,7 +138,7 @@ namespace SAE.CommonLibrary.Common.Check
         {
             if (assert.Current != null)
             {
-                throw new SAEException($"{assert.Name},不为null");
+                throw new SAEException(message);
             }
             return assert;
         }
@@ -167,7 +167,7 @@ namespace SAE.CommonLibrary.Common.Check
         {
             if (assert.Current == null)
             {
-                throw new SAEException($"{assert.Name},不能为null");
+                throw new SAEException(message);
             }
             return assert;
         } 

@@ -88,7 +88,7 @@ define(function () {
     }
     //get request parameter
     common.getQueryString = function (name) {
-        let search = window.location.search.toLowerCase();
+        let search = window.location.search;
         if (name && search && search.length > 0) {
             name = name.toLowerCase();
             let requestParameterRegExp = RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

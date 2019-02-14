@@ -6,7 +6,8 @@ namespace SAE.ShoppingMall.Identity.Domain.Event
 {
     public class UserChangeInfoEvent:Event
     {
-      
+        public string Name { get; set; }
+        public string Icon { get; set; }
         public int Sex { get; set; }
        
         public DateTime BirthDate { get; set; }

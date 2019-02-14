@@ -7,8 +7,8 @@
       "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://localhost:56200",
-      "sslPort": 44335
+      "applicationUrl": "http://auth.sae.com",
+      "sslPort": 443
     }
   },
   "profiles": {
@@ -20,7 +20,7 @@
       }
     },
     "SAE.ShoppingMall.Identity": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

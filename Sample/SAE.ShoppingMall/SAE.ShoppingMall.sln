@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.ShoppingMall.Identity",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.MvcExtension", "..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.MvcExtension\SAE.CommonLibrary.MvcExtension.csproj", "{226CFC91-FB3A-43A8-9A0D-A6F567ED3DE7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.ShoppingMall", "src\SAE.ShoppingMall\SAE.ShoppingMall.csproj", "{17DE7E17-F7C1-4F4E-B0C6-58B0CF1EA37C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,10 @@ Global
 		{226CFC91-FB3A-43A8-9A0D-A6F567ED3DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{226CFC91-FB3A-43A8-9A0D-A6F567ED3DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{226CFC91-FB3A-43A8-9A0D-A6F567ED3DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17DE7E17-F7C1-4F4E-B0C6-58B0CF1EA37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17DE7E17-F7C1-4F4E-B0C6-58B0CF1EA37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17DE7E17-F7C1-4F4E-B0C6-58B0CF1EA37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17DE7E17-F7C1-4F4E-B0C6-58B0CF1EA37C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,6 +207,7 @@ Global
 		{08688C28-3871-418B-A0FF-B6A7D7977A52} = {4BEF4E24-94E6-4439-A372-C506E270F925}
 		{633EB2A3-4892-4EB9-8920-B4A510A5BAC2} = {651E6595-8EF2-404A-9BAE-657CEE6C061A}
 		{226CFC91-FB3A-43A8-9A0D-A6F567ED3DE7} = {4BEF4E24-94E6-4439-A372-C506E270F925}
+		{17DE7E17-F7C1-4F4E-B0C6-58B0CF1EA37C} = {651E6595-8EF2-404A-9BAE-657CEE6C061A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1BA8C3B-9C35-46EF-8C84-B1F455C97D73}

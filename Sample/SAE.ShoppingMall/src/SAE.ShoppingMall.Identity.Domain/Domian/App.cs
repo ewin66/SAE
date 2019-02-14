@@ -20,9 +20,14 @@ namespace SAE.ShoppingMall.Identity.Domain
             this.Client = new ClientCredentials();
             this.Endpoint = new SignEndpoint();
         }
-        public App(string name, SignEndpoint signEndpoint) : this()
+        public App(string name, SignEndpoint signEndpoint) : this(name,new ClientCredentials(),signEndpoint)
         {
-            this.Create(name, new ClientCredentials(), signEndpoint);
+            
+        }
+
+        public App(string name,ClientCredentials credentials, SignEndpoint signEndpoint) : this()
+        {
+            this.Create(name, credentials, signEndpoint);
         }
 
         public override IIdentity Identity => IdentityGenerator.Build(this.Client.Id);

@@ -25,5 +25,10 @@ namespace SAE.CommonLibrary.Common
         /// </summary>
         [Display(Name = "自定义的异常")]
         Custom =-2,
+        /// <summary>
+        /// 账号或密码错误
+        /// </summary>
+        [Display(Name = "账号或密码错误")]
+        AccountOrPassword =10001,
     }
 }

@@ -21,10 +21,10 @@ namespace SAE.ShoppingMall.Identity.Domain.ValueObject
         }
         public ClientCredentials(string id,string secret)
         {
-            Assert.Build(id)
-                  .NotNullOrWhiteSpace();
-            Assert.Build(secret)
-                  .NotNullOrWhiteSpace();
+            if (string.IsNullOrWhiteSpace(id))
+                id = IdentityGenerator.Build().ToString();
+            if (string.IsNullOrWhiteSpace(secret))
+                secret = IdentityGenerator.Build().ToString();
             this.Id = id;
             this.Secret = secret;
         }

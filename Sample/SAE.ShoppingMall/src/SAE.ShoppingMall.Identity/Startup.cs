@@ -7,6 +7,11 @@ using SAE.ShoppingMall.Identity.Application;
 using SAE.ShoppingMall.Identity.Dto;
 using SAE.CommonLibrary.MvcExtension;
 using System;
+using SAE.ShoppingMall.Identity.Code;
+using System.Collections.Generic;
+using IdentityServer4.Models;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SAE.ShoppingMall.Identity
 {
@@ -29,6 +34,21 @@ namespace SAE.ShoppingMall.Identity
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
             services.AddApplicationService();
+            var profile= new IdentityResources.Profile();
+            profile.UserClaims.Add("role");
+            services.AddIdentityServer()
+                    .AddDeveloperSigningCredential()
+                    .AddClientStore<ClientStore>()
+                    .AddInMemoryIdentityResources(new List<IdentityResource>
+                    {
+                        new IdentityResources.OpenId(),
+                        profile,
+                    });
+
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication()
+                    .AddCookie();
+            
             
             services.AddMvc()
                     .AddValidation()
@@ -49,22 +69,22 @@ namespace SAE.ShoppingMall.Identity
 
                 appService.Register(new AppDto
                 {
-                    AppId = "admin.sae.com",
-                    AppSecret = "admin.sae.secret",
+                    AppId = "oauth.sae.com",
+                    AppSecret = "oauth.sae.secret",
                     Name = "SAE Admin",
-                    Signin = "http://admin.sae.com:12002/signin-oidc",
-                    Signout = "http://admin.sae.com:12002/signout"
+                    Signin = "https://oauth.sae.com:12001/signin-oidc",
+                    Signout = "https://oauth.sae.com:12001/signout-callback-oidc"
                 });
 
                 appService.Register(new AppDto
                 {
-                    AppId = "open.sae.com",
-                    AppSecret = "open.sae.secret",
-                    Name = "SAE Open",
-                    Signin = "http://open.sae.com:12002/signin-oidc",
-                    Signout = "http://open.sae.com:12002/signout"
+                    AppId = "www.shop.com",
+                    AppSecret = "www.shop.secret",
+                    Name = "SAE Shop",
+                    Signin = "https://www.shop.com:12002/signin-oidc",
+                    Signout = "https://www.shop.com:12002/signout-callback-oidc"
                 });
-
+                
                 identityService.Create(new CredentialsDto
                 {
                     Name = "mypjb1994",
@@ -77,9 +97,13 @@ namespace SAE.ShoppingMall.Identity
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-           
+
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            app.UseStaticFiles()
+               .UseIdentityServer()
+               .UseAuthentication();
+
 
             app.UseMvc(routes =>
             {

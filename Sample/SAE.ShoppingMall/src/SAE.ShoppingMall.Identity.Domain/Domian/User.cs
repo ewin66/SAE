@@ -31,19 +31,7 @@ namespace SAE.ShoppingMall.Identity.Domain
         /// id
         /// </summary>
         public string Id { get; set; }
-        ///// <summary>
-        ///// 标识
-        ///// </summary>
-        //public IIdentity Identity { get => new EventStore.Identity(this.Id.ToString()); }
-        
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// 头像
-        /// </summary>
-        public string Icon { get; set; }
+       
         
         /// <summary>
         /// 详细信息
@@ -111,7 +99,8 @@ namespace SAE.ShoppingMall.Identity.Domain
                 Status= (int)Status.Enable
             });
 
-            this.ChangeInformation(new UserInfo(Sex.Woman, DateTime.Now, "", new Contact()));
+            this.ChangeInformation(new UserInfo(Sex.Woman,
+                credentials.Name,string.Empty, DateTime.Now, string.Empty, new Contact()));
         }
 
         public void Change(User user)
@@ -144,14 +133,14 @@ namespace SAE.ShoppingMall.Identity.Domain
         {
             this.Id = @event.Id;
             this.Credentials = new Credentials(@event.LoginName, @event.Password, @event.Salt);
-            this.Name = this.Credentials.Name;
             this.CreateTime = @event.CreateTime;
             this.Status = @event.Status.EnumTo<Status>();
-            
         }
         internal void When(UserChangeInfoEvent @event)
         {
             this.Information = new UserInfo(@event.Sex.EnumTo<Sex>(),
+                                            @event.Name,
+                                            @event.Icon,
                                             @event.BirthDate,
                                             @event.Hometown,
                                             new Contact

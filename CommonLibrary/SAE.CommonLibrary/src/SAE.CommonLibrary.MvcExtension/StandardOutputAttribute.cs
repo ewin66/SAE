@@ -29,6 +29,7 @@ namespace SAE.CommonLibrary.MvcExtension
                 {
                     context.Result = new JsonResult(new StandardResult(StatusCode.Unknown));
                 }
+                context.ExceptionHandled = true;
             }
             else
             {

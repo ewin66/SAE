@@ -10,13 +10,18 @@ namespace SAE.ShoppingMall.Identity.Domain.ValueObject
         {
             this.Contact = new Contact();
         }
-        public UserInfo(Sex sex,DateTime birthDate,string hometown,Contact contact):this()
+        public UserInfo(Sex sex,string name,string icon,DateTime birthDate,string hometown,Contact contact):this()
         {
             this.Sex = Sex;
             this.BirthDate = birthDate;
             this.Hometown = hometown;
             this.Contact = contact;
+            this.Icon = icon;
+            this.Name = name;
         }
+
+        public string Name { get; set; }
+        public string Icon { get; set; }
 
         /// <summary>
         /// 性别

@@ -22,6 +22,8 @@ namespace SAE.ShoppingMall.Identity.Validations
             this.RuleFor(s => s.Signout)
                 .Matches(@"^(https?):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$")
                 .MaximumLength(1024);
+            this.RuleFor(s => s.AppSecret)
+                .Matches(@"^[a-zA-Z\d-]{6,36}$");
         }
     }
 }

@@ -43,7 +43,7 @@ define(["jquery", "route", "popup", "common"], function ($, route, popup, common
         }
         debugger;
         if (e && e.status == null && e.statusCode) {
-            popup.error(e.statusMessages)
+            popup.error(e.message)
         } else if (e.status) {
             switch (e.status) {
                 case 401:
