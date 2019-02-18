@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SAE.Commonlibrary.Log\SAE.CommonLibrary.Log.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Log\SAE.CommonLibrary.Log.csproj" />
   </ItemGroup>
 
 </Project>

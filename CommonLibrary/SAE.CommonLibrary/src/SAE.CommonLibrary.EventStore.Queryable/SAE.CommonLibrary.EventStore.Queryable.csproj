@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SAE.Commonlibrary.EventStore\SAE.CommonLibrary.EventStore.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.EventStore\SAE.CommonLibrary.EventStore.csproj" />
     <ProjectReference Include="..\SAE.CommonLibrary.MQ\SAE.CommonLibrary.MQ.csproj" />
-    <ProjectReference Include="..\SAE.Commonlibrary.Storage\SAE.CommonLibrary.Storage.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Storage\SAE.CommonLibrary.Storage.csproj" />
     <ProjectReference Include="..\SAE.CommonLibrary.TinyMapper\SAE.CommonLibrary.TinyMapper.csproj" />
   </ItemGroup>
 

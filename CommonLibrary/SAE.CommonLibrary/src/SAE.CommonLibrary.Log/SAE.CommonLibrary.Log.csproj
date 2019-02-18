@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\SAE.Commonlibrary.Log.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\SAE.CommonLibrary.Log.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SAE.CommonLibrary.Common\SAE.CommonLibrary.Common.csproj" />
-    <ProjectReference Include="..\SAE.Commonlibrary.Json\SAE.CommonLibrary.Json.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Json\SAE.CommonLibrary.Json.csproj" />
     <ProjectReference Include="..\SAE.CommonLibrary.Provider\SAE.CommonLibrary.Provider.csproj" />
   </ItemGroup>
 

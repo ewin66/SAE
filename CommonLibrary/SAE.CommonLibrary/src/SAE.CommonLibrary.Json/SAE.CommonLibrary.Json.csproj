@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\SAE.Commonlibrary.Json.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\SAE.CommonLibrary.Json.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\SAE.Commonlibrary.EventStore.Document.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\SAE.CommonLibrary.EventStore.Document.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SAE.Commonlibrary.EventStore\SAE.CommonLibrary.EventStore.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.EventStore\SAE.CommonLibrary.EventStore.csproj" />
     <ProjectReference Include="..\SAE.CommonLibrary.MQ\SAE.CommonLibrary.MQ.csproj" />
   </ItemGroup>
 

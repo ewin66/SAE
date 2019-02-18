@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SAE.Commonlibrary.EventStore.Document\SAE.CommonLibrary.EventStore.Document.csproj" />
+    <ProjectReference Include="..\..\src\SAE.CommonLibrary.EventStore.Document\SAE.CommonLibrary.EventStore.Document.csproj" />
     <ProjectReference Include="..\..\src\SAE.CommonLibrary.EventStore.Queryable\SAE.CommonLibrary.EventStore.Queryable.csproj" />
     <ProjectReference Include="..\SAE.Test.Infrastructure\SAE.Test.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SAE.Commonlibrary.Json\SAE.CommonLibrary.Json.csproj" />
-    <ProjectReference Include="..\SAE.Commonlibrary.Log\SAE.CommonLibrary.Log.csproj" />
-    <ProjectReference Include="..\SAE.Commonlibrary.Storage\SAE.CommonLibrary.Storage.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Json\SAE.CommonLibrary.Json.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Log\SAE.CommonLibrary.Log.csproj" />
+    <ProjectReference Include="..\SAE.CommonLibrary.Storage\SAE.CommonLibrary.Storage.csproj" />
   </ItemGroup>
 
 </Project>
