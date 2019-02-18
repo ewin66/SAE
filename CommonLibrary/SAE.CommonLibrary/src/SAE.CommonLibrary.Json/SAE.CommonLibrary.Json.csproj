@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Version>1.0.0.1</Version>
     <Description>json序列化组组件</Description>
     <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
-    <PackageReleaseNotes>json序列化基础版本，支持net45至.netcore2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>json序列化基础版本</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>Json</PackageTags>
   </PropertyGroup>
