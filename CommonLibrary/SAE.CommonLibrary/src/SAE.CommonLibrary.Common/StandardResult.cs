@@ -64,25 +64,44 @@ namespace SAE.CommonLibrary.Common
         /// </summary>
         public object Body { get; set; }
     }
+    /// <summary>
+    /// <seealso cref="StandardResult"/>的泛型实现
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
 
     public class StandardResult<T> : StandardResult
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public StandardResult()
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
         public StandardResult(T body) : base(body)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
         public StandardResult(StatusCode code) : base(code)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
         public StandardResult(StatusCode code, string message) : base(code, message)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public new T Body
         {
             get => (T)base.Body;

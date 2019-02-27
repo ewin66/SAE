@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.0.1</Version>
+    <Version>1.0.0.2</Version>
     <PackageIconUrl>https://raw.githubusercontent.com/mypjb/PhotoGallery/master/mty.png</PackageIconUrl>
     <Description>提供一些通用操作，如异常，断言等。</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
     <PackageReleaseNotes>加入有序的Guid生成函数</PackageReleaseNotes>
   </PropertyGroup>
 

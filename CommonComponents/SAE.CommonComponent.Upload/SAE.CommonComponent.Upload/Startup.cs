@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SAE.CommonComponent.Upload.Code;
 using SAE.CommonLibrary.Common;
 using SAE.CommonLibrary.Json;
 
@@ -24,15 +25,22 @@ namespace SAE.CommonComponent.Upload
                             .AddJsonFile("appsettings.json")
                             .Build();
             fileConfig= build.GetSection("FileConfig").Get<FileConfig>();
-            services.AddJson();
+            services.AddJson()
+                    .AddSingleton(this.fileConfig)
+                    .AddFileDecorator<NamingDecorator>()
+                    .AddFileDecorator<UploadDecorator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,IJsonConvertor jsonConvertor)
+        public void Configure(IApplicationBuilder app, 
+                              IHostingEnvironment env,
+                              IJsonConvertor jsonConvertor,
+                              IFileDecorator fileDecorator)
         {
 
             app.UseStatusCodePages()
                .UseStaticFiles();
+
             app.Map("/upload", builder =>
             {
                 builder.Run(async context =>
@@ -45,18 +53,13 @@ namespace SAE.CommonComponent.Upload
                     }
                     else
                     {
-                        List<FileDescription> descriptions = new List<FileDescription>();
-
-                        foreach(var file in context.Request.Form.Files)
+                        List<FileDecorator> fileDecorators = new List<FileDecorator>();
+                        foreach(var fileContext in context.Request.Form.Files.Select(f=>new FileContext(f.FileName,f.OpenReadStream(),context)))
                         {
-                            var description= new FileDescription(this.fileConfig,file.FileName,file.OpenReadStream());
-                            await description.SaveAsync();
-                            descriptions.Add(description);
+                            await fileDecorator.Decorate(fileContext);
                         }
-
-                        result.Body = descriptions;
+                        result.Body = fileDecorators;
                     }
-
                     await context.Response.WriteAsync(jsonConvertor.Serialize(result));
                 });
             });

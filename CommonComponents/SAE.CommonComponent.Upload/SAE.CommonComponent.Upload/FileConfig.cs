@@ -8,23 +8,30 @@ namespace SAE.CommonComponent.Upload
 {
     public class FileConfig
     {
+        public FileConfig()
+        {
+            this.directoryFormat = "yyyy-MM";
+        }
         public string Host { get; set; }
         public string Path { get; set; }
-        public string DirectoryFormat { get; set; }
-        public Tuple<string,string> GetPath(string fileName)
+        private string directoryFormat;
+        public string DirectoryFormat
         {
-            var date = DateTime.Now.ToString(this.DirectoryFormat ?? "yyyy-MM");
+            get=>this.directoryFormat;
+            set
+            {
+                if (value.IsNullOrWhiteSpace()) return;
 
-            var guid = Utils.GenerateId();
-            
-            var dir = System.IO.Path.Combine(this.Path, date);
-
-            if (!System.IO.Directory.Exists(dir))
-                System.IO.Directory.CreateDirectory(dir);
-
-            var file = $"{guid}{System.IO.Path.GetExtension(fileName)}";
-
-            return new Tuple<string, string>(System.IO.Path.Combine(dir, file), System.IO.Path.Combine(date, file).Replace("\\","/"));
+                this.directoryFormat = value;
+            }
+        }
+        /// <summary>
+        /// 格式化目录
+        /// </summary>
+        /// <returns></returns>
+        public string FormattDirectory()
+        {
+            return DateTime.Now.ToString(this.DirectoryFormat);
         }
     }
 }

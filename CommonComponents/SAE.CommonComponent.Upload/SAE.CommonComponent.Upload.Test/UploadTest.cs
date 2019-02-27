@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using SAE.CommonLibrary.Common;
 using SAE.CommonLibrary.Json;
 using SAE.Test.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using System.Linq;
-using SAE.CommonLibrary.Http;
-using System.Threading.Tasks;
-using SAE.CommonLibrary.Common;
+
 namespace SAE.CommonComponent.Upload.Test
 {
     public class UploadTest : BaseTest
@@ -26,6 +25,7 @@ namespace SAE.CommonComponent.Upload.Test
             _jsonConvertor = new ServiceCollection().AddJson().BuildServiceProvider().UseServiceFacade().GetService<IJsonConvertor>();
             var builder = new WebHostBuilder()
                 .UseUrls(Host)
+                .UseWebRoot("wwwroot")
                 .UseStartup<Startup>();
 
             var server = new TestServer(builder);
@@ -49,14 +49,15 @@ namespace SAE.CommonComponent.Upload.Test
             var httpResponse = await this._client.PostAsync($"/upload", content);
             httpResponse.EnsureSuccessStatusCode();
             var json = await httpResponse.Content.ReadAsStringAsync();
-            var result = _jsonConvertor.Deserialize<StandardResult<List<FileDescription>>>(json);
+            
+            var result = _jsonConvertor.Deserialize<StandardResult<List<Code.FileResult>>>(json);
             foreach(var file in result.Body)
             {
                 var response = await this._client.GetAsync(file.Url);
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
                 Assert.True(stream.Length > 0);
-                this.Show(new { Descript = file, Length = stream.Length });
+                this.Show(new { Descript = file, stream.Length });
             }
             
         }

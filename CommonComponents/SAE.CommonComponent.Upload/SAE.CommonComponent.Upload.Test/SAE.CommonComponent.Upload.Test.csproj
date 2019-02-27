@@ -23,13 +23,14 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="SAE.CommonLibrary.Common" Version="1.0.0.2" />
+    <PackageReference Include="SAE.CommonLibrary.Provider" Version="1.0.0" />
+    <PackageReference Include="SAE.Test.Infrastructure" Version="1.0.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CommonLibrary\SAE.CommonLibrary\src\SAE.CommonLibrary.Http\SAE.CommonLibrary.Http.csproj" />
-    <ProjectReference Include="..\..\..\CommonLibrary\SAE.CommonLibrary\test\SAE.Test.Infrastructure\SAE.Test.Infrastructure.csproj" />
     <ProjectReference Include="..\SAE.CommonComponent.Upload\SAE.CommonComponent.Upload.csproj" />
   </ItemGroup>
 
