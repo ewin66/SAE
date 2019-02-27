@@ -1,4 +1,5 @@
 ﻿using SAE.ShoppingMall.Identity.Dto;
+using SAE.ShoppingMall.Identity.Dto.Query;
 using SAE.ShoppingMall.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,12 @@ namespace SAE.ShoppingMall.Identity.Application
         /// <param name="userId">用户id</param>
         /// <param name="roles">角色列表</param>
         void GrantUserRoles(string userId, IEnumerable<string> roles);
+        /// <summary>
+        /// 分页获得用户
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        IPagingResult<UserDto> Paging(UserQuery query);
         #endregion
 
         #region Role

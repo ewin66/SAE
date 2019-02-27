@@ -30,5 +30,15 @@ namespace SAE.CommonLibrary.Common
         /// </summary>
         [Display(Name = "账号或密码错误")]
         AccountOrPassword =10001,
+        /// <summary>
+        /// 请求无效
+        /// </summary>
+        [Display(Name = "请求无效")]
+        RequestInvalid = 10002,
+        /// <summary>
+        /// 
+        /// </summary>
+        [Display(Name = "参数无效")]
+        ParamesterInvalid =10003,
     }
 }

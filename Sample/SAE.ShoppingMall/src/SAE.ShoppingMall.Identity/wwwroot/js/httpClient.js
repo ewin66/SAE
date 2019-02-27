@@ -44,7 +44,7 @@ define(["jquery", "route", "popup", "common"], function ($, route, popup, common
         debugger;
         if (e && e.status == null && e.statusCode) {
             popup.error(e.message)
-        } else if (e.status) {
+        } else if (e.hasOwnProperty(status)) {
             switch (e.status) {
                 case 401:
                     window.location.href = route.login;

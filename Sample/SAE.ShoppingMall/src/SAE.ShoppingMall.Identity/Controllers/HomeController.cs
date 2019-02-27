@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SAE.ShoppingMall.Identity.Models;
 
 namespace SAE.ShoppingMall.Identity.Controllers
 {
@@ -23,10 +24,12 @@ namespace SAE.ShoppingMall.Identity.Controllers
         {
             return View();
         }
+
         public async Task<IActionResult> Error(string errorId)
         {
             var result = await this._interactionService.GetErrorContextAsync(errorId);
             return this.Json(result);
         }
+
     }
 }

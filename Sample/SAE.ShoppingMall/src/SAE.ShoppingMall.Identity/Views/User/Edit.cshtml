@@ -1,0 +1,60 @@
+﻿@model UserDto
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">修改用户</h3>
+            </div>
+            <form method="post" data-ajax="true" data-ajax-success="requestSuccess">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label asp-for="Credentials.Name">用户名称</label>
+                        <input type="text" class="form-control required" asp-for="Credentials.Name" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Information.Name">真实姓名</label>
+                        <input type="text" class="form-control required" asp-for="Information.Name" placeholder="请输入真实姓名" >
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Icon">头像</label>
+                        <img style="width:200px;height:100px;"  />
+                        <input type="hidden" class="required" asp-for="Icon" placeholder="请选择头像">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Information.Sex">性别</label>
+                        <input type="text" class="form-control required" asp-for="Information.Sex" placeholder="请选择性别">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Information.BirthDate">出生日期</label>
+                        <input type="text" class="form-control required" asp-for="Information.BirthDate" placeholder="请选择出生日期">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Information.Email">邮件</label>
+                        <input type="text" class="form-control required" asp-for="Information.Email" placeholder="请输入邮件">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Information.Hometown">故乡</label>
+                        <input type="text" class="form-control required" asp-for="Information.Hometown" placeholder="请输入故乡">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Information.Phone">联系电话</label>
+                        <input type="text" class="form-control required" asp-for="Information.Phone" placeholder="请输入联系电话" >
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Information.QQ">QQ</label>
+                        <input type="text" class="form-control required" placeholder="请输入QQ" asp-for="Information.QQ" >
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a class="btn btn-danger pull-right" asp-action="index">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>

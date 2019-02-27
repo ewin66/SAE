@@ -8,7 +8,7 @@ define(["jquery", "jquery-validate", "jquery-form", "httpClient","common"], func
         ignore: ".ignore",//忽略.ignore
         errorClass: "help-block"
     });
-    $.validator.messages.regexp = "格式错误需要{0}的格式{1}{2}{3}";
+    $.validator.messages.regexp = "格式错误,需要{0}的格式";
     $.validator.addMethod("regexp", function (value, element, param) {
         return this.optional(element) || RegExp(param).test(value);
     });

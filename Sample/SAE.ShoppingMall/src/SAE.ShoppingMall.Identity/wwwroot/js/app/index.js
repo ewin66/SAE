@@ -32,6 +32,7 @@ define(["template","route"], function (parts,route) {
             }
         }, {
             name: "id",
+            text: "操作",
             render: function (id, row) {
                 let html = '<a class="btn btn-block btn-success" href="{0}"><i class="fa fa-edit"></i></a>'.format(route.appEdit.format(id));
                 return html;

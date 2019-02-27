@@ -126,29 +126,29 @@ namespace SAE.ShoppingMall.Identity.Domain
         }
     }
 
-    public partial class User
-    {
+    //public partial class User
+    //{
 
-        internal void When(UserRegisterEvent @event)
-        {
-            this.Id = @event.Id;
-            this.Credentials = new Credentials(@event.LoginName, @event.Password, @event.Salt);
-            this.CreateTime = @event.CreateTime;
-            this.Status = @event.Status.EnumTo<Status>();
-        }
-        internal void When(UserChangeInfoEvent @event)
-        {
-            this.Information = new UserInfo(@event.Sex.EnumTo<Sex>(),
-                                            @event.Name,
-                                            @event.Icon,
-                                            @event.BirthDate,
-                                            @event.Hometown,
-                                            new Contact
-                                            {
-                                                Email = @event.Email,
-                                                Phone = @event.Phone,
-                                                QQ = @event.QQ
-                                            });
-        }
-    }
+    //    internal void When(UserRegisterEvent @event)
+    //    {
+    //        this.Id = @event.Id;
+    //        this.Credentials = new Credentials(@event.LoginName, @event.Password, @event.Salt);
+    //        this.CreateTime = @event.CreateTime;
+    //        this.Status = @event.Status.EnumTo<Status>();
+    //    }
+    //    internal void When(UserChangeInfoEvent @event)
+    //    {
+    //        this.Information = new UserInfo(@event.Sex.EnumTo<Sex>(),
+    //                                        @event.Name,
+    //                                        @event.Icon,
+    //                                        @event.BirthDate,
+    //                                        @event.Hometown,
+    //                                        new Contact
+    //                                        {
+    //                                            Email = @event.Email,
+    //                                            Phone = @event.Phone,
+    //                                            QQ = @event.QQ
+    //                                        });
+    //    }
+    //}
 }

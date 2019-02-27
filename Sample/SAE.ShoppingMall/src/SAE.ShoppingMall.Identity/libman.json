@@ -34,11 +34,11 @@
       "destination": "wwwroot/lib/admin-lte"
     },
     {
-      "library": "react@16.7.0",
+      "library": "react@16.8.2",
       "destination": "wwwroot/lib/react"
     },
     {
-      "library": "react-dom@16.7.0",
+      "library": "react-dom@16.8.2",
       "destination": "wwwroot/lib/react"
     },
     {
@@ -72,6 +72,15 @@
     {
       "library": "limonte-sweetalert2@7.33.1",
       "destination": "wwwroot/lib/sweetalert2"
+    },
+    {
+      "provider": "filesystem",
+      "library": "../package/uppy/",
+      "destination": "wwwroot/lib/uppy"
+    },
+    {
+      "library": "dropzone@5.5.1",
+      "destination": "wwwroot/lib/dropzone"
     }
   ]
 }

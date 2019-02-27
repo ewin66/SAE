@@ -15,8 +15,10 @@
             "jquery-form":"jquery-form/jquery.form",
             "validate": "/js/validate",
             //react
-            "react": "react/umd/react.development",
+            "originalReact": "react/umd/react.development",
             "react-dom": "react/umd/react-dom.development",
+            //react extend
+            "react":"/js/reactExtend",
             //adminlte
             "adminlte": "admin-lte/js/adminlte",
             "bootstrap": "bootstrap/js/bootstrap",
@@ -28,6 +30,7 @@
             "common": "/js/common",
             "httpClient": "/js/httpClient",
             "popup": "/js/popup",
+            "uppy":"uppy/uppy.min"
         },
         shim: {
             "adminlte": {
@@ -44,6 +47,9 @@
             },
             "sweetalert": {
                 deps: ["css!/lib/sweetalert2/sweetalert2.min"]
+            },
+            "uppy": {
+                deps:["css!uppy"]
             }
         }
     });

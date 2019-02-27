@@ -122,34 +122,34 @@ namespace SAE.ShoppingMall.Identity.Domain
         }
     }
 
-    public partial class App
-    {
-        internal void When(AppCreateEvent @event)
-        {
-            this.Client = new ClientCredentials(@event.Id, @event.Secret);
-            this.Endpoint = new SignEndpoint(@event.Signin, @event.Signout);
-            this.Name = this.Name;
-            this.CreateTime = @event.CreateTime;
-            this.Status = @event.Status;
-        }
+    //public partial class App
+    //{
+    //    internal void When(AppCreateEvent @event)
+    //    {
+    //        this.Client = new ClientCredentials(@event.Id, @event.Secret);
+    //        this.Endpoint = new SignEndpoint(@event.Signin, @event.Signout);
+    //        this.Name = this.Name;
+    //        this.CreateTime = @event.CreateTime;
+    //        this.Status = @event.Status;
+    //    }
 
-        internal void When(AppChangeEndpointEvent @event)
-        {
-            this.Endpoint = new SignEndpoint(@event.Signin, @event.Signout);
-        }
+    //    internal void When(AppChangeEndpointEvent @event)
+    //    {
+    //        this.Endpoint = new SignEndpoint(@event.Signin, @event.Signout);
+    //    }
 
-        internal void When(AppChangeNameEvent @event)
-        {
-            this.Name = @event.Name;
-        }
+    //    internal void When(AppChangeNameEvent @event)
+    //    {
+    //        this.Name = @event.Name;
+    //    }
 
-        internal void When(AppChangeSecretEvent @event)
-        {
-            this.Client.Secret = @event.Secret;
-        }
-        internal void When(AppChangeStatusEvent @event)
-        {
-            this.Status = @event.Status;
-        }
-    }
+    //    internal void When(AppChangeSecretEvent @event)
+    //    {
+    //        this.Client.Secret = @event.Secret;
+    //    }
+    //    internal void When(AppChangeStatusEvent @event)
+    //    {
+    //        this.Status = @event.Status;
+    //    }
+    //}
 }

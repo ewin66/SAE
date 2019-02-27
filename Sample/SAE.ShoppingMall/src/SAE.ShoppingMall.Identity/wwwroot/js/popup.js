@@ -1,11 +1,11 @@
 ﻿/// <reference path="../lib/require/require.min.js" />
 /// <reference path="../lib/sweetalert2/sweetalert2.all.js" />
-define(["sweetalert"], function (Swal) {
+define(["sweetalert","common"], function (Swal,common) {
 
     const popup = {};
 
     const modals = function (type, content, title) {
-        Swal.fire({
+        return Swal.fire({
             title: title,
             text: content,
             type: type,

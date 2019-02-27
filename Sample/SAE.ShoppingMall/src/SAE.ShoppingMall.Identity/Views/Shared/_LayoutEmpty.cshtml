@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    ViewBag.BodyAttr = HtmlString.Empty;
+}
 <!DOCTYPE html>
 
 <html>
@@ -9,7 +11,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 
-<body>
+<body class='hold-transition register-page'>
     @RenderBody()
     <script src="~/lib/require/require.js" data-main="/js/main.js"></script>
 </body>

@@ -17,7 +17,8 @@ define(function () {
     
     route.add("/", "/home/index");
     route.add("/app", "/app/index");
-
+    route.add("/user", "/user/index");
     route.appEdit = "/app/edit?id={0}";
+    route.userEdit = "/user/edit?id={0}";
     return route;
 });

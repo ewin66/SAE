@@ -71,15 +71,15 @@ namespace SAE.ShoppingMall.Identity.Domain
         }
     }
 
-    public partial class Permission
-    {
-        internal void When(PermissionChangeEvent @event)
-        {
+    //public partial class Permission
+    //{
+    //    internal void When(PermissionChangeEvent @event)
+    //    {
             
-        }
+    //    }
 
-        internal void When(PermissionCreateEvent @event)
-        {
-        }
-    }
+    //    internal void When(PermissionCreateEvent @event)
+    //    {
+    //    }
+    //}
 }

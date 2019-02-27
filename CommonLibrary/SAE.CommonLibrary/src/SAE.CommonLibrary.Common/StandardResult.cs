@@ -64,4 +64,29 @@ namespace SAE.CommonLibrary.Common
         /// </summary>
         public object Body { get; set; }
     }
+
+    public class StandardResult<T> : StandardResult
+    {
+        public StandardResult()
+        {
+        }
+
+        public StandardResult(T body) : base(body)
+        {
+        }
+
+        public StandardResult(StatusCode code) : base(code)
+        {
+        }
+
+        public StandardResult(StatusCode code, string message) : base(code, message)
+        {
+        }
+
+        public new T Body
+        {
+            get => (T)base.Body;
+            set => base.Body = value;
+        }
+    }
 }

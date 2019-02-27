@@ -7,6 +7,7 @@ using SAE.CommonLibrary.EventStore;
 using SAE.CommonLibrary.MvcExtension;
 using SAE.ShoppingMall.Identity.Application;
 using SAE.ShoppingMall.Identity.Dto;
+using SAE.ShoppingMall.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace SAE.ShoppingMall.Identity.Controllers
         }
         [Verify]
         [StandardOutput]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> LogIn(CredentialsDto credentials)
         {
@@ -81,5 +83,21 @@ namespace SAE.ShoppingMall.Identity.Controllers
             return this.Redirect(redirectUrl);
         }
 
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [Verify]
+        [StandardOutput]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserRegisterModel model)
+        {
+            this._identityService.Create(model);
+            var result = new StandardResult();
+            return this.Json(result);
+        }
     }
 }

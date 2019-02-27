@@ -6,6 +6,7 @@ using SAE.CommonLibrary.Storage;
 using SAE.ShoppingMall.Identity.Domain;
 using SAE.ShoppingMall.Identity.Domain.ValueObject;
 using SAE.ShoppingMall.Identity.Dto;
+using SAE.ShoppingMall.Identity.Dto.Query;
 using SAE.ShoppingMall.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,11 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
         public void RemovePermission(string permissionId)
         {
             this.Remove<Permission>(permissionId);
+        }
+
+        public  IPagingResult<UserDto> Paging(UserQuery query)
+        {
+            return this.Paging(query, query);
         }
     }
 }
