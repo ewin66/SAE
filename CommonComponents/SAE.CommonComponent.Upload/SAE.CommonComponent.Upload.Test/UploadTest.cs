@@ -22,7 +22,7 @@ namespace SAE.CommonComponent.Upload.Test
         public const string Host = "http://file.sae.com";
         public UploadTest(ITestOutputHelper output) : base(output)
         {
-            _jsonConvertor = new ServiceCollection().AddJson().BuildServiceProvider().UseServiceFacade().GetService<IJsonConvertor>();
+            _jsonConvertor = new ServiceCollection().AddJson().BuildServiceProvider().GetService<IJsonConvertor>();
             var builder = new WebHostBuilder()
                 .UseUrls(Host)
                 .UseWebRoot("wwwroot")
