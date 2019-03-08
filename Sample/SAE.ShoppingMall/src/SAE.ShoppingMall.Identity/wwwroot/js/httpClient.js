@@ -38,12 +38,15 @@ define(["jquery", "route", "popup", "common"], function ($, route, popup, common
     //default error callback
     httpClient.defaultError = function (e, error) {
 
-        if (error && common.isFunction(error) && error(e)) {
-            return;
+        if (error && common.isFunction(error)) {
+            const bl = error(e);
+            if (bl == null || bl) {
+                return;
+            }
         }
         debugger;
-        if (e && e.status == null && e.statusCode) {
-            popup.error(e.message)
+        if (e && !e.hasOwnProperty("status") && e.hasOwnProperty("statusCode")) {
+            popup.error(e.statusMsg)
         } else if (e.hasOwnProperty(status)) {
             switch (e.status) {
                 case 401:

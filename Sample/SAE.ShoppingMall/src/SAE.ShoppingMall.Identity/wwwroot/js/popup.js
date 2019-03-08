@@ -1,14 +1,15 @@
 ﻿/// <reference path="../lib/require/require.min.js" />
 /// <reference path="../lib/sweetalert2/sweetalert2.all.js" />
-define(["sweetalert","common"], function (Swal,common) {
+define(["sweetalert", "common"], function (Swal, common) {
 
     const popup = {};
 
-    const modals = function (type, content, title) {
+    const modals = function (type, content, title, cancelButton) {
         return Swal.fire({
             title: title,
             text: content,
             type: type,
+            showCancelButton: cancelButton || false
             //allowOutsideClick: false
         });
     }
