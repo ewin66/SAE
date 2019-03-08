@@ -154,5 +154,10 @@ define(function () {
         const uuid = s.join("");
         return uuid;
     }
+
+    common.refreshPage = function () {
+        window.location = window.location.origin + window.location.pathname + window.location.search;
+    }
+
     return common;
 });
