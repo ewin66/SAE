@@ -55,5 +55,13 @@ namespace SAE.ShoppingMall.Identity.Application.Test
             this._appService.Change(dto);
             this.Valid(dto);
         }
+        [Fact]
+        public void Remove()
+        {
+            var dto = this.Register();
+            this._appService.Remove(dto.AppId);
+            var app = this._appService.GetById(dto.AppId);
+            Assert.Null(app);
+        }
     }
 }

@@ -7,21 +7,34 @@ using System.Threading.Tasks;
 
 namespace SAE.CommonLibrary.EventStore.Document
 {
+    /// <summary>
+    /// 默认的文档存储对象
+    /// </summary>
     public class DefaultDocumentStore : IDocumentStore
     {
         private readonly ISnapshotStore _snapshot;
-        private readonly ISerializer _serializer=SerializerProvider.Current;
+        private readonly ISerializer _serializer = SerializerProvider.Current;
         private readonly IEventStore _eventStore;
         private readonly IDocumentEvent _documentEvent;
-        
-        public DefaultDocumentStore(ISnapshotStore snapshot,IEventStore eventStore,IDocumentEvent documentEvent)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="snapshot"></param>
+        /// <param name="eventStore"></param>
+        /// <param name="documentEvent"></param>
+        public DefaultDocumentStore(ISnapshotStore snapshot, IEventStore eventStore, IDocumentEvent documentEvent)
         {
             this._snapshot = snapshot;
             this._eventStore = eventStore;
             this._documentEvent = documentEvent;
         }
-
-        public virtual async Task<TDocument> FindAsync<TDocument>(IIdentity identity)where TDocument:IDocument,new()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TDocument"></typeparam>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        public virtual async Task<TDocument> FindAsync<TDocument>(IIdentity identity) where TDocument : IDocument, new()
         {
             //获取最新快照
             var snapshot = await this._snapshot.FindAsync(identity) ?? new Snapshot.Snapshot(identity);
@@ -41,9 +54,9 @@ namespace SAE.CommonLibrary.EventStore.Document
                 document = this._serializer.Deserialize<TDocument>(snapshot.Data);
             }
             //序列化文档
-            
+
             //重放事件
-            foreach(IEvent @event in eventStream)
+            foreach (IEvent @event in eventStream)
             {
                 document.Mutate(@event);
             }
@@ -57,12 +70,12 @@ namespace SAE.CommonLibrary.EventStore.Document
         /// <param name="identity"></param>
         /// <param name="version"></param>
         /// <returns></returns>
-        public virtual async Task<TDocument> FindAsync<TDocument>(IIdentity identity, long version) where TDocument : IDocument,new()
+        public virtual async Task<TDocument> FindAsync<TDocument>(IIdentity identity, long version) where TDocument : IDocument, new()
         {
             //获取快照
             var snapshot = await this.FindSnapshotAsync(identity, version);
             //加载事件流
-            var eventStream =await this._eventStore.LoadEventStreamAsync(identity, snapshot.Version, (int)(version-snapshot.Version));
+            var eventStream = await this._eventStore.LoadEventStreamAsync(identity, snapshot.Version, (int)(version - snapshot.Version));
             //序列化文档
             var document = this._serializer.Deserialize<TDocument>(snapshot.Data);
             //重放事件
@@ -80,7 +93,7 @@ namespace SAE.CommonLibrary.EventStore.Document
         /// <param name="identity"></param>
         /// <param name="version"></param>
         /// <returns></returns>
-        protected virtual async Task<Snapshot.Snapshot> FindSnapshotAsync(IIdentity identity,long version)
+        protected virtual async Task<Snapshot.Snapshot> FindSnapshotAsync(IIdentity identity, long version)
         {
 
             var snapshotInterval = Config.SnapshotInterval.Invoke();
@@ -91,7 +104,7 @@ namespace SAE.CommonLibrary.EventStore.Document
 
             var snapshotVersion = version - version % snapshotInterval;
 
-            var snapshot =await this._snapshot.FindAsync(identity, snapshotVersion);
+            var snapshot = await this._snapshot.FindAsync(identity, snapshotVersion);
 
             if (snapshot == null)
             {
@@ -130,7 +143,7 @@ namespace SAE.CommonLibrary.EventStore.Document
             }
 
             //从快照存储获取对应快照
-            var snapshot =await this._snapshot.FindAsync(identity);
+            var snapshot = await this._snapshot.FindAsync(identity);
             //反序列化文档
             document = this._serializer.Deserialize(snapshot.Data, Type.GetType(snapshot.Type)) as IDocument;
             //重放事件
@@ -140,6 +153,25 @@ namespace SAE.CommonLibrary.EventStore.Document
             }
             //
             await this._snapshot.SaveAsync(new Snapshot.Snapshot(identity, document, version));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public Task RemoveAsync(IDocument document)
+        {
+            return this.RemoveAsync(document.Identity);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        public async Task RemoveAsync(IIdentity identity)
+        {
+            await this._snapshot.RemoveAsync(identity);
+            await this._eventStore.RemoveAsync(identity);
         }
     }
 }

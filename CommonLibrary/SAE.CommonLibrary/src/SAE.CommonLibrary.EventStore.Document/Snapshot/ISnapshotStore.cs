@@ -28,5 +28,11 @@ namespace SAE.CommonLibrary.EventStore.Snapshot
         /// </summary>
         /// <param name="snapshot">要保存的快照对象</param>
         Task SaveAsync(Snapshot snapshot);
+        /// <summary>
+        /// 根据<paramref name="identity"/>移除快照
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        Task RemoveAsync(IIdentity identity);
     }
 }

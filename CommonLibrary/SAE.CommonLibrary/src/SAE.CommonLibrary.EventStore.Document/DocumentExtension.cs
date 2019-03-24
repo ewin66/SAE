@@ -78,6 +78,29 @@ namespace SAE.CommonLibrary.EventStore.Document
                          .Wait();
         }
 
+
+        /// <summary>
+        /// 从<seealso cref="IDocumentStore"/>中移除该对象
+        /// </summary>
+        /// <param name="documentStore"></param>
+        /// <param name="identity"></param>
+        public static void Remove(this IDocumentStore documentStore, IIdentity identity)
+        {
+            documentStore.RemoveAsync(identity)
+                         .Wait();
+        }
+
+        /// <summary>
+        /// 从<seealso cref="IDocumentStore"/>中移除该对象
+        /// </summary>
+        /// <param name="documentStore"></param>
+        /// <param name="document"></param>
+        public static void Remove<TDocument>(this IDocumentStore documentStore, TDocument document) where TDocument : IDocument, new()
+        {
+            documentStore.RemoveAsync(document)
+                         .Wait();
+        }
+
         /// <summary>
         /// 使用<seealso cref="DefaultDocumentEvent"/>发布器
         /// </summary>
@@ -86,14 +109,12 @@ namespace SAE.CommonLibrary.EventStore.Document
         {
             var documentEvent = provider.GetService<IDocumentEvent>() as DefaultDocumentEvent;
             var mq = provider.GetService<IMQ>();
-            documentEvent.OnAppend +=async (document, events) =>
+            documentEvent.OnAppend += async (document, events) =>
             {
                 foreach (var @event in events)
-                   await mq.PublishAsync(@event);
+                    await mq.PublishAsync(@event);
             };
             return provider;
         }
-
-
     }
 }

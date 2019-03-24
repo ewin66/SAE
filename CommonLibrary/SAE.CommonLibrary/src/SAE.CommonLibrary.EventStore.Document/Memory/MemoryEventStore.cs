@@ -40,5 +40,11 @@ namespace SAE.EventStore.Memory
             }
             return Task.FromResult(eventStream);
         }
+
+        public Task RemoveAsync(IIdentity identity)
+        {
+            this._store.RemoveAll(s => s.Identity.ToString() == identity.ToString());
+            return Task.CompletedTask;
+        }
     }
 }

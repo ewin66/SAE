@@ -46,6 +46,14 @@ namespace SAE.CommonLibrary.EventStore.Document.Dapper
             return snapshot;
         }
 
+        public async Task RemoveAsync(IIdentity identity)
+        {
+            using (var conn = this._dbConnectionFactory.Get())
+            {
+                await conn.ExecuteAsync($"delete {nameof(Snapshot)} where id=@id", new { id = identity.ToString() });
+            }
+        }
+
         public async Task SaveAsync(Snapshot.Snapshot snapshot)
         {
             using (var conn = this._dbConnectionFactory.Get())

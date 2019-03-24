@@ -25,6 +25,12 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory
             return Task.FromResult(_store.FirstOrDefault(s => s.Id == identity.ToString()));
         }
 
+        public Task RemoveAsync(IIdentity identity)
+        {
+            this._store.RemoveAll(s => s.Id == identity.ToString());
+            return Task.CompletedTask;
+        }
+
         public Task SaveAsync(Snapshot.Snapshot snapshot)
         {
             this._store.Add(snapshot);

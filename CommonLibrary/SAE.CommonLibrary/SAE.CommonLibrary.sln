@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.OAuth", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.MQ.RabbitMQ", "src\SAE.CommonLibrary.MQ.RabbitMQ\SAE.CommonLibrary.MQ.RabbitMQ.csproj", "{605B0060-0726-47B7-8D55-BBC06892013B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Log", "src\SAE.Commonlibrary.Log\SAE.CommonLibrary.Log.csproj", "{F6C2585A-6A04-4DD7-AA2C-ABC648E9386E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Log", "src\SAE.CommonLibrary.Log\SAE.CommonLibrary.Log.csproj", "{F6C2585A-6A04-4DD7-AA2C-ABC648E9386E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Cache.Redis", "src\SAE.CommonLibrary.Cache.Redis\SAE.CommonLibrary.Cache.Redis.csproj", "{4A56560A-F3E4-4DA6-9D6E-327C9DA5B047}"
 EndProject
@@ -35,9 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Http", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Cache", "src\SAE.CommonLibrary.Cache\SAE.CommonLibrary.Cache.csproj", "{544DAE29-4B70-4C45-A380-84CF4DE53F9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Storage", "src\SAE.Commonlibrary.Storage\SAE.CommonLibrary.Storage.csproj", "{839904A1-9549-4B2B-B838-942E26681504}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Storage", "src\SAE.CommonLibrary.Storage\SAE.CommonLibrary.Storage.csproj", "{839904A1-9549-4B2B-B838-942E26681504}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Json", "src\SAE.Commonlibrary.Json\SAE.CommonLibrary.Json.csproj", "{68CDC46B-8FEB-4C03-9AF0-BE78AE68D19C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Json", "src\SAE.CommonLibrary.Json\SAE.CommonLibrary.Json.csproj", "{68CDC46B-8FEB-4C03-9AF0-BE78AE68D19C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DD75371B-490B-4728-8706-A82A88CF413D}"
 EndProject
@@ -59,13 +59,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.Test.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Json.Test", "test\SAE.CommonLibrary.Json.Test\SAE.CommonLibrary.Json.Test.csproj", "{41978A2A-A334-4E7D-851F-8C91E25388E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore", "src\SAE.Commonlibrary.EventStore\SAE.CommonLibrary.EventStore.csproj", "{B4DB921A-5400-4966-A39A-A531C1C6473E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore", "src\SAE.CommonLibrary.EventStore\SAE.CommonLibrary.EventStore.csproj", "{B4DB921A-5400-4966-A39A-A531C1C6473E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore.Document", "src\SAE.Commonlibrary.EventStore.Document\SAE.CommonLibrary.EventStore.Document.csproj", "{87976750-6CCB-4032-AB50-348B00E6035B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore.Document", "src\SAE.CommonLibrary.EventStore.Document\SAE.CommonLibrary.EventStore.Document.csproj", "{87976750-6CCB-4032-AB50-348B00E6035B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore.Document.Memory.Test", "test\SAE.Commonlibrary.EventStore.Document.Memory.Test\SAE.CommonLibrary.EventStore.Document.Memory.Test.csproj", "{9B70DDC1-B505-41FD-BB59-2BEF26432237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore.Document.Memory.Test", "test\SAE.CommonLibrary.EventStore.Document.Memory.Test\SAE.CommonLibrary.EventStore.Document.Memory.Test.csproj", "{9B70DDC1-B505-41FD-BB59-2BEF26432237}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore.Document.Dapper", "src\SAE.Commonlibrary.EventStore.Dapper\SAE.CommonLibrary.EventStore.Document.Dapper.csproj", "{39E9AF27-5F92-46B0-BDAF-E764C6D1A5C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.EventStore.Document.Dapper", "src\SAE.CommonLibrary.EventStore.Dapper\SAE.CommonLibrary.EventStore.Document.Dapper.csproj", "{39E9AF27-5F92-46B0-BDAF-E764C6D1A5C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE.CommonLibrary.Common", "src\SAE.CommonLibrary.Common\SAE.CommonLibrary.Common.csproj", "{BECC20AB-9503-403D-A121-CF89B60819C5}"
 EndProject

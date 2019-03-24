@@ -33,6 +33,17 @@ namespace SAE.CommonLibrary.EventStore.Document
         /// <param name="document"></param>
         Task SaveAsync(IDocument document);
 
-        
+        /// <summary>
+        /// 移除文档
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        Task RemoveAsync(IDocument document);
+        /// <summary>
+        /// 使用<seealso cref="IIdentity"/>移除文档对象
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        Task RemoveAsync(IIdentity identity);
     }
 }

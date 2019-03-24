@@ -93,7 +93,6 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
 
         public void RemoveUser(string id)
         {
-            throw new NotImplementedException();
             var user = this._documentStore.Find<User>(id.ToIdentity());
             user.Destory();
             this._documentStore.Save(user);

@@ -71,8 +71,14 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
                 config.Bind(s => s.Information.Contact.QQ, t => t.QQ);
                 config.Bind(s => s.Information.Sex, t => t.Sex);
                 config.Bind(s => s.Information.Name, t => t.Name);
-                config.Bind(s => s.Information.Sex, t => t.Sex);
             });
+
+            TinyMapper.Bind<UserInfo, UserChangeInfoEvent>(config =>
+             {
+                 config.Bind(s => s.Contact.Email, t => t.Email);
+                 config.Bind(s => s.Contact.Phone, t => t.Phone);
+                 config.Bind(s => s.Contact.QQ, t => t.QQ);
+             });
 
             TinyMapper.Bind<AppDto, App>(config =>
             {
@@ -114,14 +120,17 @@ namespace SAE.ShoppingMall.Identity.Application.Implement
                 config.Bind(s => s.Signin, t => t.Endpoint.Signin);
                 config.Bind(s => s.Signout, t => t.Endpoint.Signout);
             });
+
+            
         }
 
         protected virtual void Remove<TAggregateRoot>(string id) where TAggregateRoot : IDocument, new()
         {
-            var aggregate = this._documentStore.Find<TAggregateRoot>(id.ToIdentity());
-            dynamic dynamic = aggregate; ;
-            dynamic.Destory();
-            this._documentStore.Save(aggregate);
+            //var aggregate = this._documentStore.Find<TAggregateRoot>(id.ToIdentity());
+            //dynamic dynamic = aggregate; ;
+            //dynamic.Destory();
+            //this._documentStore.Save(aggregate);
+            this._documentStore.Remove(id.ToIdentity());
         }
 
         public virtual void Update<TDto, TAggregateRoot>(TDto dto) where TDto : class where TAggregateRoot : IDocument, new()

@@ -12,7 +12,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Dapper
         }
         public async Task AppendAsync(EventStream eventStream)
         {
-            using (var conn= this._dbConnectionFactory.Get())
+            using (var conn = this._dbConnectionFactory.Get())
             {
                 if (await conn.ExecuteAsync("insert into EventStream(id,timestamp,version,data) values(@id,@timestamp,@version,@data)", new
                 {
@@ -32,7 +32,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Dapper
             var eventStream = new EventStream(identity, 0, events: null, timeStamp: DateTimeOffset.MinValue);
             using (var conn = this._dbConnectionFactory.Get())
             {
-                using (var reader =await conn.ExecuteReaderAsync($"select * from EventStream where id=@id and version > @skipVersion limit {maxCount}",
+                using (var reader = await conn.ExecuteReaderAsync($"select * from EventStream where id=@id and version > @skipVersion limit {maxCount}",
                                                                  new
                                                                  {
                                                                      Id = identity.ToString(),
@@ -55,7 +55,15 @@ namespace SAE.CommonLibrary.EventStore.Document.Dapper
         {
             using (var conn = this._dbConnectionFactory.Get())
             {
-                return await conn.ExecuteScalarAsync<int>("select version from EventStream where id=@id order by version desc limit 1");
+                return await conn.ExecuteScalarAsync<int>("select version from EventStream where id=@id order by version desc limit 1", new { id = identity.ToString() });
+            }
+        }
+
+        public async Task RemoveAsync(IIdentity identity)
+        {
+            using (var conn = this._dbConnectionFactory.Get())
+            {
+                await conn.ExecuteAsync("delete EventStream where id=@id", new { id = identity.ToString() });
             }
         }
     }

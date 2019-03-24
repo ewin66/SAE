@@ -27,5 +27,12 @@ namespace SAE.CommonLibrary.EventStore
         /// <param name="identity">事件流标识</param>
         /// <returns></returns>
         Task<long> GetVersionAsync(IIdentity identity);
+
+        /// <summary>
+        /// 将事件彻底从事件存储移除
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        Task RemoveAsync(IIdentity identity);
     }
 }
