@@ -1,0 +1,54 @@
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SAE.CommonComponent.UI.Controllers
+{
+    public class ComponentController : Controller
+    {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public ComponentController(IHostingEnvironment hostingEnvironment)
+        {
+            this._hostingEnvironment = hostingEnvironment;
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Add(Models.Component component)
+        {
+            return View();
+        }
+
+        public object Types()
+        {
+            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "js", "template");
+            var dir = Directory.GetDirectories(path, string.Empty, SearchOption.AllDirectories)
+                               .Select(s => s.Substring(path.Length).Replace("\\", "/").Trim('/'))
+                               .OrderBy(s => s);
+            return dir;
+        }
+
+        public IActionResult Collection()
+        {
+            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "js", "template");
+            this.ViewData.Model= Directory.GetFiles(path, "*.js", SearchOption.AllDirectories)
+                                          .Select(s => s.Substring(path.Length - "template".Length - 1).Replace("\\", "/").Trim('/').Replace(".js",string.Empty))
+                                          .OrderBy(s => s);
+            return View();
+        }
+    }
+}

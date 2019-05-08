@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "react@16.8.6",
+      "destination": "wwwroot/lib/react"
+    },
+    {
+      "library": "react-dom@16.8.6",
+      "destination": "wwwroot/lib/react"
+    },
+    {
+      "library": "jquery@3.4.0",
+      "destination": "wwwroot/lib/jquery"
+    },
+    {
+      "library": "require.js@2.3.6",
+      "destination": "wwwroot/lib/require"
+    },
+    {
+      "library": "require-css@0.1.10",
+      "destination": "wwwroot/lib/require/plugins"
+    },
+    {
+      "library": "require-text@2.0.12",
+      "destination": "wwwroot/lib/require/plugins"
+    },
+    {
+      "library": "requirejs-plugins@1.0.3",
+      "destination": "wwwroot/lib/require/plugins"
+    },
+    {
+      "library": "twitter-bootstrap@4.3.1",
+      "destination": "wwwroot/lib/bootstrap"
+    },
+    {
+      "library": "admin-lte@2.4.10",
+      "destination": "wwwroot/lib/admin-lte"
+    },
+    {
+      "library": "select2@4.0.5",
+      "destination": "wwwroot/lib/select2"
+    },
+    {
+      "library": "layer@2.3",
+      "destination": "wwwroot/lib/layer"
+    },
+    {
+      "library": "ionicons@4.5.6",
+      "destination": "wwwroot/lib/ionicons"
+    }
+  ]
+}
