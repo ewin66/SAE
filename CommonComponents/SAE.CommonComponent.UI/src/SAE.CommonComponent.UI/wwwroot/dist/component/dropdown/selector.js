@@ -1,8 +1,4 @@
-/// <reference path="../../../lib/require/require.js" />
-/// <reference path="../../../lib/react/umd/react.production.min.js" />
-/// <reference path="../../../lib/react/umd/react-dom.production.min.js" />
-/// <reference path="../../../lib/jquery/jquery.min.js" />
-define(["jquery", "react", "react-dom", "select2/js/select2", "css!select2/css/select2"], function ($, React, ReactDOM) {
+define(["jquery", "react", "react-dom", "select2"], function ($, React, ReactDOM) {
   //array
   //ajax
   //optionText

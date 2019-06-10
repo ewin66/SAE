@@ -49,6 +49,10 @@
     {
       "library": "ionicons@4.5.6",
       "destination": "wwwroot/lib/ionicons"
+    },
+    {
+      "library": "font-awesome@5.8.2",
+      "destination": "wwwroot/lib/font-awesome"
     }
   ]
 }

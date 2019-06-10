@@ -1,9 +1,9 @@
 ﻿@model Component
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 box box-success">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Quick Example</h3>
+                <h3 class="box-title">创建组件</h3>
             </div>
             <form method="post" data-ajax="true" class="form-horizontal" data-ajax-success="requestSuccess">
                 <div class="box-body">
@@ -16,32 +16,36 @@
                         <span id="type"></span>
                     </div>
                     <div class="form-group">
+                        <label>测试数据</label>
+                        <button type="button" class="btn btn-info" id="addDatasBtn">添加数据</button>
+                    </div>
+                    <div class="form-group" id="datas">
+                    </div>
+                    <div class="form-group">
                         <label>组件</label>
-                        <button type="button" class="btn btn-info">选择组件</button>
+                        <button type="button" class="btn btn-info" id="addComponentBtn">选择组件</button>
                     </div>
                     <div class="form-group" id="components">
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Action</button>
-                            </div>
-                            <!-- /btn-group -->
-                            <input type="checkbox" class="form-control">
-                        </div>
                     </div>
                     <div class="form-group">
                         <label>编辑代码</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ...">
-                        </textarea>
+                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                 </div>
                 <div class="box-footer">
+                    <button type="button" class="btn btn-primary" id="previewBtn">Preview</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a class="btn btn-danger pull-right" asp-action="index">Cancel</a>
                 </div>
             </form>
         </div>
-
-
     </div>
-
+    <div class="col-md-6 box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">结构</h3>
+        </div>
+        <div class="form-horizontal" id="structureView">
+            
+        </div>
+    </div>
 </div>

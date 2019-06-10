@@ -1,4 +1,4 @@
-﻿define(["jquery"], function () {
+﻿define(["jquery","adminlte"], function () {
 
     const parent = window.parent;
     const close = function () {

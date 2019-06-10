@@ -35,7 +35,7 @@ namespace SAE.CommonComponent.UI.Controllers
 
         public object Types()
         {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "js", "template");
+            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "component");
             var dir = Directory.GetDirectories(path, string.Empty, SearchOption.AllDirectories)
                                .Select(s => s.Substring(path.Length).Replace("\\", "/").Trim('/'))
                                .OrderBy(s => s);
@@ -44,9 +44,9 @@ namespace SAE.CommonComponent.UI.Controllers
 
         public IActionResult Collection()
         {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "js", "template");
-            this.ViewData.Model= Directory.GetFiles(path, "*.js", SearchOption.AllDirectories)
-                                          .Select(s => s.Substring(path.Length - "template".Length - 1).Replace("\\", "/").Trim('/').Replace(".js",string.Empty))
+            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "component");
+            this.ViewData.Model = Directory.GetFiles(path, "*.js", SearchOption.AllDirectories)
+                                          .Select(s => s.Substring(path.Length - "template".Length - 1).Replace("\\", "/").Trim('/').Replace(".js", string.Empty))
                                           .OrderBy(s => s);
             return View();
         }
