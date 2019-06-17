@@ -1,0 +1,4 @@
+{
+  "path": "bootstrap/js/bootstrap.bundle.min",
+  "dependencies": [ "css!/lib/bootstrap/css/bootstrap.min", "jquery", "css!font-awesome" ]
+}

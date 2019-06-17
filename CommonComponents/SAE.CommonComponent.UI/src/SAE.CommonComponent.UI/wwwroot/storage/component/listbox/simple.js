@@ -3,7 +3,6 @@
         constructor(props) {
             super(props);
             this.state = { data: props.data || [] };
-            this.data = this.state.data;
             this.itemRender = (props.render || this.defaultRender).bind(this);
             if (props.add) {
                 this.addHandle = props.add.bind(this);
@@ -37,6 +36,10 @@
             }
             this.state.data.push(item);
             this.setState(this.state);
+        }
+
+        getData() {
+            return this.state.data;
         }
 
         render = () => {

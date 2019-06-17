@@ -45,7 +45,6 @@ define(["jquery", "react", "react-dom"], function ($, React, ReactDOM) {
       this.state = {
         data: props.data || []
       };
-      this.data = this.state.data;
       this.itemRender = (props.render || this.defaultRender).bind(this);
 
       if (props.add) {
@@ -55,6 +54,10 @@ define(["jquery", "react", "react-dom"], function ($, React, ReactDOM) {
       if (props.setValue) {
         this.setValueHandle = props.setValue.bind(this);
       }
+    }
+
+    getData() {
+      return this.state.data;
     }
 
   }

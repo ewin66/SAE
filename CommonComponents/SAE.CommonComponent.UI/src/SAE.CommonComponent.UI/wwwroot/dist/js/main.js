@@ -16,8 +16,7 @@
     }
   });
 
-  require([path + "/js/config.js"], function (config) {
-    requirejs.config(config);
+  require([path + "/js/config.js"], function () {
     const trimReg = /(\/*)$/;
     const url = window.location.pathname.toLocaleLowerCase().replace(trimReg, "");
 

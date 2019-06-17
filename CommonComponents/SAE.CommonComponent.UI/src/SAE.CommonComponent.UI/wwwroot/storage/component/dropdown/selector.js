@@ -99,6 +99,10 @@
             $(this.el).select2("destroy");
         }
 
+        getData() {
+            return $(this.el).val();
+        }
+
         render() {
             return <select ref={el => this.el = el} className={this.props.class} >
             </select>

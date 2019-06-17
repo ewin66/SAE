@@ -35,6 +35,10 @@
       "destination": "wwwroot/lib/bootstrap"
     },
     {
+      "library": "bootstrap-switch@3.3.4",
+      "destination": "wwwroot/lib/bootstrap-switch"
+    },
+    {
       "library": "admin-lte@2.4.10",
       "destination": "wwwroot/lib/admin-lte"
     },

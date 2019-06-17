@@ -105,6 +105,10 @@ define(["jquery", "react", "react-dom", "select2"], function ($, React, ReactDOM
       $(this.el).select2("destroy");
     }
 
+    getData() {
+      return $(this.el).val();
+    }
+
     render() {
       return React.createElement("select", {
         ref: el => this.el = el,

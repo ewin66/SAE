@@ -1,0 +1,42 @@
+﻿
+@{
+    this.Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>预览页</title>
+</head>
+<body>
+    <div>
+
+    </div>
+
+    <script src="~/lib/require/require.js"></script>
+    <script type="text/javascript">
+        const version = new Date().getDate();
+        const path = "/dist";
+        require.config({
+            urlArgs: "v=" + version,
+            baseUrl: "/lib",
+            waitSeconds: 0,
+            paths: {
+                "css": "require/plugins/css",
+                "text": "require/plugins/text",
+                "json": "require/plugins/json",
+                "component": path + "/component"
+            }
+        });
+    </script>
+    
+    <script type="text/javascript">
+        require([path + "/js/config.js"], function () {
+            const code = window.parent.beready();
+            debugger;
+            eval(code);
+        });
+    </script>
+</body>
+</html>

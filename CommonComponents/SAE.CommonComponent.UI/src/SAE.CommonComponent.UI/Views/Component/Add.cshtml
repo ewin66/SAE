@@ -16,10 +16,8 @@
                         <span id="type"></span>
                     </div>
                     <div class="form-group">
-                        <label>测试数据</label>
-                        <button type="button" class="btn btn-info" id="addDatasBtn">添加数据</button>
-                    </div>
-                    <div class="form-group" id="datas">
+                        <label>引用</label>
+                        <span id="libs"></span>
                     </div>
                     <div class="form-group">
                         <label>组件</label>
@@ -28,8 +26,14 @@
                     <div class="form-group" id="components">
                     </div>
                     <div class="form-group">
+                        <label>测试数据</label>
+                        <button type="button" class="btn btn-info" id="addDatasBtn">添加数据</button>
+                    </div>
+                    <div class="form-group" id="datas">
+                    </div>
+                    <div class="form-group">
                         <label>编辑代码</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea class="form-control" asp-for="Content" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                 </div>
                 <div class="box-footer">

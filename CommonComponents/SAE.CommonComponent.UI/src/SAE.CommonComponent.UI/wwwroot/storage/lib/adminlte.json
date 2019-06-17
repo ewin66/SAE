@@ -1,0 +1,4 @@
+{
+  "paht": "admin-lte/js/adminlte.min",
+  "dependencies": [ "css!admin-lte/css/AdminLTE.min", "css!admin-lte/css/skins/_all-skins.min", "bootstrap", "jquery", "css!font-awesome" ]
+}

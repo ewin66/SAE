@@ -50,5 +50,20 @@ namespace SAE.CommonComponent.UI.Controllers
                                           .OrderBy(s => s);
             return View();
         }
+
+        public IActionResult Libs()
+        {
+            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "lib");
+            var libs = Directory.GetFiles(path, "*.json", SearchOption.AllDirectories)
+                               .Select(s=>Path.GetFileNameWithoutExtension(s))
+                               .OrderBy(s => s);
+            return this.Json(libs);
+        }
+
+        public IActionResult Preview()
+        {
+            return View();
+        }
+        
     }
 }

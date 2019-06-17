@@ -1,0 +1,5 @@
+{
+  "path": "select2/js/select2.full.min",
+  "dependencies": [ "css!/lib/select2/css/select2.min", "jquery" ],
+  "bootstrap-switch": [ "css!/lib/bootstrap-switch/css/bootstrap3/bootstrap-switch.min" ]
+}
