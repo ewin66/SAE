@@ -1,7 +1,3 @@
-/// <reference path="../../lib/require/require.js" />
-/// <reference path="../../lib/react/umd/react.production.min.js" />
-/// <reference path="../../lib/react/umd/react-dom.production.min.js" />
-/// <reference path="../../lib/jquery/jquery.js" />
 define(["jquery", "react", "react-dom", "component/container/form", "component/dropdown/selector", "component/listbox/simple", "layer", "adminlte"], function ($, React, ReactDOM, Form, Selector, Simple, layer) {
   const select = $("#type").get(0);
   const option = {
@@ -20,7 +16,7 @@ define(["jquery", "react", "react-dom", "component/container/form", "component/d
   ReactDOM.render(React.createElement(Selector, option), select);
   const libsSelect = $("#libs").get(0);
   const libOption = {
-    url: "/component/libs",
+    url: "/library/all",
     transform: data => {
       return data.map(item => {
         return {
@@ -147,7 +143,7 @@ define(["jquery", "react", "react-dom", "component/container/form", "component/d
       shadeClose: true,
       shade: 0.8,
       area: ['90%', '90%'],
-      content: "/component/preview"
+      content: "/preview.html"
     });
   });
 

@@ -1,8 +1,4 @@
-﻿/// <reference path="../../lib/require/require.js" />
-/// <reference path="../../lib/react/umd/react.production.min.js" />
-/// <reference path="../../lib/react/umd/react-dom.production.min.js" />
-/// <reference path="../../lib/jquery/jquery.js" />
-define(["jquery",
+﻿define(["jquery",
     "react",
     "react-dom",
     "component/container/form",
@@ -27,7 +23,7 @@ define(["jquery",
         const libsSelect = $("#libs").get(0);
 
         const libOption = {
-            url: "/component/libs",
+            url: "/library/all",
             transform: data => {
                 return data.map(item => { return { id: item, text: item } });
             },
@@ -152,7 +148,7 @@ define(["jquery",
                 shadeClose: true,
                 shade: 0.8,
                 area: ['90%', '90%'],
-                content: "/component/preview"
+                content: "/preview.html"
             });
         });
 

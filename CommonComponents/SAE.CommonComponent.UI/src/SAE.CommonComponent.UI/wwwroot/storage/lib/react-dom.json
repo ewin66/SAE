@@ -1,3 +1,4 @@
 {
+  "name": "react-dom",
   "path": "react/umd/react-dom.development"
 }

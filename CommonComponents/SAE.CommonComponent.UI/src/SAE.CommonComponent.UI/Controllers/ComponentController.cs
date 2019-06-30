@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
+using SAE.CommonComponent.UI.Services;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAE.CommonComponent.UI.Controllers
 {
     public class ComponentController : Controller
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IComponentService _componentService;
 
-        public ComponentController(IHostingEnvironment hostingEnvironment)
+        public ComponentController(IComponentService componentService)
         {
-            this._hostingEnvironment = hostingEnvironment;
+            this._componentService = componentService;
         }
         public IActionResult Index()
         {
@@ -30,40 +25,21 @@ namespace SAE.CommonComponent.UI.Controllers
         [HttpPost]
         public IActionResult Add(Models.Component component)
         {
+            this._componentService.Add(component);
             return View();
         }
 
         public object Types()
         {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "component");
-            var dir = Directory.GetDirectories(path, string.Empty, SearchOption.AllDirectories)
-                               .Select(s => s.Substring(path.Length).Replace("\\", "/").Trim('/'))
-                               .OrderBy(s => s);
-            return dir;
+            return this._componentService.Types();
         }
 
         public IActionResult Collection()
         {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "component");
-            this.ViewData.Model = Directory.GetFiles(path, "*.js", SearchOption.AllDirectories)
-                                          .Select(s => s.Substring(path.Length - "template".Length - 1).Replace("\\", "/").Trim('/').Replace(".js", string.Empty))
-                                          .OrderBy(s => s);
+            this.ViewData.Model = this._componentService.GetALL()
+                                                        .Select(s => s.Name);
+
             return View();
         }
-
-        public IActionResult Libs()
-        {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "lib");
-            var libs = Directory.GetFiles(path, "*.json", SearchOption.AllDirectories)
-                               .Select(s=>Path.GetFileNameWithoutExtension(s))
-                               .OrderBy(s => s);
-            return this.Json(libs);
-        }
-
-        public IActionResult Preview()
-        {
-            return View();
-        }
-        
     }
 }

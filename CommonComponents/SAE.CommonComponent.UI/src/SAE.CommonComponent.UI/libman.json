@@ -57,6 +57,10 @@
     {
       "library": "font-awesome@5.8.2",
       "destination": "wwwroot/lib/font-awesome"
+    },
+    {
+      "library": "dropzone@5.5.1",
+      "destination": "wwwroot/lib/dropzone"
     }
   ]
 }

@@ -16,6 +16,6 @@
     <Folder Include="wwwroot\dist\" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties libman_1json__JsonSchema="http://json.schemastore.org/libman" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>
