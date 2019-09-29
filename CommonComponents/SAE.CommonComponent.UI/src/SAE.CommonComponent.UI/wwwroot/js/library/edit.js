@@ -11,9 +11,9 @@ define(["jquery",
         const dependencies = eval('(' + $("#Dependencies").val() + ')');
 
         $("#btn_dependencies").click(function () {
-            const index = $(this).nextAll().length;
+            const index = $(this).nextAll("input").length;
             let html = '<br/><input type="text" class="form-control required" name="dependencies[' + index + ']" maxlength="256" placeholder="请输入引用名称">';
-            $(this).parent().append(html); 
+            $(this).parent().append(html);
         });
 
         dependencies.forEach(val => {

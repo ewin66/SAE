@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>跟踪组件</Description>
     <PackageReleaseNotes>跟踪组件</PackageReleaseNotes>
@@ -14,7 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="zipkin4net" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="zipkin4net" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup>

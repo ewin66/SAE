@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <Version>1.0.0.5</Version>
     <PackageTags>EventStore</PackageTags>
     <PackageReleaseNotes>1、改变id生成规则（有序的guid）

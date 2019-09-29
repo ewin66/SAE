@@ -1,8 +1,8 @@
-﻿using SAE.CommonLibrary.Http;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using SAE.CommonLibrary.Http;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace SAE.CommonLibrary.Trace.Test
 {

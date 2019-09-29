@@ -1,5 +1,5 @@
 {
   "name": "bootstrap-switch",
   "path": "bootstrap-switch/js/bootstrap-switch.min",
-  "dependencies": [ "css!/lib/bootstrap-switch/css/bootstrap3/bootstrap-switch.min" ]
+  "dependencies": [ "/lib/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" ]
 }

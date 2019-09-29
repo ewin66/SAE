@@ -1,5 +1,0 @@
-{
-  "name": "ionicons",
-  "path": "ionicons/ionicons",
-  "dependencies": [ "ionicons/css/ionicons.min" ]
-}

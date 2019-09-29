@@ -22,6 +22,7 @@ namespace SAE.CommonComponent.UI.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult Add(Models.Component component)
         {

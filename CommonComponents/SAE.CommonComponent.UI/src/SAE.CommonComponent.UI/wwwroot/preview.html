@@ -6,32 +6,63 @@
     <title>预览页</title>
 </head>
 <body>
-    <div>
+    <div id="example">
 
     </div>
-
-    <script src="~/lib/require/require.js"></script>
+    <script src="lib/babel/babel.js"></script>
+    <script src="lib/require/require.js"></script>
     <script type="text/javascript">
+
         const version = new Date().getDate();
-        const path = "/dist";
+        const path = "/dist/";
+        //const libPath = "/lib/";
         require.config({
             urlArgs: "v=" + version,
-            baseUrl: "/lib",
+            baseUrl: "/lib/",
             waitSeconds: 0,
             paths: {
                 "css": "require/plugins/css",
                 "text": "require/plugins/text",
                 "json": "require/plugins/json",
-                "component": path + "/component"
+                "component": "component"
             }
         });
     </script>
-    
+
     <script type="text/javascript">
-        require([path + "/js/config.js"], function () {
-            const code = window.parent.beready();
+        ///设置依赖
+        function setConfig(libarry) {
             debugger;
-            eval(code);
+            const config = {
+                paths: {}
+            };
+            config.paths[libarry.name] = libarry.path;
+            if (libarry.dependencies) {
+                config.shim = {};
+                const dependencies = libarry.dependencies.map(function (dep) {
+                    if (dep.endsWith('.css')) {
+                        return 'css!' + dep.substr(0, dep.length - 4);
+                    };
+                    return dep;
+                });
+                config.shim[libarry.name] = dependencies;
+            }
+            requirejs.config(config);
+        };
+
+        require([path + "js/config.js"], function () {
+            debugger;
+            const code = window.parent.beready();
+
+            const script = document.createElement("script");
+            script.type = "text/babel";
+
+            script.innerHTML = code;
+
+            document.head.appendChild(script);
+
+            window.Babel.transformScriptTags();
+
         });
     </script>
 </body>

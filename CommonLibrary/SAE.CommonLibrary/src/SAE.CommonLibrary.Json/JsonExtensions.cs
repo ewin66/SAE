@@ -1,4 +1,4 @@
-﻿#if !NET45
+﻿
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SAE.CommonLibrary.Json;
@@ -23,4 +23,3 @@ namespace Microsoft.Extensions.DependencyInjection
         }
     }
 }
-#endif

@@ -19,7 +19,7 @@ namespace SAE.CommonLibrary.Json.Test
         public void Serialize()
         {
             var json = this._jsonConvertor.Serialize(new Student { Name = "PJB", Sex = Sex.Man, Age = 23, Birthday = new DateTime(1994, 2, 27) });
-            this.Show(json);
+            this.WriteLine(json);
         }
 
         [Theory]

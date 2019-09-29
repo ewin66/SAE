@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SAE.CommonComponent.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SAE.CommonComponent.UI.Services
 {
@@ -19,17 +21,19 @@ namespace SAE.CommonComponent.UI.Services
 
     public class ComponentService : IComponentService
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly string _path;
+        private readonly IJsonHelper _jsonHelper;
 
-        public ComponentService(IHostingEnvironment hostingEnvironment)
+        public ComponentService(IHostingEnvironment hostingEnvironment, IJsonHelper jsonHelper)
         {
-            this._hostingEnvironment = hostingEnvironment;
+            _path = Path.Combine(hostingEnvironment.WebRootPath, "storage", "components");
+            this._jsonHelper = jsonHelper;
         }
 
 
         public void Add(Component component)
         {
-            throw new NotImplementedException();
+            this.Save(component);
         }
 
         public Component Get(string name)
@@ -39,9 +43,9 @@ namespace SAE.CommonComponent.UI.Services
 
         public IEnumerable<Component> GetALL()
         {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "component");
-            var components = Directory.GetFiles(path, "*.js", SearchOption.AllDirectories)
-                                      .Select(s => s.Substring(path.Length - "component".Length - 1).Replace("\\", "/").Trim('/').Replace(".js", string.Empty))
+
+            var components = Directory.GetFiles(this._path, "*.js", SearchOption.AllDirectories)
+                                      .Select(s => s.Substring(this._path.Length - "component".Length - 1).Replace("\\", "/").Trim('/').Replace(".js", string.Empty))
                                       .OrderBy(s => s)
                                       .Select(s => new Component
                                       {
@@ -52,21 +56,36 @@ namespace SAE.CommonComponent.UI.Services
 
         public void Remove(Component component)
         {
-            throw new NotImplementedException();
+            var path = Path.Combine(_path, $"{component.Name}.json");
+            File.Delete(path);
         }
 
         public IEnumerable<string> Types()
         {
-            var path = Path.Combine(this._hostingEnvironment.WebRootPath, "storage", "component");
-            var types = Directory.GetDirectories(path, string.Empty, SearchOption.AllDirectories)
-                                 .Select(s => s.Substring(path.Length).Replace("\\", "/").Trim('/'))
+            var types = Directory.GetDirectories(this._path, string.Empty, SearchOption.AllDirectories)
+                                 .Select(s => s.Substring(this._path.Length).Replace("\\", "/").Trim('/'))
                                  .OrderBy(s => s);
             return types;
         }
 
         public void Update(Component component)
         {
-            throw new NotImplementedException();
+            this.Save(component);
+        }
+
+        protected virtual void Save(Component component)
+        {
+
+            var path = Path.Combine(_path, $"{component.Name}.json");
+
+            var json = this._jsonHelper.Serialize(component).ToString();
+
+            var dir = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            File.WriteAllText(path, json, Encoding.UTF8);
         }
     }
 }

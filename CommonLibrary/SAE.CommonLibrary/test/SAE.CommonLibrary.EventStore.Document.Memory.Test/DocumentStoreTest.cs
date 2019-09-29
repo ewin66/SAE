@@ -73,7 +73,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             var user = new User();
             user.Create(loginName, password);
             _documentStore.Save(user);
-            this.Show(user);
+            this.WriteLine(user);
             var newUser = this._persistenceService.Find<User>(user.Id);
             Assert.NotNull(newUser);
             Assert.Equal(user.Id, newUser.Id);
@@ -82,7 +82,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             Assert.Equal(user.Password, newUser.Password);
             Assert.Equal(user.Sex, newUser.Sex);
             Assert.NotEqual(user.Version, newUser.Version);
-            this.Show(newUser);
+            this.WriteLine(newUser);
             return user;
         }
 
@@ -104,7 +104,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             Assert.Equal(user.Password, newUser.Password);
             Assert.Equal(user.Sex, newUser.Sex);
             Assert.NotEqual(user, newUser);
-            this.Show(newUser);
+            this.WriteLine(newUser);
         }
 
         [Theory]
@@ -127,7 +127,7 @@ namespace SAE.CommonLibrary.EventStore.Document.Memory.Test
             Assert.Equal(user.Password, newUser.Password);
             Assert.Equal(user.Sex, newUser.Sex);
             Assert.NotEqual(user, newUser);
-            this.Show(newUser);
+            this.WriteLine(newUser);
         }
         
     }

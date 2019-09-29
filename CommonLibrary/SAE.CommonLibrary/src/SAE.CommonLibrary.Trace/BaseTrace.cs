@@ -77,7 +77,7 @@ namespace SAE.CommonLibrary.Trace
         /// </summary>
         protected bool IsSampled
         {
-            get => this.Trace.CurrentSpan.SamplingStatus == SamplingStatus.Sampled;
+            get => this.Trace.CurrentSpan.Sampled.HasValue ? this.Trace.CurrentSpan.Sampled.Value : false;
         }
 
         /// <summary>

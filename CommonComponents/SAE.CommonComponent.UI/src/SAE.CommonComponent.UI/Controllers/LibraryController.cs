@@ -8,15 +8,15 @@ namespace SAE.CommonComponent.UI.Controllers
     public class LibraryController : Controller
     {
         private readonly ILibraryService _libraryService;
+        private readonly IComponentService _componentService;
 
-        public LibraryController(ILibraryService libraryService)
+        public LibraryController(ILibraryService libraryService,
+                                 IComponentService componentService)
         {
             this._libraryService = libraryService;
+            this._componentService = componentService;
         }
-        public object ALL()
-        {
-            return this._libraryService.GetALL().Select(s => s.Name);
-        }
+        
 
         public IActionResult Search()
         {
@@ -46,6 +46,28 @@ namespace SAE.CommonComponent.UI.Controllers
         {
             this._libraryService.Update(library);
             return this.Ok();
+        }
+
+        public object ALL()
+        {
+            return this._libraryService.GetALL().Select(s => s.Name);
+        }
+        [HttpGet("~/api/[controller]")]
+        public object Get()
+        {
+            return this._libraryService.GetALL();
+        }
+
+        [HttpGet("~/api/[controller]/{name}")]
+        public object Get(string name)
+        {
+            return this._libraryService.Get(name);
+        }
+        [HttpGet("~/api/componentlibrary/{name}")]
+        public object ComponentLibrary(string name)
+        {
+            var component = this._componentService.Get(name);
+            return View();
         }
     }
 }

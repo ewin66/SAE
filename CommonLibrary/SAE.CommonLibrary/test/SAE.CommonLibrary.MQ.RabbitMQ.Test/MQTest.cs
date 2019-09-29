@@ -54,11 +54,11 @@ namespace SAE.CommonLibrary.MQ.RabbitMQ.Test
 
             await _mq.SubscibeAsync<ClassGrade>(cg =>
             {
-                this.Show($"Test1_{nameof(ClassGrade)}:{cg.Id}");
+                this.WriteLine($"Test1_{nameof(ClassGrade)}:{cg.Id}");
             });
             await _mq.SubscibeAsync<Student>(s =>
             {
-                this.Show($"1:{nameof(Student)}:name={s.Name},sex={s.Sex},age={s.Age}");
+                this.WriteLine($"1:{nameof(Student)}:name={s.Name},sex={s.Sex},age={s.Age}");
             });
             await _mq.SubscibeAssemblyAsync();
             _mq.SubscibeAssembly()

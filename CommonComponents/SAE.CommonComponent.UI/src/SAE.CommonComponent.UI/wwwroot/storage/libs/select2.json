@@ -1,0 +1,5 @@
+{
+  "name": "select2",
+  "path": "select2/js/select2.full.min",
+  "dependencies": [ "/lib/select2/css/select2.min.css", "jquery" ]
+}

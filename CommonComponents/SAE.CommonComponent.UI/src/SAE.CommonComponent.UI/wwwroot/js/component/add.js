@@ -101,8 +101,9 @@
 
         let script;
 
+        const randomName = 'component_' + new Date().getTime();
+
         $("#previewBtn").click(function () {
-            debugger;
             const libArray = libs.getData();
             const components = simple.getData();
             const maps = {};
@@ -131,17 +132,12 @@
                 values.push(val);
             }
 
-            const componentName = $("#Name").val();
-
-            script = 'define("' + componentName + '",' + (JSON.stringify(keys)) + ', function (' + (values.join()) + ') {';
+            script = 'define("' + randomName + '",' + (JSON.stringify(keys)) + ', function (' + (values.join()) + ') {';
 
             script += $("#Content").val();
 
             script += "});"
 
-            script += "";
-
-            let datas = ["{off:'关',on:'开'}", "{off:'禁用',on:'启用'}"];
             layer.open({
                 type: 2,
                 title: '组件页',
@@ -156,14 +152,14 @@
             let js = script;
             const componentName = $("#Name").val();
             const data = datasList.getData();
-            js += 'require(["' + componentName + '", "react", "react-dom"], function (' + componentName + ', React, ReactDOM) {';
+            js += 'require(["' + randomName + '", "react", "react-dom"], function (' + componentName + ', React, ReactDOM) {';
             if (data.length == 0) {
                 js += 'ReactDOM.render(React.createElement(' + componentName + ', {}), document.body);';
             } else {
                 for (let i in data) {
                     js += 'const div' + i + '= document.createElement("div");';
                     js += 'document.body.appendChild(div' + i + ');';
-                    js += 'ReactDOM.render(React.createElement(' + componentName+', ' + (data[i] || '{}') + '), div' + i + ');';
+                    js += 'ReactDOM.render(React.createElement(' + componentName + ', ' + (data[i] || '{}') + '), div' + i + ');';
                 }
             }
             js += '});';

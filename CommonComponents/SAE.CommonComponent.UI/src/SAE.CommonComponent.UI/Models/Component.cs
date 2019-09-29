@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SAE.CommonComponent.UI.Models
 {
@@ -19,5 +20,13 @@ namespace SAE.CommonComponent.UI.Models
         /// </summary>
         public IEnumerable<string> Datas { get; set; }
         public ICollection<Component> Childs { get; set; }
+
+        public void Unique(Func<string, Component> func)
+        {
+            if (func.Invoke(this.Name) != null)
+            {
+                throw new Exception($"组件'/{this.Type}/{this.Name}'已存在");
+            }
+        }
     }
 }

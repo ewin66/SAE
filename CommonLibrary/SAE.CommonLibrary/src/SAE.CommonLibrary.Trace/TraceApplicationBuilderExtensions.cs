@@ -1,6 +1,5 @@
-﻿#if !NET45
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using SAE.CommonLibrary.Trace;
 using System;
@@ -66,7 +65,7 @@ namespace Microsoft.AspNetCore.Builder
                                                               request.Host.Port ?? 80))
                 {
                     serverTrace.Record("http.host", request.Host.ToString())
-                               .Record("http.uri", request.GetDisplayUrl())
+                               .Record("http.uri", $"{request.Scheme}://{request.Host}{request.Path}")
                                .Record("http.path", request.Path);
 
                     await serverTrace.TracedActionAsync(next());
@@ -79,4 +78,3 @@ namespace Microsoft.AspNetCore.Builder
 
     }
 }
-#endif

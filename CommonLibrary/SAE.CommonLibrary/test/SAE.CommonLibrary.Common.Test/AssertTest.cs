@@ -25,7 +25,7 @@ namespace SAE.CommonLibrary.Common.Test
                 assert.Assert.Build(str)
                       .IsNullOrWhiteSpace();
             });
-            this.Show(ex.Message);
+            this.WriteLine(ex.Message);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace SAE.CommonLibrary.Common.Test
                 assert.Assert.Build(str)
                    .NotNullOrWhiteSpace();
             });
-            this.Show(ex.Message);
+            this.WriteLine(ex.Message);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace SAE.CommonLibrary.Common.Test
                 assert.Assert.Build(bl)
                   .True();
             });
-            this.Show(ex.Message);
+            this.WriteLine(ex.Message);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace SAE.CommonLibrary.Common.Test
                 assert.Assert.Build(bl)
                   .False();
             });
-            this.Show(ex.Message);
+            this.WriteLine(ex.Message);
         }
 
 
@@ -85,7 +85,7 @@ namespace SAE.CommonLibrary.Common.Test
                 assert.Assert.Build(@object)
                   .Null();
             });
-            this.Show(ex.Message);
+            this.WriteLine(ex.Message);
         }
 
 
@@ -101,7 +101,7 @@ namespace SAE.CommonLibrary.Common.Test
                 assert.Assert.Build(@object)
                   .NotNull();
             });
-            this.Show(ex.Message);
+            this.WriteLine(ex.Message);
         }
     }
 }

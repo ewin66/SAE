@@ -1,0 +1,5 @@
+{
+  "name": "adminlte",
+  "path": "admin-lte/js/adminlte.min",
+  "dependencies": [ "admin-lte/css/AdminLTE.min.css", "admin-lte/css/skins/_all-skins.min.css", "bootstrap", "jquery", "font-awesome.css" ]
+}

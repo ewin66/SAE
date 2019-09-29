@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SAE.CommonComponent.UI.Services
 {
@@ -25,17 +26,16 @@ namespace SAE.CommonComponent.UI.Services
         public readonly string _path;
         private readonly IJsonHelper _jsonHelper;
 
-        public LibraryService(IHostingEnvironment hostingEnvironment,IJsonHelper jsonHelper)
+        public LibraryService(IHostingEnvironment hostingEnvironment, IJsonHelper jsonHelper)
         {
-            _path = Path.Combine(hostingEnvironment.WebRootPath, "storage", "lib");
+            _path = Path.Combine(hostingEnvironment.WebRootPath, "storage", "libs");
             this._jsonHelper = jsonHelper;
         }
 
         public void Add(Library library)
         {
             library.Unique(this.Get);
-            var json = _jsonHelper.Serialize(library).ToString();
-            File.WriteAllText(Path.Combine(this._path, $"{library.Name}.json"), json, System.Text.Encoding.UTF8);
+            this.Save(library);
         }
 
         public Library Get(string name)
@@ -53,13 +53,27 @@ namespace SAE.CommonComponent.UI.Services
 
         public void Remove(Library library)
         {
-            throw new NotImplementedException();
+            var path = Path.Combine(_path, $"{library.Name}.json");
+            File.Delete(path);
         }
 
         public void Update(Library library)
         {
-            var json = _jsonHelper.Serialize(library).ToString();
-            File.WriteAllText(Path.Combine(this._path, $"{library.Name}.json"), json, System.Text.Encoding.UTF8);
+            this.Save(library);
+        }
+
+        protected virtual void Save(Library library)
+        {
+            var path = Path.Combine(_path, $"{library.Name}.json");
+
+            var json = this._jsonHelper.Serialize(library).ToString();
+
+            var dir = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            File.WriteAllText(path, json, Encoding.UTF8);
         }
     }
 }

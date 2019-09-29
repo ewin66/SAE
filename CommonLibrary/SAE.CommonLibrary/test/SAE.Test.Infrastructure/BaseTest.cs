@@ -14,7 +14,7 @@ namespace SAE.Test.Infrastructure
             _output = output;
         }
 
-        protected void Show(object @object)
+        protected void WriteLine(object @object)
         {
             this._output.WriteLine(JsonConvert.SerializeObject(@object));
         }

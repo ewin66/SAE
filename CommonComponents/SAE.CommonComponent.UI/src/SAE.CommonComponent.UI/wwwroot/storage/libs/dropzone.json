@@ -1,0 +1,5 @@
+﻿{
+  "name": "dropzone",
+  "path": "lib/dropzone/min/dropzone-amd-module.min",
+  "dependencies": [ "lib/dropzone/min/dropzone.min.css" ]
+}
